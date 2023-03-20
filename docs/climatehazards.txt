@@ -1,0 +1,35 @@
+Started 7 January 2023
+Thinking on climate hazards project with Isabelle
+
+<><><><><><><><><>
+What did I propose?
+Seasonal pressure points of climate change see git/grants/misc/sabbatical2022/fulbright2021.pdf
+
+- Build a year-round phenological model
+- Compare what gets better with longer seasons and warmer winters versus losses due to cold (spring/fall?) and heat damage. 
+
+Isabelle said to just do it with PhenoFit versus re-invent the wheel. 
+
+Best ref for Phenofit is Chuine & Beaubien 2001:
+"PHENOFIT is based on different process-based models: phenological models (Chuine 2000), a frost-injury model (Leinonen 1996), a survival model and a reproductive success model."
+
+Maybe be careful to think through what we'd dream to do, then figure out a good (and interesting on its own) FIRST step. Then clearly outline what else we would like to do. 
+
+Questions for Isabelle:
+
+- Seems like a lot of this might be done already in Phenofit, but no one has focused on the events versus mean warming -- is that correct?
+- Phenofit very focused on survival (at bud level? At what level?) -- and how to translate to fitness metric such as seeds produced (instead of dead/alive). 
+- Is there a model for winegrapes we can use? Does it include hardiness (my guess is no; it seems a sharp threshold model)?
+- Other resources to read about PhenoFit?
+
+Misc questions for Isabelle:
+- REALM project by Prentice to introduce eco-evolutionary optimality (EEO) such as https://onlinelibrary.wiley.com/doi/10.1111/gcb.16459 (meh) and in Organizing principles for vegetation dynamics (https://hal.archives-ouvertes.fr/hal-02615052/document) and Eco-evolutionary optimality as a means to improve vegetation and land-surface models (https://nph.onlinelibrary.wiley.com/doi/10.1111/nph.17558) which both seem to lay out the idea 
+
+<><><><><><><><><>
+Other ideas
+
+-> Run some non-phenology data through phenoFit
+
+-> Tension between over-identified models like phenofit/STICS etc. and simpler ones (wha I was proposing sort of).... As an example here's STICS for winegrapes: https://onlinelibrary.wiley.com/doi/10.1111/gcb.16493 and compare that to the paper Nacho published. 
+
+-> Finish callose stuff. 

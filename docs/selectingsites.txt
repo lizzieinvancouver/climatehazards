@@ -1,0 +1,34 @@
+Started 17 mars 2023
+Selecting sites
+
+
+<><><><><><><><><>
+Looking at Fig S0 in Duputie et al. 2015 I then went to google maps and selected:
+
+9 sites from mid Italy to lower part of Sweden, trying to not pick sites that were too close to the coast  (note that mid-Italy may not have PINSYL and upper regions of Sweden do not have QUEPET but QUEROB appears to go further north)
+
+43.038560, 11.846579 (Siena Provence, Italy)
+45.357721, 9.896506 (east of Milan)
+47.290201, 8.256797 (between Zurich and Lucerne)
+49.172526, 8.968161 (north of Stuttgart, looks flat)
+51.359586, 10.028342 (east of Kassel, flat-ish)
+53.092191, 10.275534 (south of Hamburg)
+56.061279, 13.557157 (north of Malmo, big jump as otherwise it's Denmark for these latitudes)
+57.609649, 14.435134 (Sweden)
+59.171276, 14.398552 (Sweden)
+
+Could also do a transect through France to UK ... but I suspect that would not include so much climate variability so I picked this one. 
+
+Email to Victor? 
+
+Historical climate (ideally 1950-2020) and one 20 year climate projection (something similar to +2 C perhaps?) for these sites 
+
+43.038560, 11.846579 
+45.357721, 9.896506 
+47.290201, 8.256797 
+49.172526, 8.968161
+51.359586, 10.028342 
+53.092191, 10.275534 
+56.061279, 13.557157
+57.609649, 14.435134
+59.171276, 14.398552

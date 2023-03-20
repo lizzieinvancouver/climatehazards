@@ -1,0 +1,62 @@
+Started 26 January 2023
+Trying to install Phenofit
+
+
+<><><><><><><><><><>
+<> Installation <>
+<><><><><><><><><><>
+
+From Isabelle on java installation: https://capsis.cirad.fr/capsis/documentation/faq
+
+https://stackoverflow.com/questions/64788005/java-jdk-for-the-apple-silicon-chips
+
+Go to directory ... Phenofit4_Standalone (this is the FIRST folder that she gave me)  
+java -jar phenofit4.setup.jar
+
+phenofitsetup.jar is the SECOND file she gave me.
+I think capsis.jar is the LAST one ... use whichever one is the last one. 
+
+One of these SHOULD work on a PC. You may need to restart Capsis to get it to not freeze the first time. 
+
+<><><><><><><><><><>
+<> Using Phenofit <>
+<><><><><><><><><><>
+Step 1 (updated by Lizzie on 27 Feb 2023):
+
+In Terminal:
+
+cd /Applications/Capsis/
+sh capsis.sh -l en
+
+Once you have the installation done, go to the folder in Terminal:
+Type 'capsis' at the prompt and it should launch.
+- Creer nouveau project
+- New pop-up window and you can name it if you want; but you don't have to as it will save automatically (it writes out output and appends it automatically).
+- Then you click initialize. 
+- New pop up requires species parameter file. 
+    Species box
+	- You should have in your phenofit folder: SVN_files -> Species -> then you can select a species to try (.species files)
+	- You can skip 'dates dives par fichier'
+    Climate Box
+	- SVN_files -> climate ... You should also have some climate files to play with (not very much, but enough to try out). You need at least min/max temperature and then maybe EVT (and then it calculate everything else) ... sounds like this (or next) version she calculates a lot of the climate files outside Phenofit
+	- SVN_files -> climate -> N2 folders are different ways of calculating daily climate data (she uses N2_PenmanBacleau usually) ... pick the directory for the climatic data (e.g., N2_PenmanBacleau)
+	- Pick which way your lat/long is (usually WS854) -- this will calculate the photoperiod
+	- You can restrict the geographical zone (but then you need a file with the coordinates set up)
+	- SKIP activer le temperature moyenne
+     Next Box
+	- Start the year before the event ALWAYS 
+	- Always select 'activer l'esport a la vollee' -- this gives you the output (otherwise you can try to get it from exporting the last year of results on the next screen)
+	- You can also change the folder here that it writes out to ... it's set to tmp now. 
+	- Next it will ask about 'clearing output directory' (tmp) -- overwriting should be okay if you picked a good directory to write out files 
+	- 'Activer l'ecriture' will give you for one year x one site (which you need to identify) all the internal output (otherwise 
+- Then you click go or something (I missed this)
+- Output you get all the variables as separate files! 
+	- Tempsurvival is lethal temperature and the whole tree dies, but if just buds die (as they do), then you see it in the LAI output file. 
+
+
+Misc:
+- Local files should be just that -- files on your computer
+	- Lots of other species, but files not checked as well. 
+- SVN_files should be server versions. 
+- You can launch as many runs as you want. 
+

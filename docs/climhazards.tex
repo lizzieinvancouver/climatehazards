@@ -1,0 +1,130 @@
+\documentclass[11pt,letter]{article}
+\usepackage[top=1.00in, bottom=1.0in, left=1.1in, right=1.1in]{geometry}
+\renewcommand{\baselinestretch}{1}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+
+\def\labelitemi{--}
+\parindent=0pt
+
+\begin{document}
+\bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
+\renewcommand{\refname}{\CHead{}}
+
+\title{Climate Hazards}
+\author{Lizzie, Isabelle, Ben Cook, Victor van }
+\date{\today}
+\maketitle
+
+\section*{Some current issues}
+\begin{itemize}
+\item See \verb|howto_phenofit| for one place I am stuck.
+\item What site and species do we want to use?
+\begin{itemize}
+\item Ideally one with an existing model we do not have to spend a long time verifying? 
+\item Both historical climate and future climate ... so we can compare
+\item But also one where some events (frost, heat damage) may have shifted at the same time that growing season length or seasonal warmth has had an impact.
+\end{itemize}
+\item High temperatures?
+\item What do we want to measure?
+\begin{itemize}
+\item Phenological shifts related to end/start of season and particular damage events
+\item Tissue or ideally reproduction lost due to each event type
+\item Reproduction changes due to longer/warmer season
+\item What else?
+\end{itemize}
+\item What \emph{in silica} experiments do we want to run? 
+\begin{itemize}
+\item Historical climate
+\item CMIP future climate scenario (maybe) -- characterize future climate: what is mean shift, what is variance shift? 
+\item Historical climate + 2C?
+\item Historical climate with increased variability in spring (and summer?)
+\item Historical climate + 2C? with increased variability in spring (and summer?)
+\item We want to test how phenological shifts x extremes matter, so I wonder if there is a scenario where we can try to hold phenology more constant and layer on climate variability? Not sure what that will show us ... YES: Can do this -- when initializing you can do this, 'activate the date files' -- give it specific dates (see methods Duputie et al. 2015 on plasticity GCB). Not sure if it works for Phenofit 5 (see Gauzere Evolution Letters 2020 .... new standing variability in phenology may make this hard). 
+\end{itemize}
+\end{itemize}
+
+\section*{Meeting notes}
+{\bf 9 mars 2023}
+
+\begin{enumerate}
+\item Sites
+\begin{enumerate}
+\item Previously discussed: Southern beech forest as site (Massan and sites in Pyrenees) may not be ideal as lengthening of growing season is not happening in southern range (because drought is shortening the length of the growing season; senescence now in August sometimes). That's the REAL world though, the current PhenoFit shows it lengthening (Isabelle has a postdoc starting in May who may try to work on the drought aspect to fix this)
+\item Right now the model (Phenofit 4; Delpierre) does not include drought effect on senescence ... just temperature and daylength affect senescence
+\item But do we need specific sites? Only if we want to compare to what is happening.... But we do need for some climate data. \item But be sure to pick a site that is FLAT (because using climate re-analysis) 
+\end{enumerate}
+\item Adding heat damage: Need good experimental data ... 60C at surface for adult leaves, lower for young leaves (June 2019 saw leaf damage, even on Holm Oak) -- so no, don't add. 
+\item Species 
+\begin{enumerate}
+\item There are parameterized models for 20 species or so, could use one of these. Or, an artificial species -- make up parameters. 
+\item Work with a broadleaf and an evergreen needleleaf. 
+\item Quercus robur and patraea are basically the same species. 
+\item Actually do these three (based on comparisons and having well parameterized models for them) Do querob/quepet (pick one), fagsyl, and pinsyl. Look at the overlay distributions for somewhere flat and not too far south. Look at the new European atlas (European atlas of forest trees) .... \url{https://forest.jrc.ec.europa.eu/en/european-atlas/} .. see also SI of Duputie...
+\end{enumerate}
+\item Phenofit5 is still being parameterizing and tested. Used already for beach and Oak. 
+\item What we'll measure? 
+\begin{enumerate}
+\item Phenofit 4 has annual fitness: sum(survival + reproductive success) ... reproductive success is based on ripe fruit by end of season before leaf senescence. Survival has a crude carbon metric. -- so fitness is constrained by spring frost and length of season. 
+\item Survival is the product of 3 survival parts (temp, drought, carbon: most of survival is drought).
+\item MaturationIndex is a metric of if the season was long enough .... so this is a way to measure season length
+\item FruitIndex and LeafIndex only go below 1 due to frost ... so these are ways to measure frost loss. 
+\item LeafDormancyBreakDate relates to leaf-unfolding and to frost risk. 
+\end{enumerate}
+\item Some notes on climate. ... 
+\begin{enumerate}
+\item ERA5land model at 10km (includes scenarios and future) % https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=overview
+\item WHC is hard to calculate -- so many want to try across three values (low/medium/high). 
+\end{enumerate}
+\end{enumerate}
+
+{\bf 15 mars 2023}\\
+
+See \verb|ChatsBenNotes.txt| for thoughts on how to do the climate.\\
+
+{\bf 17 mars 2023}\\
+
+MW Isabelle:\\
+- Two ideas for climate\\
+- How to adjust for other climate variables\\
+- How to ask for climate data from Victor \\
+- Which months around budburst 
+
+
+
+\section*{Next steps}
+Solve current issues above!\\
+Start git repo.\\
+Come up with graphs to make ... \\
+Pick a site, ask Florence for climate and start .... \\
+
+MW Victor: \\
+v_vandermeersch
+Prepared climate data for 6-10 sites?\\ 1970-2000 (1950-2020)
+How to calculate ET (R script)\\
+	- He calculates in R
+	- Penman Montif (it's what FAO uses)
+Does he have scripts to calculate mean across the data? \\ 
+Does he have scripts to calculate variance across the data? \\
+Would he collaborate on project?\\
+
+\end{document}
+
+\begin{align}
+N_{i}(t+1) & =
+s_{i}(N_{i}(t)(1-g_{i}(t))+\phi_{i}B(t+\delta)
+\end{align}
+The production of new biomass each season follows a basic R* competition model: new biomass production depends on its resource uptake ($f_i(R)$ converted into biomass at rate $c_i$) less maintenance costs ($m_i$), with uptake controlled by $a_i$ and $u_i$:
+\begin{align}
+\frac{\partial B_{i}}{\partial t} &  = [c_{i}f_{i}(R) - m_{i}]B_{i} \\
+f_{i}(R) & = \frac{a_{i}R^{\theta_{i}}}{1+a_{i}u_{i}R^{\theta_{i}}}
+\end{align}
+With the initial condition:
+\begin{align}
+B(t+0) & = N_{i}(t)g_{i}(t)b_{0,i}
+\end{align}
+The resource ($R$) itself declines across a growing season due to uptake by all species and abiotic loss ($\epsilon$):
+\begin{align}
+\frac{\mathrm{d}R}{\mathrm{d}t} & = - \sum_{i=1}^{n}f_{i}(R)B_{i} -\epsilon R
+\end{align}
