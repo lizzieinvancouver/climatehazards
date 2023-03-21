@@ -7,11 +7,66 @@ options(stringsAsFactors = FALSE)
 
 ## packages
 library(data.table)
+library(ggplot2)
 
 ## set working directory
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
+## To do!
+## START HERE !!!!
+# Some quick calculations to check my code
+
 justone <- fread("input/ERA5LAND/ERA5LAND_glo_1970_dly.fit")
+
+yrz <- c(1970:2000)
+filelist <-paste("input/ERA5LAND/ERA5LAND_tmn_", yrz, "_dly.fit", sep="")
+
+resultzmin <- data.frame()
+
+# loop through each file in the list
+for (i in c(1:length(filelist))) {
+  # read in the data file
+    data <- fread(filelist[i])
+    data <- as.matrix(data)
+    # calculate the mean and variance by month for each site
+  for (j in 1:nrow(data)) {
+    # get the latitude and longitude for the site
+      lat <- data[j,1]
+      lon <- data[j,2]
+      datasm <- data[,-c(1:2)]
+     # loop through each month
+      for (month in 1:12) {
+        # calculate the mean and variance for the month (doing some gymnastics to make chatGPT's idea work)
+        monthsdays  <- which(format(as.Date(paste0(yrz[i], "-01-01"), "%Y-%m-%d") + (0:364), "%m") == sprintf("%02d", month))
+        monthstartday <- monthsdays[1]
+        monthendday <- monthsdays[length(monthsdays)]
+        monthdata <- datasm[j, monthstartday:monthendday]
+        meanhere <- mean(monthdata, na.rm=TRUE)
+        sdhere <- sd(monthdata, na.rm=TRUE)
+      # add the results to the data frame
+      resultzmin <- rbind(resultzmin, data.frame(lat=lat, lon=lon, month=month, year=yrz[i], mean=meanhere, sd=sdhere))
+     }
+   }
+}
+
+resultzmin$counter <- rep(seq(1:(12*length(yrz))), nrow(justone))
+
+ggplot(resultzmin, aes(x=counter, y=mean, color=lat)) +
+    geom_line() 
+
+ggplot(resultzmin, aes(x=year, y=mean, group=lat, color=lat)) +
+    geom_line() +
+    # geom_smooth(method=lm) +
+    facet_wrap(month~.)
+
+ggplot(resultzmin, aes(x=year, y=sd, group=lat, color=lat)) +
+    geom_line() +
+    # geom_smooth(method=lm) +
+    facet_wrap(month~.)
+
+##
+
+
 
 ## ChatGPT output to get started with ...
 
