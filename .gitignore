@@ -3,6 +3,7 @@
 *.rda
 *.Rds
 *.Rhistory
+*.Rapp.history
 
 *.DS_Store
 

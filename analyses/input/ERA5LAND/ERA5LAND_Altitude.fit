@@ -1,0 +1,13 @@
+Climate datafile for Phenofit model
+Created on RStudio, by uservandermeersch, on the 2023-03-20
+Variable : altitude (m) calculated from geopotential height - First two columns are latitude/longitude
+ 
+43	11.8	474.74
+45.4	9.9	101.55
+47.3	8.3	538.36
+49.2	9	225.71
+51.4	10	288.09
+53.1	10.3	80.25
+56.1	13.6	108.42
+57.6	14.4	287.89
+59.2	14.4	130.03
