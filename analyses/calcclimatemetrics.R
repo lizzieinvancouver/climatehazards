@@ -12,8 +12,7 @@ library(ggplot2)
 ## set working directory
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
-## To do!
-## START HERE !!!!
+## To do! Look for ## START HERE !!!! below...
 # Some quick calculations to check my code
 
 justone <- fread("input/ERA5LAND/ERA5LAND_glo_1970_dly.fit")
@@ -64,7 +63,16 @@ ggplot(resultzmin, aes(x=year, y=sd, group=lat, color=lat)) +
     # geom_smooth(method=lm) +
     facet_wrap(month~.)
 
-##
+
+## Test my code above ...
+## START HERE !!!!
+library(tidyr)
+colnameshere <- c("lat", "lon", as.character(1:365))
+justone <- fread("input/ERA5LAND/ERA5LAND_glo_1970_dly.fit")
+names(justone) <- colnameshere
+
+goober  <- gather(justone, day, value,
+           -lat, -lon)
 
 
 
