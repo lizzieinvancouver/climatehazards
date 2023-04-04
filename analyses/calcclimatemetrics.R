@@ -25,29 +25,32 @@ justone <- fread("input/ERA5LAND/ERA5LAND_tmn_1970_dly.fit")
 source("source/calcclimatefxs.R")
 
 # each list item should be 71 years * days in month * 9 sites
+# So, for January: 19809 rows
 tminlist <- readfilestolist(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
 tminlistanom <- readfilestolistanomalies(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
 
+# Should be 12 months x 9 sites 
 tminsumm <- getmeansdbysitemonth(tminlist, unique(tminlist[[1]]["latlon"]), 1950, 2020)
+# Should be 12 months x 9 sites x 71 years
 tminsummyr <- getmeansdbysiteyrmonth(tminlist, unique(tminlist[[1]]["latlon"]), 1950, 2020)
 
 tmindetmonths <- detrendmonthlyclimatelist(tminsummyr, tminsumm, unique(tminlist[[1]]["latlon"]))
 tminlistdet <- getdailydetrendedlist(tmindetmonths, tminlistanom, unique(tminlist[[1]]["latlon"]), c(1950:2020))
 
 colz <- viridis(9)
-par(mfrow=c(3,4))
-for(i in c(1:12)){
+par(mfrow=c(1,4))
+for(i in c(1,4,7,11)){ # just doing a few months as this is slow
     dfplain <- tminlist[[i]]
     dfdet <- tminlistdet[[i]]
-    plot(x=dfplain$tempC, y=dfdet$tempC, type="n")
-    for(j in c(1:nrow(unique(tminlist[[1]]["latlon"])))){
+    plot(x=dfplain$tempC, y=dfdet$tempC, type="n", xlab="Min C", ylab="detrended Min C")
+    for(j in c(1,4,9)){ # 1:nrow(unique(tminlist[[1]]["latlon"]))
         dfplainsite <- subset(dfplain, latlon==unique(tminlist[[1]]["latlon"])[j,])
         dfdetsite <- subset(dfdet, latlon==unique(tminlist[[1]]["latlon"])[j,])
         points(x=dfplainsite$tempC, y=dfdetsite$tempC, col=colz[j])
+        abline(lm(dfdetsite$tempC~dfplainsite$tempC), col=colz[j])
      }
 }
     
-par(mfrow=c(1,1))
 
 
 ##############
@@ -83,7 +86,7 @@ ggplot(resultztmean, aes(x=year, y=mean, group=lat, color=lat)) +
 # write.csv(results, "results.csv", row.names=FALSE)
 
 
-if(FALSE){ ## Test my code above ...
+if(FALSE){ ## Test some code at some early point ...
 library(tidyr)
 colnameshere <- c("lat", "lon", as.character(1:365))
 names(justone) <- colnameshere

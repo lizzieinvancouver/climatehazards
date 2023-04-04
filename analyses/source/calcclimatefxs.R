@@ -75,6 +75,13 @@ for (i in c(1:length(filelist))) {
 return(resultz)
 }
 
+if(FALSE){ # stuff for testing below functions
+i <- 2
+sitevector <- unique(tminlist[[1]]["latlon"])
+climatelist <- tminlist
+startyear <- 1950
+endyear <- 2020
+}
 
 # Function to get the mean and SD (from daily data) across years by month and site
 # You need this to do detrending 
@@ -131,21 +138,26 @@ for(i in 1:12){
         meansiteyearhere <- subset(meansiteyearhereall, latlon==sitevector[j,])
         meanheresite <-  subset(meansitehereall, latlon==sitevector[j,])
         fithere <- lm(meansiteyearhere$mean~meansiteyearhere$year)
-        # plot(meansiteyearhere$mean~meansiteyearhere$year, xlab="Daily anomalies (done by month within year)", ylab="Year")
-        # abline(fithere, col="red")
         # Add long-term monthly mean to the detrended monthly temperatures 
         detrendedtemp <- as.vector(fithere$residuals)+meanheresite$mean
         dftolist <- data.frame(meansiteyearhere, detrendmean=detrendedtemp)
         somebasics <- data.frame(latlon=sitevector[j,], month=i, mean=meanheresite$mean, slope=coef(fithere)[2])
         resultz[[i]] <- rbind(resultz[[i]], dftolist)
         resultz[[13]] <- rbind(resultz[[13]], somebasics)
+        if(FALSE){
+        par(mfrow=c(3,1))
+        plot(meansiteyearhere$mean~meansiteyearhere$year, ylab="Monthly means", xlab="Year")
+        abline(fithere, col="red")
+        plot(as.vector(fithere$residuals)~meansiteyearhere$year, ylab="Residuals", xlab="Year")
+        plot(detrendedtemp~meansiteyearhere$year, ylab="Detrended monthly temperature", xlab="Year")
+        }
        }
     }
 return(resultz)
 }
 
 if(FALSE){ # stuff for testing below function
-detrendedmonthly <- testingpart1
+detrendedmonthly <- tmindetmonths
 climatelistofanomalies <- tminlistanom
 sitevector <- unique(tminlist[[1]]["latlon"])
 yearlist <- c(1950:2020)
@@ -165,7 +177,7 @@ for(i in 1:12){
         for (k in c(1:length(yearlist))){
             detmonthsiteyr <- subset(detmonthsite, year==yearlist[k])
             anommonthsiteyr <- subset(anommonthsite, year==yearlist[k])
-            newdata <- anommonthsiteyr$tempanom + detmonthsiteyr$mean ## CHECK
+            newdata <- anommonthsiteyr$tempanom + detmonthsiteyr$detrendmean 
             dftolist <- cbind(anommonthsiteyr, newdata)
             names(dftolist)[names(dftolist)=="newdata"] <- "tempC"
             resultz[[i]] <- rbind(resultz[[i]], dftolist)
@@ -174,42 +186,6 @@ for(i in 1:12){
 }    
 return(resultz)
 }
-
-
-if(FALSE){ # stuff for testing below function
-i <- 3
-j <- 1
-sitevector <- unique(tminlist[[1]]["latlon"])
-startyear <- 1950
-endyear <- 2020
-climatelistofanomalies <- tminlistanom
-meanzbyyear <- tminsumm
-}
-
-# This function takes anomalized data (above), detrends it by linear regression and then adds in a mean
-# It writes out the means and slopes in the last dataframe (13)
-# OLD version ... does the whole thing on anomalies, which seems pretty WRONG
-detrendclimatelistOLD <- function(climatelistofanomalies, sitevector, meanzbyyear){
-resultz <- vector(mode='list', length=13)            
-for(i in 1:12){
-    dfhere <- climatelistofanomalies[[i]]
-    meanhere <- subset(meanzbyyear, month==i)
-    for(j in c(1:nrow(sitevector))){
-        dfsite <- subset(dfhere, latlon==sitevector[j,])
-        meanheresite <-  subset(meanhere, latlon==sitevector[j,])
-        fithere <- lm(dfsite$tempanom~dfsite$year)
-        # plot(dfsite$tempanom~dfsite$year, xlab="Daily anomalies (done by month within year)", ylab="Year")
-        # abline(fithere, col="red")
-        detrendedtemp <- as.vector(fithere$residuals)+meanheresite$mean
-        dftolist <- data.frame(dfsite, tempC=detrendedtemp)
-        somebasics <- data.frame(latlon=sitevector[j,], month=i, mean=meanheresite$mean, slope=coef(fithere)[2])
-        resultz[[i]] <- rbind(resultz[[i]], dftolist)
-        resultz[[13]] <- rbind(resultz[[13]], somebasics)
-       }
-    }
-return(resultz)
-}
-
 
 
 # This funtion calculates the mean of min and max files then makes into a long format
