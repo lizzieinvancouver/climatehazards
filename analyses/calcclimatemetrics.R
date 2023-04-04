@@ -11,6 +11,8 @@ options(stringsAsFactors = FALSE)
 ## packages
 library(data.table)
 library(ggplot2)
+library(viridis)
+
 
 ## set working directory
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
@@ -21,8 +23,31 @@ setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 justone <- fread("input/ERA5LAND/ERA5LAND_tmn_1970_dly.fit")
 
 source("source/calcclimatefxs.R")
-resultztmean <- fromfiletotmeanalldays(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1970:2000), "_dly.fit", sep=""), paste("input/ERA5LAND/ERA5LAND_tmx_", c(1970:2000), "_dly.fit", sep=""), c(1970:2000))
 
+# each list item should be 71 years * days in month * 9 sites
+tminlist <- readfilestolist(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
+tminlistanom <- readfilestolistanomalies(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
+
+tminsumm <- getmeansdbysitemonth(tminlist, unique(tminlist[[1]]["latlon"]), 1950, 2020)
+tminsummyr <- getmeansdbysiteyrmonth(tminlist, unique(tminlist[[1]]["latlon"]), 1950, 2020)
+
+tmindetmonths <- detrendmonthlyclimatelist(tminsummyr, tminsumm, unique(tminlist[[1]]["latlon"]))
+tminlistdet <- getdailydetrendedlist(tmindetmonths, tminlistanom, unique(tminlist[[1]]["latlon"]), c(1950:2020))
+
+colz <- viridis(9)
+par(mfrow=c(3,4))
+for(i in c(1:12)){
+    dfplain <- tminlist[[i]]
+    dfdet <- tminlistdet[[i]]
+    plot(x=dfplain$tempC, y=dfdet$tempC, type="n")
+    for(j in c(1:nrow(unique(tminlist[[1]]["latlon"])))){
+        dfplainsite <- subset(dfplain, latlon==unique(tminlist[[1]]["latlon"])[j,])
+        dfdetsite <- subset(dfdet, latlon==unique(tminlist[[1]]["latlon"])[j,])
+        points(x=dfplainsite$tempC, y=dfdetsite$tempC, col=colz[j])
+     }
+}
+    
+par(mfrow=c(1,1))
 
 
 ##############
