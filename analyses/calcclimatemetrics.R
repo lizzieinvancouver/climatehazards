@@ -24,10 +24,12 @@ justone <- fread("input/ERA5LAND/ERA5LAND_tmn_1970_dly.fit")
 
 source("source/calcclimatefxs.R")
 
+
 # each list item should be 71 years * days in month * 9 sites
 # So, for January: 19809 rows
 tminlist <- readfilestolist(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
 tminlistanom <- readfilestolistanomalies(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
+sitez <- unique(tminlist[[1]]["latlon"])
 
 # Should be 12 months x 9 sites 
 tminsumm <- getmeansdbysitemonth(tminlist, unique(tminlist[[1]]["latlon"]), 1950, 2020)
@@ -37,6 +39,20 @@ tminsummyr <- getmeansdbysiteyrmonth(tminlist, unique(tminlist[[1]]["latlon"]), 
 tmindetmonths <- detrendmonthlyclimatelist(tminsummyr, tminsumm, unique(tminlist[[1]]["latlon"]))
 tminlistdet <- getdailydetrendedlist(tmindetmonths, tminlistanom, unique(tminlist[[1]]["latlon"]), c(1950:2020))
 
+# Tmax!
+tmaxlist <- readfilestolist(paste("input/ERA5LAND/ERA5LAND_tmx_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
+tmaxlistanom <- readfilestolistanomalies(paste("input/ERA5LAND/ERA5LAND_tmx_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
+tmaxsumm <- getmeansdbysitemonth(tmaxlist, unique(tmaxlist[[1]]["latlon"]), 1950, 2020)
+tmaxsummyr <- getmeansdbysiteyrmonth(tmaxlist, unique(tmaxlist[[1]]["latlon"]), 1950, 2020)
+tmaxdetmonths <- detrendmonthlyclimatelist(tmaxsummyr, tmaxsumm, unique(tmaxlist[[1]]["latlon"]))
+tmaxlistdet <- getdailydetrendedlist(tmaxdetmonths, tmaxlistanom, unique(tmaxlist[[1]]["latlon"]), c(1950:2020))
+
+
+##############
+## Plotting ##
+##############
+
+# Compare the original data to detrended data 
 colz <- viridis(9)
 par(mfrow=c(1,4))
 for(i in c(1,4,7,11)){ # just doing a few months as this is slow
@@ -50,36 +66,65 @@ for(i in c(1,4,7,11)){ # just doing a few months as this is slow
         abline(lm(dfdetsite$tempC~dfplainsite$tempC), col=colz[j])
      }
 }
-    
 
 
-##############
-## Plotting ##
-##############
-# BELOW is NOT updated yet ... 
+plotPDFsbymonthsite <- function(climatedata, filename, sitevector, xlabhere){
+colz <- c("skyblue1", "tan1", "red4")
+lwdhere  <- 2
+pdf(paste("graphs/pdf", filename, ".pdf", sep=""), width=14, height=10)
+par(mfrow=c(3, 4))
+for (i in c(1:nrow(sitevector))){
+    latlonhere <- sitevector[i,]
+    print(latlonhere)
+    onesite <- lapply(climatedata, subset, latlon==latlonhere)
+    for (j in 1:12){
+        dfhere <- onesite[[j]]
+        plot(density(dfhere$tempC), type="n", main=paste("month", j, "- site", latlonhere, sep=" "), 
+             xlab=xlabhere)
+        legend("topleft", c("1951-1970", "1981-2000", "2001-2020"), lty=rep(1, 3), col=colz, bty="n")
+        dfheretime1 <- subset(dfhere, year>=1951 & year <=1970)
+        dfheretime2 <- subset(dfhere, year>=1981 & year <=2000)
+        dfheretime3 <- subset(dfhere, year>=2001 & year <=2020)
+        lines(density(dfheretime1$tempC), col=colz[1], lwd=lwdhere)
+        lines(density(dfheretime2$tempC), col=colz[2], lwd=lwdhere)
+        lines(density(dfheretime3$tempC), col=colz[3], lwd=lwdhere)
+        }
+     }
+    dev.off()
+}
 
-resultzmin$counter <- rep(seq(1:(12*length(c(1970:2000)))), nrow(justone))
+# NEED to fix ... not sure why the function cannot find the latlonhere starting at i=2
+# Below hack (writing it outside the f(x) once) works, but is sad.
+colz <- c("skyblue1", "tan1", "red4")
+lwdhere  <- 2
+sitevector <- sitez
+climatedata <- tminlistdet
 
-ggplot(resultzmin, aes(x=counter, y=mean, color=lat)) +
-    geom_line() 
+for (i in c(1:nrow(sitevector))){
+    latlonhere <- sitevector[i,]
+    print(latlonhere)
+    onesite <- lapply(climatedata, subset, latlon==latlonhere)
+    for (j in 1:12){
+        dfhere <- onesite[[j]]
+        plot(density(dfhere$tempC), type="n", main=paste("month", j, "- site", latlonhere, sep=" "), 
+             xlab="detrended temperature")
+        legend("topleft", c("1951-1970", "1981-2000", "2001-2020"), lty=rep(1, 3), col=colz, bty="n")
+        dfheretime1 <- subset(dfhere, year>=1951 & year <=1970)
+        dfheretime2 <- subset(dfhere, year>=1981 & year <=2000)
+        dfheretime3 <- subset(dfhere, year>=2001 & year <=2020)
+        lines(density(dfheretime1$tempC), col=colz[1], lwd=lwdhere)
+        lines(density(dfheretime2$tempC), col=colz[2], lwd=lwdhere)
+        lines(density(dfheretime3$tempC), col=colz[3], lwd=lwdhere)
+        }
+     }
+    dev.off()
 
-ggplot(resultzmin, aes(x=year, y=mean, group=lat, color=lat)) +
-    geom_line() +
-    # geom_smooth(method=lm) +
-    facet_wrap(month~.)
 
-ggplot(resultzmin, aes(x=year, y=sd, group=lat, color=lat)) +
-    geom_line() +
-    # geom_smooth(method=lm) +
-    facet_wrap(month~.)
+plotPDFsbymonthsite(tminlistdet, "tmindet", sitez, "min C detrended")
+plotPDFsbymonthsite(tminlist, "tmin", sitez, "min C")
 
-ggplot(resultztmean, aes(x=year, y=mean, group=lat, color=lat)) +
-    geom_line() +
-    # geom_smooth(method=lm) +
-    facet_wrap(month~.)
-
-
-
+plotPDFsbymonthsite(tmaxlistdet, "tmaxdet", sitez, "max C detrended")
+plotPDFsbymonthsite(tmaxlist, "tmax", sitez, "max C")
 
 
 # save the results to a CSV file
