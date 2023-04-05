@@ -211,7 +211,8 @@ pdf(paste("graphs/pdf", filename, ".pdf", sep=""), width=14, height=10)
 par(mfrow=c(3, 4))
 for (i in c(1:nrow(sitevector))){
     latlonhere <- sitevector[i,]
-    onesite <- lapply(climatedata, subset, latlon==latlonhere, env = parent.frame())
+    # onesite <- lapply(climatedata, subset, latlon==latlonhere, env = parent.frame()) # totally does not work
+    onesite <- lapply(climatedata, function(x) subset(x, latlon == latlonhere))
     for (j in 1:12){
         dfhere <- onesite[[j]]
         plot(density(dfhere$tempC), type="n", main=paste("month", j, "- site", latlonhere, sep=" "), 
