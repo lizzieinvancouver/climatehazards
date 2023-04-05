@@ -113,8 +113,8 @@ sdplotovetime <- ggplot(changezdf, aes(y=sd, x=year, color=latlon)) +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
 panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-ggsave(filename="graphs/historicaltrendsmean.pdf", plot=meanplotovetime)
-ggsave(filename="graphs/historicaltrendssd.pdf", plot=sdplotovetime)
+ggsave(filename="graphs/historicaltrendsmean.pdf", plot=meanplotovetime, height=8, width=12)
+ggsave(filename="graphs/historicaltrendssd.pdf", plot=sdplotovetime, height=8, width=12)
 
 
 if(FALSE){ ## Test some code at some early point ...
