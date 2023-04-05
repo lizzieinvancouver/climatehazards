@@ -188,36 +188,46 @@ return(resultz)
 }
 
 
-# This funtion calculates the mean of min and max files then makes into a long format
-# It's the first one I made, so may want to double-check
-fromfiletotmeanalldays <- function(filelistmin, filelistmax, yearlist){
-resultz <- data.frame()
-# loop through each file in the list
-for (i in c(1:length(filelistmin))) {
-  # read in the data file
-    datamin <- fread(filelistmin[i])
-    datamin <- as.matrix(datamin)
-    datamax <- fread(filelistmax[i])
-    datamax <- as.matrix(datamax)
-  for (j in 1:nrow(datamin)) {
-    # get the latitude and longitude for the site
-      lat <- datamin[j,1]
-      lon <- datamin[j,2]
-      latmax <-  datamax[j,1]
-      if(identical(lat, latmax)==FALSE) {print("Ahh! Latitudes not the same across files!")}
-      dataminsm <- datamin[,-c(1:2)]
-      datamaxsm <- datamax[,-c(1:2)]
-      # now get the mean ...
-      datamean <- (dataminsm[j,]+datamaxsm[j,])/2
-      # now get the date and flip to long format
-      dayz  <- format(as.Date(paste(yearlist[i],  1:length(datamean), sep="-"), "%Y-%j"))
-      # add the results to the data frame
-      resultz <- rbind(resultz, data.frame(lat=rep(lat, length(datamean)), lon=rep(lon, length(datamean)),
-          year=rep(yearlist[i], length(datamean)), date=dayz, tmean=datamean))
+### Plotting f(x)s ###
+
+if(FALSE){ # testing below f(x)
+    climatedata <- tminlist
+    filename <- "tmin"
+    sitevector <- sitez
+    xlabhere <- "min C"
+    i <- 1
+    j <- 8
+    colz <- c("skyblue1", "tan1", "red4")
+    lwdhere  <- 2
+    }
+
+# This f(x) plots data by month across three 20 year periods (one page per site)
+# It needs some work to be use too much further because you have to define latlonhere outside first, which seems bad
+# See notes in the main file
+plotPDFsbymonthsite <- function(climatedata, filename, sitevector, xlabhere){
+colz <- c("skyblue1", "tan1", "red4")
+lwdhere  <- 2
+pdf(paste("graphs/pdf", filename, ".pdf", sep=""), width=14, height=10)
+par(mfrow=c(3, 4))
+for (i in c(1:nrow(sitevector))){
+    latlonhere <- sitevector[i,]
+    onesite <- lapply(climatedata, subset, latlon==latlonhere, env = parent.frame())
+    for (j in 1:12){
+        dfhere <- onesite[[j]]
+        plot(density(dfhere$tempC), type="n", main=paste("month", j, "- site", latlonhere, sep=" "), 
+             xlab=xlabhere)
+        legend("topleft", c("1951-1970", "1981-2000", "2001-2020"), lty=rep(1, 3), col=colz, bty="n")
+        dfheretime1 <- subset(dfhere, year>=1951 & year <=1970)
+        dfheretime2 <- subset(dfhere, year>=1981 & year <=2000)
+        dfheretime3 <- subset(dfhere, year>=2001 & year <=2020)
+        lines(density(dfheretime1$tempC), col=colz[1], lwd=lwdhere)
+        lines(density(dfheretime2$tempC), col=colz[2], lwd=lwdhere)
+        lines(density(dfheretime3$tempC), col=colz[3], lwd=lwdhere)
+        }
      }
-   }
-return(resultz)
+    dev.off()
 }
+
 
 
 

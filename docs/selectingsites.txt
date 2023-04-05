@@ -19,8 +19,6 @@ Looking at Fig S0 in Duputie et al. 2015 I then went to google maps and selected
 
 Could also do a transect through France to UK ... but I suspect that would not include so much climate variability so I picked this one. 
 
-Email to Victor? 
-
 Historical climate (ideally 1950-2020) and one 20 year climate projection (something similar to +2 C perhaps?) for these sites 
 
 43.038560, 11.846579 
@@ -32,3 +30,12 @@ Historical climate (ideally 1950-2020) and one 20 year climate projection (somet
 56.061279, 13.557157
 57.609649, 14.435134
 59.171276, 14.398552
+
+<><><><><><><><><>
+Update 5 avril 2023
+
+Victor asked why no sites in more continental Europe where variability might be higher. I looked at Duputie supp and agreed, so I am picking three more. Fagus is the most limited here so I am checking also this: https://forest.jrc.ec.europa.eu/media/atlas/Fagus_sylvatica.pdf
+
+52.877881, 17.306702 - slightly northern Poland 
+50.508674, 21.833069 - slightly southern Poland 
+46.614127, 24.206116 - trying to pick a not hilly part of Romania

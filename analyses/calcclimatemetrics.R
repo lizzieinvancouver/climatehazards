@@ -18,9 +18,7 @@ library(viridis)
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
 ## To do!
-##
-
-justone <- fread("input/ERA5LAND/ERA5LAND_tmn_1970_dly.fit")
+## 
 
 source("source/calcclimatefxs.R")
 
@@ -29,7 +27,6 @@ source("source/calcclimatefxs.R")
 # So, for January: 19809 rows
 tminlist <- readfilestolist(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
 tminlistanom <- readfilestolistanomalies(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
-sitez <- unique(tminlist[[1]]["latlon"])
 
 # Should be 12 months x 9 sites 
 tminsumm <- getmeansdbysitemonth(tminlist, unique(tminlist[[1]]["latlon"]), 1950, 2020)
@@ -52,7 +49,8 @@ tmaxlistdet <- getdailydetrendedlist(tmaxdetmonths, tmaxlistanom, unique(tmaxlis
 ## Plotting ##
 ##############
 
-# Compare the original data to detrended data 
+if(FALSE){ # Sort of slow and was just a safety check
+# Compare the original data to detrended data
 colz <- viridis(9)
 par(mfrow=c(1,4))
 for(i in c(1,4,7,11)){ # just doing a few months as this is slow
@@ -66,44 +64,27 @@ for(i in c(1,4,7,11)){ # just doing a few months as this is slow
         abline(lm(dfdetsite$tempC~dfplainsite$tempC), col=colz[j])
      }
 }
+} 
 
 
-plotPDFsbymonthsite <- function(climatedata, filename, sitevector, xlabhere){
-colz <- c("skyblue1", "tan1", "red4")
-lwdhere  <- 2
-pdf(paste("graphs/pdf", filename, ".pdf", sep=""), width=14, height=10)
-par(mfrow=c(3, 4))
-for (i in c(1:nrow(sitevector))){
-    latlonhere <- sitevector[i,]
-    print(latlonhere)
-    onesite <- lapply(climatedata, subset, latlon==latlonhere)
-    for (j in 1:12){
-        dfhere <- onesite[[j]]
-        plot(density(dfhere$tempC), type="n", main=paste("month", j, "- site", latlonhere, sep=" "), 
-             xlab=xlabhere)
-        legend("topleft", c("1951-1970", "1981-2000", "2001-2020"), lty=rep(1, 3), col=colz, bty="n")
-        dfheretime1 <- subset(dfhere, year>=1951 & year <=1970)
-        dfheretime2 <- subset(dfhere, year>=1981 & year <=2000)
-        dfheretime3 <- subset(dfhere, year>=2001 & year <=2020)
-        lines(density(dfheretime1$tempC), col=colz[1], lwd=lwdhere)
-        lines(density(dfheretime2$tempC), col=colz[2], lwd=lwdhere)
-        lines(density(dfheretime3$tempC), col=colz[3], lwd=lwdhere)
-        }
-     }
-    dev.off()
-}
+# PDFs by month and site
+sitez <- unique(tminlist[[1]]["latlon"])
 
 # NEED to fix ... not sure why the function cannot find the latlonhere starting at i=2
-# Below hack (writing it outside the f(x) once) works, but is sad.
+# ChatGPT tells me: This error is likely occurring because the variable "latlonhere" is defined inside a loop in the function plotPDFsbymonthsite. The variable is initialized as latlonhere <- sitedf$latlon[i] inside the loop, but it may not exist outside the loop when the lapply function is called.
+# Tried add , envir=parent.frame() to apply command, but did not fix it.
+# Without the f(x) -- see below -- it is okay; within the function it is the same data across sites
 colz <- c("skyblue1", "tan1", "red4")
 lwdhere  <- 2
 sitevector <- sitez
 climatedata <- tminlistdet
 
+
+pdf(paste("graphs/pdfTEST.pdf", sep=""), width=14, height=10)
+par(mfrow=c(3, 4))
 for (i in c(1:nrow(sitevector))){
     latlonhere <- sitevector[i,]
-    print(latlonhere)
-    onesite <- lapply(climatedata, subset, latlon==latlonhere)
+    onesite <- lapply(climatedata, subset, latlon==latlonhere, env = parent.frame())
     for (j in 1:12){
         dfhere <- onesite[[j]]
         plot(density(dfhere$tempC), type="n", main=paste("month", j, "- site", latlonhere, sep=" "), 
@@ -117,14 +98,16 @@ for (i in c(1:nrow(sitevector))){
         lines(density(dfheretime3$tempC), col=colz[3], lwd=lwdhere)
         }
      }
-    dev.off()
-
+dev.off()
 
 plotPDFsbymonthsite(tminlistdet, "tmindet", sitez, "min C detrended")
 plotPDFsbymonthsite(tminlist, "tmin", sitez, "min C")
 
 plotPDFsbymonthsite(tmaxlistdet, "tmaxdet", sitez, "max C detrended")
 plotPDFsbymonthsite(tmaxlist, "tmax", sitez, "max C")
+
+
+
 
 
 # save the results to a CSV file

@@ -33,3 +33,31 @@ Other ideas
 -> Tension between over-identified models like phenofit/STICS etc. and simpler ones (wha I was proposing sort of).... As an example here's STICS for winegrapes: https://onlinelibrary.wiley.com/doi/10.1111/gcb.16493 and compare that to the paper Nacho published. 
 
 -> Finish callose stuff. 
+
+
+<><><><><><><><><>
+Chat with Ben
+4 April 2023
+
+** MAKE sure to min and max RH ** 
+
+- Detrending removes trends in central tendency 
+- Use detrended data for long-term baseline
+	(1) Z-score them
+	(2) Then multiple the SD by 1.2 for a 20% increase in variability *normal distribution 
+	(3) Check your output 
+- ET
+	- if you have relative humidity and temperature, then that's enough 
+	- Use this: https://en.wikipedia.org/wiki/Clausius%E2%80%93Clapeyron_relation#August%E2%80%93Roche%E2%80%93Magnus_formula
+	- This is how Ben typically does it
+	- Need: max RH and min RH (and temperature)
+	- Remember: Tmax is associated Tmin RH (and vice versa)
+	- RH tells you how saturated the air is; use temperature to calculate how much water the air is
+	- Step 1: Put in the August Roche Magnus -- hypothetical maximum (e_s) using just T -- see the link: Basically it's 6.1^((17.625*T)/(T+234))
+	- Step 2: Now multiple e_s by RH: e_S*(RH)
+	- (Make relative RH is measured as a fraction)
+	- Now you have the ET!
+	- Check with an online calculator! Or check that every degree warmer get about a 7% increase. 
+
+(2) Good question, Ben does not know. 
+	
