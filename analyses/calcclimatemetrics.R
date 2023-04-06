@@ -18,7 +18,10 @@ library(viridis)
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
 ## To do!
-## 
+# (1) Make up new climate series
+# (2) Run historical data in phenofit
+# (3) Plot phenofit output
+# (4) Start drafting what we want to say and show in paper, so we (I) do not end up down a rabbit hole
 
 source("source/calcclimatefxs.R")
 
@@ -27,6 +30,7 @@ source("source/calcclimatefxs.R")
 ## Grab historical data and detrend ##
 ######################################
 
+# Tmin first, with some extra checking notes
 # each list item should be 71 years * days in month * 9 sites
 # So, for January: 19809 rows
 tminlist <- readfilestolist(paste("input/ERA5LAND/ERA5LAND_tmn_", c(1950:2020), "_dly.fit", sep=""), c(1950:2020))
@@ -48,6 +52,83 @@ tmaxsummyr <- getmeansdbysiteyrmonth(tmaxlist, unique(tmaxlist[[1]]["latlon"]), 
 tmaxdetmonths <- detrendmonthlyclimatelist(tmaxsummyr, tmaxsumm, unique(tmaxlist[[1]]["latlon"]))
 tmaxlistdet <- getdailydetrendedlist(tmaxdetmonths, tmaxlistanom, unique(tmaxlist[[1]]["latlon"]), c(1950:2020))
 
+###################################################
+## Build simulation data based on detrended data ##
+###################################################
+
+varchanges <- c(-0.1, 0.1, 0.2)
+tempchanges <-  c(0) # c(0.5, 1, 2)
+allchanges <- expand.grid(varchanges, tempchanges)
+names(allchanges) <- c("sd", "mean")
+
+whichsite <-  unique(tmaxlist[[1]]["latlon"])[4,]
+onesitetmin <- lapply(tminlistdet, function(x) subset(x, latlon == whichsite))
+
+# calculate mean and SD for each month across time series
+# take z-scored data then add back in mean and SD based on values
+makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
+    resultz <- vector(mode='list', length=12)
+    for (i in c(1:12)) {
+        dfhereallyears <- climatedatadet[[i]]
+        dfhere <- subset(dfhereallyears, year>=startyear & year<=endyear)
+        meanhere <- mean(dfhere$tempC)
+        sdhere <- sd(dfhere$tempC)
+        dfhere$ztempC <- (dfhere$tempC-meanhere)/sdhere
+        resultzwithinmonth <- vector(mode='list', length=nrow(treatdf))
+        for (j in c(1:nrow(treatdf))){
+            newmean <- meanhere*(1+treatdf[["mean"]][j])
+            newsd <- sdhere*(1+treatdf[["sd"]][j])
+            newdata <- (dfhere$ztempC*newsd)+newmean
+            # plot(dfhere$tempC~newdata)
+            # abline(0,1)
+            newdf <- data.frame(lat=dfhere$lat, lon=dfhere$lon, year=dfhere$year, day=dfhere$day,
+                                meanttreat=rep(treatdf[["mean"]][j], length(newdata)),
+                                sdtreat=rep(treatdf[["sd"]][j], length(newdata)),
+                                tempC=newdata)
+            resultzwithinmonth[[j]] <- rbind(resultzwithinmonth[[j]], newdf)
+        }
+        resultz[[i]] <- rbind(resultz[[i]], resultzwithinmonth)
+    }
+    return(resultz)
+}
+
+tminsims <- makesimdata(onesitetmin, 1970, 2000, allchanges)
+
+if(FALSE){
+climatedatadet <-  onesite
+startyear <- 1970
+endyear <- 2000
+treatdf <- allchanges
+i <- 2
+j <- 1
+filename <- "tmin3sd"
+simdata <- tminsims
+}
+
+plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
+    colz <- viridis(length(simshere))
+    pdf(paste("graphs/simdata", filename, ".pdf", sep=""), width=14, height=10)
+    par(mfrow=c(3, 4))
+    for (i in c(1:12)) {
+        dfhereallyears <- climatedatadet[[i]]
+        dfhere <- subset(dfhereallyears, year>=startyear & year<=endyear)
+        simlist <- simdata[[i]]
+        plot(dfhere[["tempC"]], dfhere[["tempC"]], type="n", xlab="Original data", ylab="Sim data",
+             main=paste("month", i, sep=" "))
+        abline(0, 1, col="black")
+        legend("topleft", legend=simshere, pch=rep(16, length(simshere)), col=colz, bty="n")
+        for(j in c(1:length(simlist))){
+            simdatahere <- simlist[[j]]
+            points(simdatahere[["tempC"]]~dfhere[["tempC"]], col=colz[j])
+            abline(lm(simdatahere[["tempC"]]~dfhere[["tempC"]]), col=colz[j])
+        }
+    }
+    dev.off()
+    }
+
+simshere <- c("sd -10%", "sd + 10%", "sd + 20%")
+plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+        
 
 ##############
 ## Plotting ##
