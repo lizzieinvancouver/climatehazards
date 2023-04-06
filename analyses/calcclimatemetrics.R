@@ -94,28 +94,48 @@ plotPDFsbymonthsite(tmaxlist, "tmax", sitez, "max C")
 ## Look at SD and mean over time ...
 yearschange <- data.frame(startyear=seq(from=1950, to=2000, by=10), endyear=seq(from=1970, to=2020, by=10))
 
-changez <- list()
+changeztmin <- list()
 for(i in c(1:nrow(yearschange))){
     meanzhere <- getmeansdbysitemonth(tminlist, unique(tminlist[[1]]["latlon"]), yearschange$startyear[i], yearschange$endyear[i])
-    changez[[i]] <- data.frame(meanzhere, year=yearschange$startyear[i])
+    changeztmin[[i]] <- data.frame(meanzhere, year=yearschange$startyear[i])
 }
-changezdf <- do.call("rbind", changez)
+changeztmindf <- do.call("rbind", changeztmin)
 
-meanplotovetime <- ggplot(changezdf, aes(y=mean, x=year, color=latlon)) +
+changeztmax <- list()
+for(i in c(1:nrow(yearschange))){
+    meanzhere <- getmeansdbysitemonth(tmaxlist, unique(tmaxlist[[1]]["latlon"]), yearschange$startyear[i], yearschange$endyear[i])
+    changeztmax[[i]] <- data.frame(meanzhere, year=yearschange$startyear[i])
+}
+changeztmaxdf <- do.call("rbind", changeztmax)
+
+meantminplotovetime <- ggplot(changeztmindf, aes(y=mean, x=year, color=latlon)) +
     geom_line() + 
     facet_wrap(month~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-sdplotovetime <- ggplot(changezdf, aes(y=sd, x=year, color=latlon)) +
+sdtminplotovetime <- ggplot(changeztmindf, aes(y=sd, x=year, color=latlon)) +
     geom_line() + 
     facet_wrap(month~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-ggsave(filename="graphs/historicaltrendsmean.pdf", plot=meanplotovetime, height=8, width=12)
-ggsave(filename="graphs/historicaltrendssd.pdf", plot=sdplotovetime, height=8, width=12)
+meantmaxplotovetime <- ggplot(changeztmaxdf, aes(y=mean, x=year, color=latlon)) +
+    geom_line() + 
+    facet_wrap(month~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
+sdtmaxplotovetime <- ggplot(changeztmaxdf, aes(y=sd, x=year, color=latlon)) +
+    geom_line() + 
+    facet_wrap(month~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename="graphs/historicaltrendstminmean.pdf", plot=meantminplotovetime, height=8, width=12)
+ggsave(filename="graphs/historicaltrendstminsd.pdf", plot=sdtminplotovetime, height=8, width=12)
+ggsave(filename="graphs/historicaltrendstmaxmean.pdf", plot=meantmaxplotovetime, height=8, width=12)
+ggsave(filename="graphs/historicaltrendstmaxsd.pdf", plot=sdtmaxplotovetime, height=8, width=12)
 
 if(FALSE){ ## Test some code at some early point ...
 library(tidyr)
