@@ -4,6 +4,7 @@
 *.Rds
 *.Rhistory
 *.Rapp.history
+*.RData
 
 *.DS_Store
 

@@ -18,7 +18,7 @@ setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 # May also want to think on bash scripts to automate some of the file stuff
 
 ## get the data
-sitezmessy <- read.delim("input/phenofit/fagsyl_19712000/Fitness.txt", nrows=3, header=FALSE)
+sitezmessy <- read.delim("input/phenofit/fagsyl_19512020/Fitness.txt", nrows=3, header=FALSE)
 
 row.names(sitezmessy) <- sitezmessy$V1
 sitezmessy$V1 <- NULL
@@ -40,17 +40,17 @@ cleanphenofitdata <- function(filename, sitedf){
    return(dfhere)
 }
 
-fsfit <- cleanphenofitdata("fagsyl_19712000/Fitness", sitez)
-psfit <- cleanphenofitdata("pinsyl_19712000/Fitness", sitez)
-qrfit <- cleanphenofitdata("querob_19712000/Fitness", sitez)
+fsfit <- cleanphenofitdata("fagsyl_19512020/Fitness", sitez)
+psfit <- cleanphenofitdata("pinsyl_19512020/Fitness", sitez)
+qrfit <- cleanphenofitdata("querob_19512020/Fitness", sitez)
 
-fsleafi <- cleanphenofitdata("fagsyl_19712000/LeafIndex", sitez)
-psleafi <- cleanphenofitdata("pinsyl_19712000/LeafIndex", sitez)
-qrleafi <- cleanphenofitdata("querob_19712000/LeafIndex", sitez)
+fsleafi <- cleanphenofitdata("fagsyl_19512020/LeafIndex", sitez)
+psleafi <- cleanphenofitdata("pinsyl_19512020/LeafIndex", sitez)
+qrleafi <- cleanphenofitdata("querob_19512020/LeafIndex", sitez)
 
-fsmati <- cleanphenofitdata("fagsyl_19712000/MaturationIndex", sitez)
-psmati <- cleanphenofitdata("pinsyl_19712000/MaturationIndex", sitez)
-qrmati <- cleanphenofitdata("querob_19712000/MaturationIndex", sitez)
+fsmati <- cleanphenofitdata("fagsyl_19512020/MaturationIndex", sitez)
+psmati <- cleanphenofitdata("pinsyl_19512020/MaturationIndex", sitez)
+qrmati <- cleanphenofitdata("querob_19512020/MaturationIndex", sitez)
 
 
 makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
@@ -83,9 +83,9 @@ makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
 dev.off()
 }
 
-makequickplots(fsfit, fsleafi, fsmati, "historical3metricsSitesOverlayFagus", c(0,1.1), c(1965, 2001))
-makequickplots(qrfit, qrleafi, qrmati, "historical3metricsSitesOverlayQuercus", c(0,1.1), c(1965, 2001))
-makequickplots(psfit, psleafi, psmati, "historical3metricsSitesOverlayPinus", c(0,1.1), c(1965, 2001))
+makequickplots(fsfit, fsleafi, fsmati, "historical3metricsSitesOverlayFagus", c(0,1.1), c(1945, 2021))
+makequickplots(qrfit, qrleafi, qrmati, "historical3metricsSitesOverlayQuercus", c(0,1.1), c(1945, 2021))
+makequickplots(psfit, psleafi, psmati, "historical3metricsSitesOverlayPinus", c(0,1.1), c(1945, 2021))
 
 fsfit$sp <- "Fagus"
 qrfit$sp <- "Quercus"
@@ -127,6 +127,6 @@ ggmat <- ggplot(allsppmathack, aes(x=year, y=value, color=sp)) +
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
     
 
-ggsave(filename="graphs/phenofit/historicalggfitness.pdf", plot=ggfit, height=8, width=12)
-ggsave(filename="graphs/phenofit/historicalggleaf.pdf", plot=ggleaf, height=8, width=12)
-ggsave(filename="graphs/phenofit/historicalggmat.pdf", plot=ggmat, height=8, width=12)
+ggsave(filename="graphs/phenofit/historicalggfitness1951.pdf", plot=ggfit, height=8, width=12)
+ggsave(filename="graphs/phenofit/historicalggleaf1951.pdf", plot=ggleaf, height=8, width=12)
+ggsave(filename="graphs/phenofit/historicalggmat1951.pdf", plot=ggmat, height=8, width=12)
