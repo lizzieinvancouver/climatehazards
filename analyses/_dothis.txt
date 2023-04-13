@@ -4,11 +4,15 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 Do next ...
 
-* Make the PDF plot that Ben requested. 
-
+* Make the PDF plot that Ben requested and update the code as he asked
+* Run the new sites historical data through PHENOFIT once I have it.
+* Clean up simulated data code for temperature then format it for PHENOFIT runs
+* RUN simulated data (even if you don't have the RH) 
+* Make (bash?) code to copy over all the other data beyond temperature and RH for the runs somehow ... and then maybe delete it as it will be duplicated. 
+* Make plots of historical shifts in mean and variance?
 
 NEED:
-- Updated historical data, incl. dew point
+- Updated historical data, incl. dew point -- then build RH from this
 - Projections (at least temperature) -- for checking shifts in mean and variability 
 
 
