@@ -7,6 +7,8 @@ Do next ...
 * Make the PDF plot that Ben requested and update the code as he asked
 * Run the new sites historical data through PHENOFIT once I have it.
 * Clean up simulated data code for temperature then format it for PHENOFIT runs
+	- f(x) to make the simulated data
+	- f(x) to make the data into PHENOFIT format (change lon for each sim)
 * RUN simulated data (even if you don't have the RH) 
 * Make (bash?) code to copy over all the other data beyond temperature and RH for the runs somehow ... and then maybe delete it as it will be duplicated. 
 * Make plots of historical shifts in mean and variance?

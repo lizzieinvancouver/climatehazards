@@ -64,6 +64,17 @@ names(allchanges) <- c("sd", "mean")
 whichsite <-  unique(tmaxlist[[1]]["latlon"])[4,]
 onesitetmin <- lapply(tminlistdet, function(x) subset(x, latlon == whichsite))
 
+if(FALSE){
+# Does SD vary based on whether you subtract mean first? No.
+testingdf <- tmaxlist[[1]]
+aggregate(testingdf["tempC"], testingdf["latlon"], FUN=sd)
+for(i in c(1:length(unique(testingdf$latlon)))){
+    subby <- testingdf[which(testingdf$latlon==unique(testingdf$latlon)[i]),]
+    subby$newtemp <- subby$tempC-mean(subby$tempC, na.rm=TRUE)
+    print(sd(subby$newtemp))
+}
+}
+
 # calculate mean and SD for each month across time series
 # take z-scored data then add back in mean and SD based on values
 makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
@@ -105,6 +116,25 @@ filename <- "tmin3sd"
 simdata <- tminsims
 }
 
+plotsimdataPDF <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
+    colz <- viridis(length(simshere))
+    pdf(paste("graphs/simdataPDF", filename, ".pdf", sep=""), width=14, height=10)
+    par(mfrow=c(3, 4))
+    for (i in c(1:12)) {
+        dfhereallyears <- climatedatadet[[i]]
+        dfhere <- subset(dfhereallyears, year>=startyear & year<=endyear)
+        simlist <- simdata[[i]]
+        plot(density(dfhere[["tempC"]]), type="n", xlab="Temp C", ylab="Density",
+             main=paste("month", i, sep=" "))
+        legend("topleft", legend=simshere, pch=rep(16, length(simshere)), col=colz, bty="n")
+        for(j in c(1:length(simlist))){
+            simdatahere <- simlist[[j]]
+            lines(density(simdatahere[["tempC"]]), col=colz[j], lwd=2)
+        }
+    }
+    dev.off()
+}
+
 plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
     colz <- viridis(length(simshere))
     pdf(paste("graphs/simdata", filename, ".pdf", sep=""), width=14, height=10)
@@ -124,11 +154,13 @@ plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, s
         }
     }
     dev.off()
-    }
+}
+
 
 simshere <- c("sd -10%", "sd + 10%", "sd + 20%")
 plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
-        
+plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+    
 
 ##############
 ## Plotting ##
