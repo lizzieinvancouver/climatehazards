@@ -7,45 +7,52 @@
 
 \def\labelitemi{--}
 \parindent=0pt
+\parskip=5pt
 
 \begin{document}
 \bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
 \renewcommand{\refname}{\CHead{}}
 
 \title{Climate Hazards}
-\author{Lizzie, Isabelle, Ben Cook, Victor van }
+\author{Lizzie, Isabelle Chuine, Ben Cook, Victor van der Meersch}
 \date{\today}
 \maketitle
 
 \section*{Some current issues}
-\begin{itemize}
-\item See \verb|howto_phenofit| for one place I am stuck.
-\item What site and species do we want to use?
-\begin{itemize}
-\item Ideally one with an existing model we do not have to spend a long time verifying? 
-\item Both historical climate and future climate ... so we can compare
-\item But also one where some events (frost, heat damage) may have shifted at the same time that growing season length or seasonal warmth has had an impact.
-\end{itemize}
-\item High temperatures?
-\item What do we want to measure?
-\begin{itemize}
-\item Phenological shifts related to end/start of season and particular damage events
-\item Tissue or ideally reproduction lost due to each event type
-\item Reproduction changes due to longer/warmer season
-\item What else?
-\end{itemize}
-\item What \emph{in silica} experiments do we want to run? 
-\begin{itemize}
-\item Historical climate
-\item CMIP future climate scenario (maybe) -- characterize future climate: what is mean shift, what is variance shift? 
-\item Historical climate + 2C?
-\item Historical climate with increased variability in spring (and summer?)
-\item Historical climate + 2C? with increased variability in spring (and summer?)
-\item We want to test how phenological shifts x extremes matter, so I wonder if there is a scenario where we can try to hold phenology more constant and layer on climate variability? Not sure what that will show us ... YES: Can do this -- when initializing you can do this, 'activate the date files' -- give it specific dates (see methods Duputie et al. 2015 on plasticity GCB). Not sure if it works for Phenofit 5 (see Gauzere Evolution Letters 2020 .... new standing variability in phenology may make this hard). 
-\end{itemize}
-\end{itemize}
+
 
 \section*{Meeting notes}
+
+{\bf 7 avril, with Isabelle}
+
+\begin{itemize}
+\item WHC (water holding capacity)
+\item Coding simulations in PHENOFIT
+\item Problems with fitness values
+\end{itemize}
+
+{\bf WHC.} Try 50 and 100\%. See `Lien entre dommages dus a  la crise et reserve utile en eau des sols.doc' on Lizzie's computer for some background that helped Isabelle select these. 
+
+{\bf Coding simulations in PHENOFIT.} Use different longitudes as way to code different simulations. (Latitude is used in the model for photoperiod, but longitude is just used as location marker so should be fine.) Isabelle also thought same lat/lon with different data in different rows would work, but using longitude seems easier. 
+
+{\bf Problems with fitness values.} I ran PHENOFIT on the historical data using my gradient of sites from Italy, through Germany and onward to Sweden, but I got pretty low fitness values for FAGSYL and QUEROB. Isabelle said this happens. They usually convert to 0/1 so you don't notice this. She also said they have seen that the fitness is higher closer to where the data used to parameterize the model comes from  (see `Phenofit4_Anne_Duputie.pdf' on Lizzie's computer). 
+
+So, Isabelle said it might have to do with where the data that the parameterized with from (France) versus where our points are (more Central Europe). We discussed changing to other parameters for the leaf phenology (from a K. Kramer book), but then Isabelle realized that we don't have similar parameters to use for flowering. 
+
+So I changed to sites that track more through France. \\
+
+{\bf 15 mars 2023}\\
+
+See \verb|ChatsBenNotes.txt| for thoughts on how to do the climate.\\
+
+{\bf 17 mars 2023}\\
+
+MW Isabelle:\\
+- Two ideas for climate\\
+- How to adjust for other climate variables\\
+- How to ask for climate data from Victor \\
+- Which months around budburst \\
+
 {\bf 9 mars 2023}
 
 \begin{enumerate}
@@ -71,6 +78,7 @@
 \item MaturationIndex is a metric of if the season was long enough .... so this is a way to measure season length
 \item FruitIndex and LeafIndex only go below 1 due to frost ... so these are ways to measure frost loss. 
 \item LeafDormancyBreakDate relates to leaf-unfolding and to frost risk. 
+\item We can hold phenology constant (at least in PHENOFIT 4)...YES! Can do this -- when initializing you can do this, 'activate the date files' -- give it specific dates (see methods Duputie et al. 2015 on plasticity GCB). Not sure if it works for Phenofit 5 (see Gauzere Evolution Letters 2020 .... new standing variability in phenology may make this hard). 
 \end{enumerate}
 \item Some notes on climate. ... 
 \begin{enumerate}
@@ -79,52 +87,34 @@
 \end{enumerate}
 \end{enumerate}
 
-{\bf 15 mars 2023}\\
+{\bf Before 9 mars 2023}
 
-See \verb|ChatsBenNotes.txt| for thoughts on how to do the climate.\\
+Notes from getting going ... 
 
-{\bf 17 mars 2023}\\
-
-MW Isabelle:\\
-- Two ideas for climate\\
-- How to adjust for other climate variables\\
-- How to ask for climate data from Victor \\
-- Which months around budburst 
-
-
-
-\section*{Next steps}
-Solve current issues above!\\
-Start git repo.\\
-Come up with graphs to make ... \\
-Pick a site, ask Florence for climate and start .... \\
-
-MW Victor: \\
-v_vandermeersch
-Prepared climate data for 6-10 sites?\\ 1970-2000 (1950-2020)
-How to calculate ET (R script)\\
-	- He calculates in R
-	- Penman Montif (it's what FAO uses)
-Does he have scripts to calculate mean across the data? \\ 
-Does he have scripts to calculate variance across the data? \\
-Would he collaborate on project?\\
+\begin{itemize}
+\item What site and species do we want to use?
+\begin{itemize}
+\item Ideally one with an existing model we do not have to spend a long time verifying? 
+\item Both historical climate and future climate ... so we can compare
+\item But also one where some events (frost, heat damage) may have shifted at the same time that growing season length or seasonal warmth has had an impact.
+\end{itemize}
+\item High temperatures?
+\item What do we want to measure?
+\begin{itemize}
+\item Phenological shifts related to end/start of season and particular damage events
+\item Tissue or ideally reproduction lost due to each event type
+\item Reproduction changes due to longer/warmer season
+\item What else?
+\end{itemize}
+\item What \emph{in silica} experiments do we want to run? 
+\begin{itemize}
+\item Historical climate
+\item CMIP future climate scenario (maybe) -- characterize future climate: what is mean shift, what is variance shift? 
+\item Historical climate + 2C?
+\item Historical climate with increased variability in spring (and summer?)
+\item Historical climate + 2C? with increased variability in spring (and summer?)
+\item We want to test how phenological shifts x extremes matter, so I wonder if there is a scenario where we can try to hold phenology more constant and layer on climate variability? Not sure what that will show us ... 
+\end{itemize}
+\end{itemize}
 
 \end{document}
-
-\begin{align}
-N_{i}(t+1) & =
-s_{i}(N_{i}(t)(1-g_{i}(t))+\phi_{i}B(t+\delta)
-\end{align}
-The production of new biomass each season follows a basic R* competition model: new biomass production depends on its resource uptake ($f_i(R)$ converted into biomass at rate $c_i$) less maintenance costs ($m_i$), with uptake controlled by $a_i$ and $u_i$:
-\begin{align}
-\frac{\partial B_{i}}{\partial t} &  = [c_{i}f_{i}(R) - m_{i}]B_{i} \\
-f_{i}(R) & = \frac{a_{i}R^{\theta_{i}}}{1+a_{i}u_{i}R^{\theta_{i}}}
-\end{align}
-With the initial condition:
-\begin{align}
-B(t+0) & = N_{i}(t)g_{i}(t)b_{0,i}
-\end{align}
-The resource ($R$) itself declines across a growing season due to uptake by all species and abiotic loss ($\epsilon$):
-\begin{align}
-\frac{\mathrm{d}R}{\mathrm{d}t} & = - \sum_{i=1}^{n}f_{i}(R)B_{i} -\epsilon R
-\end{align}

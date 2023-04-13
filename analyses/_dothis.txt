@@ -4,16 +4,14 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 Do next ...
 
-We have 1950-2020 for 9 sites (I think it is 9). 
+* Make the PDF plot that Ben requested. 
 
-- Calculate mean and SD by month over each 20 year period for each latitude and plot
-	... So we want a f(x) that does this for whichever data (min or max, or mean, but mean seems less critical) based on different WINDOWS
-	- Right now I have a f(x) to just make the data in a long time-series format (am I okay with this?) 
-	- Next step would be f(x) for mean, SD across windows and with/without detrending
-	
-- Do the above again, but detrend first
-- Do the PDF thing that Ben suggested
-- Run the historical data through phenofit for each species... THINK first on how to format the data (maybe ask Isabelle -- would she write each scenario eventually as a different site? I think I would ...)
+
+NEED:
+- Updated historical data, incl. dew point
+- Projections (at least temperature) -- for checking shifts in mean and variability 
+
+
 
 
 <><><><><><><><><><><><><><>

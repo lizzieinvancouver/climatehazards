@@ -39,3 +39,22 @@ Victor asked why no sites in more continental Europe where variability might be 
 52.877881, 17.306702 - slightly northern Poland 
 50.508674, 21.833069 - slightly southern Poland 
 46.614127, 24.206116 - trying to pick a not hilly part of Romania
+
+<><><><><><><><><>
+Update 8 avril 2023
+
+On running PHENOFIT on the historical data we found that the fitness was quite low often fro QUEROB ad FAGSYL. Isabelle said it might have to do with where the data that the parameterized with from (France) versus where our points are (more Central Europe). We discussed changing to other parameters for the leaf phenology (from a K. Kramer book), but then Isabelle realized that we don't have similar parameters to use for flowering. 
+
+So I am changing to sites that track more through France. Jump from 44.5 to 46.3 is to avoid some hills. 
+
+Lat 46 or 47 would be good for main site I think. 
+
+41.951439, 2.027988
+43.842566, 2.192783
+44.473105, 2.643222
+46.316695, 3.653965
+47.480196, 4.730625
+49.088362, 5.741367
+50.576362, 6.829013
+51.998509, 8.850498
+53.133686, 10.311679
