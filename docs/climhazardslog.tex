@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{natbib}
 \usepackage{amsmath}
+\usepackage{hyperref}
 
 \def\labelitemi{--}
 \parindent=0pt
@@ -21,6 +22,56 @@
 % \section*{Some current issues}
 
 \section*{Meeting notes}
+
+{\bf 14 avril, with Isabelle \& Victor: PET}
+
+PET ... we do not have RH from ERA5LAND so we cannot use Ben's easy equation (see below). Instead we could use the complicated Penman Monteith which is the \href{https://www.fao.org/3/x0490e/x0490e06.htm#TopOfPage}{Standard FAO method}. See also \verb|docs/2023Apr_ETVictor.pdf.| And he shared his code.\\
+
+{\bf 14 avril, with Isabelle}
+
+\emph{This meeting covered:}
+\begin{itemize}
+\item References on risk (damage) versus longer growing season
+\item What output from PHENOFIT to look at (long discussion)
+\item Visiting in June: Avoid 26-28 (away) June and 13, 15 (she is busy)
+\end{itemize}
+
+{\bf References on risk (damage) versus longer growing season}\\
+
+Yann has some work (I think she meant frost damage); perhaps do a lit review for Chinese species. I asked about \emph{high temperatures} and she is not aware of any, but said there is some literature on floral necrosis (during spring) in crop literature probably. Also, there was heat damage at Peuchabon (field station) due to high temperature and some work on cuticles from this -- some by Nicolas Martin (who is now at INRAe Avignon, forest group) but she does not think that it is published. % https://www6.paca.inrae.fr/ecologie_des_forets_mediterraneennes/Les-personnes/Personnels-permanents/MARTIN-Nicolas
+
+Air temperature of 30-35 C means leaf surface temperature approaches protein denaturation limits. See paper by Yann Vitasse on this, also ag literature
+
+{\bf Which output from PHENOFIT?}\\
+
+\emph{A little more complicated than I thought!}
+
+\begin{enumerate}
+\item LeafIndex -- impacted only by frost (and contributes to maturation index). We think it should be only impacted by frost. This is continually updated inside the model so Isabelle is checking when the version that is written out is taken. 
+\item FruitIndex -- impacted only by frost (lost due to frost on flowers or perhaps small fruit present early enough to get frosted)
+\item MaturationIndex -- this one is more of a pain than I realized! 
+\begin{enumerate}
+\item It depends on: Length of the growing season (including drought during it I think) and LeafIndex
+\item So if we want to look at impacts of GSL we'd need to look at MaturationIndex x GSL and see how strong the relationship is (could also look MaturationIndex x LeafIndex) ... 
+\end{enumerate}
+\end{enumerate}
+
+So we need to extract: 
+
+\begin{enumerate}
+\item LeafIndex
+\item FruitIndex 
+\item MaturationIndex
+\item Fitness -- which is the product of survival*FruitIndex*MaturationIndex (in our case, survival should generally always be 1 since this is only below 1 due to lethal cold temperatures and we're not in that range and drought)
+\item LeafSenescence and LeafUnfolding dates -- this will give GSL, which matters to MaturationIndex for QUEROB and FAGSYL (but likely not PINSYSL) ... could check
+\item Could also check (not critical) that LeafUnfolding date is good metric -- it should be HIGHLY correlated with FloweringDate and FruitInitDate. 
+\end{enumerate}
+
+\emph{Pinus} spp mature fruit over two years; in PHENOFIT the maturation takes place in one year so flowering date and season length should matter less to MaturationIndex (may want to double check model). Thus we {\bf predict} that warming does not impact MaturationIndex for PINSYL as much as for other two species, but all will be impacted by increased variability due to frost loss (though now that I transcribe these notes, I think the least impact should be on species that leaf out the latest, which I suspect is also PINSYL).  \\
+
+I asked about partitioning PHENOFIT fitness due to each part and Isabelle said they did something a little like this in Morin et al. 2006 `Process-based modeling of species’ distributions: What limits temperate tree species’ range boundaries' \\% https://esajournals.onlinelibrary.wiley.com/doi/pdfdirect/10.1890/06-1591.1
+
+A few more notes maybe in green and gray notebook, but I think I got most stuff here. 
 
 {\bf 7 avril, with Isabelle}
 
@@ -40,6 +91,39 @@
 So, Isabelle said it might have to do with where the data that the parameterized with from (France) versus where our points are (more Central Europe). We discussed changing to other parameters for the leaf phenology (from a K. Kramer book), but then Isabelle realized that we don't have similar parameters to use for flowering. 
 
 So I changed to sites that track more through France. \\
+
+
+{\bf 4 April 2023 with Ben}\\
+
+Calculating ET ... and a little more on simulated climate data 
+
+Detrending removes trends in central tendency 
+\begin{enumerate}
+Use detrended data for long-term baseline
+\begin{enumerate}
+\item Z-score them
+\item Then multiple the SD by 1.2 for a 20\% increase in variability *normal distribution 
+\item Check your output 
+\end{enumerate}
+\end{enumerate}
+
+ET ... {\bf MAKE sure to use min and max RH correctly}
+\begin{itemize}
+	\item if you have relative humidity and temperature, then that's enough 
+	\item Use this: \url{https://en.wikipedia.org/wiki/Clausius%E2%80%93Clapeyron_relation#August%E2%80%93Roche%E2%80%93Magnus_formula}
+	\item This is how Ben typically does it
+	\item Need: max RH and min RH (and temperature)
+	\item Remember: Tmax is associated Tmin RH (and vice versa)
+	\item RH tells you how saturated the air is; use temperature to calculate how much water the air is
+	\begin{itemize}
+	\item Step 1: Put in the August Roche Magnus -- hypothetical maximum ($e_s$) using just $T$ -- see the link: Basically it's $6.1 ^{((17.625*T)/(T+234))}$
+\item Step 2: Now multiple $e_s$ by RH: $e_S*(RH)$
+\item (Make relative RH is measured as a fraction)
+\item Now you have the ET!
+\item Check with an online calculator! Or check that every degree warmer get about a 7\% increase. 
+	\end{itemize}
+	\end{itemize}
+
 
 {\bf 15 mars 2023}\\
 
