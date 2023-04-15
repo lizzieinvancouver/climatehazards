@@ -4,17 +4,18 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 Do next ...
 
-* Make the PDF plot that Ben requested and update the code as he asked
-* Run the new sites historical data through PHENOFIT once I have it.
+
 * Clean up simulated data code for temperature then format it for PHENOFIT runs
 	- f(x) to make the simulated data
 	- f(x) to make the data into PHENOFIT format (change lon for each sim)
-* RUN simulated data (even if you don't have the RH) 
-* Make (bash?) code to copy over all the other data beyond temperature and RH for the runs somehow ... and then maybe delete it as it will be duplicated. 
-* Make plots of historical shifts in mean and variance?
+* RUN simulated data (do it first, without worrying about fixing PET) 
+* Make (bash? R?) code to copy over all the other data beyond temperature and PET for the runs somehow with the new lat/lon (just need to edit the locations, but otherwise REP the data) ... and then maybe delete it as it will be duplicated.  ... check with Isabelle what input files are NEEDED (or guess and add on as needed, may not need GLO, WND ...)
+* Make (start on) ms plots of historical shifts in mean and variance
+* Consider trials with different WHC
+* Trials with static leaf unfolding (use the historical leaf unfolding dates)
+* Eventually, make the new PET data and redo all runs
 
 NEED:
-- Updated historical data, incl. dew point -- then build RH from this
 - Projections (at least temperature) -- for checking shifts in mean and variability 
 
 

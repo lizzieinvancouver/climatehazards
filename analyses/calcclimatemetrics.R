@@ -19,9 +19,7 @@ setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
 ## To do!
 # (1) Make up new climate series
-# (2) Run historical data in phenofit
-# (3) Plot phenofit output
-# (4) Start drafting what we want to say and show in paper, so we (I) do not end up down a rabbit hole
+# (2) Remember to keeo drafting what we want to say and show in paper, so we (I) do not end up down a rabbit hole
 
 source("source/calcclimatefxs.R")
 
