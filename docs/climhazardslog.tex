@@ -25,7 +25,11 @@
 
 {\bf 14 avril, with Isabelle \& Victor: PET}
 
-PET ... we do not have RH from ERA5LAND so we cannot use Ben's easy equation (see below). Instead we could use the complicated Penman Monteith which is the \href{https://www.fao.org/3/x0490e/x0490e06.htm#TopOfPage}{Standard FAO method}. See also \verb|docs/2023Apr_ETVictor.pdf.| And he shared his code.\\
+PET ... we do not have RH from ERA5LAND so we cannot use Ben's easy equation (see below). Instead we could use the complicated Penman Monteith which is the \href{https://www.fao.org/3/x0490e/x0490e06.htm#TopOfPage}{Standard FAO method; $ET_o$ in Chapter 2}. See also \verb|docs/2023Apr_ETVictor.pdf.| And he shared his code.\\
+
+$T_{dew}$ is $e_a$\\
+$e_a$ is basically $vabar$\\
+$e_s$ is basically $vas$ (and you can compute with $T_{min}$ and $T_{max}$ ...\\
 
 {\bf 14 avril, with Isabelle}
 
@@ -86,7 +90,7 @@ A few more notes maybe in green and gray notebook, but I think I got most stuff 
 
 {\bf Coding simulations in PHENOFIT.} Use different longitudes as way to code different simulations. (Latitude is used in the model for photoperiod, but longitude is just used as location marker so should be fine.) Isabelle also thought same lat/lon with different data in different rows would work, but using longitude seems easier. 
 
-{\bf Problems with fitness values.} I ran PHENOFIT on the historical data using my gradient of sites from Italy, through Germany and onward to Sweden, but I got pretty low fitness values for FAGSYL and QUEROB. Isabelle said this happens. They usually convert to 0/1 so you don't notice this. She also said they have seen that the fitness is higher closer to where the data used to parameterize the model comes from  (see `Phenofit4_Anne_Duputie.pdf' on Lizzie's computer). 
+{\bf Problems with fitness values.} I ran PHENOFIT on the historical data using my gradient of sites from Italy, through Germany and onward to Sweden, but I got pretty low fitness values for FAGSYL and QUEROB. Isabelle said this happens. They usually convert to $0/1$ so you don't notice this. She also said they have seen that the fitness is higher closer to where the data used to parameterize the model comes from  (see \verb|Phenofit4_Anne_Duputie.pdf| on Lizzie's computer). 
 
 So, Isabelle said it might have to do with where the data that the parameterized with from (France) versus where our points are (more Central Europe). We discussed changing to other parameters for the leaf phenology (from a K. Kramer book), but then Isabelle realized that we don't have similar parameters to use for flowering. 
 
@@ -99,7 +103,7 @@ Calculating ET ... and a little more on simulated climate data
 
 Detrending removes trends in central tendency 
 \begin{enumerate}
-Use detrended data for long-term baseline
+\item Use detrended data for long-term baseline
 \begin{enumerate}
 \item Z-score them
 \item Then multiple the SD by 1.2 for a 20\% increase in variability *normal distribution 
