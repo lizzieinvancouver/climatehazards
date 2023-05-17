@@ -8,6 +8,7 @@ options(stringsAsFactors = FALSE)
 ## packages
 library(data.table)
 library(ggplot2)
+library(gridExtra)
 library(viridis)
 
 ## set working directory
@@ -25,33 +26,37 @@ sitezmessy$V1 <- NULL
 sitez <- as.data.frame(t(sitezmessy))
 names(sitez) <- c("loc", "lat", "lon")
 
-cleanphenofitdata <- function(filename, sitedf){
-    d <- read.delim(paste("input/phenofit/", filename, ".txt", sep=""),
+phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
+                   "LeafUnfoldingDate", "MaturationIndex", "Survival", "TempSurvival")
+
+cleanphenofitdata <- function(phenofitfilelist, filename, sitedf){
+    df <- list()
+    for (phenometric in phenofitfilelist){     
+        d <- read.delim(paste("input/phenofit/", filename, phenometric, ".txt", sep=""),
                     skip=3, header=FALSE)
-    dfhere <- data.frame(lat=numeric(), lon=numeric(), year=numeric(),
-       year=numeric(), value=numeric())
-    for(i in c(1:nrow(sitedf))){
-       dftobind <- data.frame(lat=rep(sitedf[["lat"]][i], nrow(d)),
+        dfhere <- data.frame(metric=character(), lat=numeric(), lon=numeric(), year=numeric(),
+                             year=numeric(), value=numeric())
+        for(i in c(1:nrow(sitedf))){
+            dftobind <- data.frame(metric=rep(phenometric, nrow(d)),
+                           lat=rep(sitedf[["lat"]][i], nrow(d)),
                            lon=rep(sitedf[["lon"]][i], nrow(d)),
                            year=as.numeric(unlist(d["V1"])),
                            value=as.numeric(unlist(d[,i+1])))
-       dfhere <- rbind(dfhere, dftobind)
-   }
-   return(dfhere)
+            dfhere <- rbind(dfhere, dftobind)
+        }
+       df[[phenometric]] <- dfhere
+        }
+   return(df)
 }
 
-fsfit <- cleanphenofitdata("fagsyl_19512020/Fitness", sitez)
-psfit <- cleanphenofitdata("pinsyl_19512020/Fitness", sitez)
-qrfit <- cleanphenofitdata("querob_19512020/Fitness", sitez)
 
-fsleafi <- cleanphenofitdata("fagsyl_19512020/LeafIndex", sitez)
-psleafi <- cleanphenofitdata("pinsyl_19512020/LeafIndex", sitez)
-qrleafi <- cleanphenofitdata("querob_19512020/LeafIndex", sitez)
+fsfit <- cleanphenofitdata(phenofitfiles, "fagsyl_19512020/", sitez)
+psfit <- cleanphenofitdata(phenofitfiles, "pinsyl_19512020/", sitez)
+qrfit <- cleanphenofitdata(phenofitfiles, "querob_19512020/", sitez)
 
-fsmati <- cleanphenofitdata("fagsyl_19512020/MaturationIndex", sitez)
-psmati <- cleanphenofitdata("pinsyl_19512020/MaturationIndex", sitez)
-qrmati <- cleanphenofitdata("querob_19512020/MaturationIndex", sitez)
 
+
+## plot the data
 
 makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
     colz <- viridis(nrow(sitez))
@@ -73,7 +78,7 @@ makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
         lines(dfhere[["value"]] ~ dfhere[["year"]], col=colz[i])
 }
     plot(matdf[["value"]] ~ matdf[["year"]], type="n",
-         xlab="year", ylab="maturation infex", ylim=ylimhere, xlim=xlimhere)
+         xlab="year", ylab="maturation index", ylim=ylimhere, xlim=xlimhere)
     legend("topleft", legend=sitez[["lat"]], lty=rep(1, nrow(sitez)), col=colz, bty="n")
 
     for(i in c(1:nrow(sitez))){
@@ -83,35 +88,30 @@ makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
 dev.off()
 }
 
-makequickplots(fsfit, fsleafi, fsmati, "historical3metricsSitesOverlayFagus", c(0,1.1), c(1945, 2021))
-makequickplots(qrfit, qrleafi, qrmati, "historical3metricsSitesOverlayQuercus", c(0,1.1), c(1945, 2021))
-makequickplots(psfit, psleafi, psmati, "historical3metricsSitesOverlayPinus", c(0,1.1), c(1945, 2021))
+makequickplots(fsfit[["Fitness"]], fsfit[["LeafIndex"]], fsfit[["MaturationIndex"]],
+               "historical3metricsSitesOverlayFagus", c(0,1.1), c(1945, 2021))
+makequickplots(qrfit[["Fitness"]], qrfit[["LeafIndex"]], qrfit[["MaturationIndex"]],
+               "historical3metricsSitesOverlayQuercus", c(0,1.1), c(1945, 2021))
+makequickplots(psfit[["Fitness"]], psfit[["LeafIndex"]], psfit[["MaturationIndex"]],
+               "historical3metricsSitesOverlayPinus", c(0,1.1), c(1945, 2021))
 
-fsfit$sp <- "Fagus"
-qrfit$sp <- "Quercus"
-psfit$sp <- "Pinus"
+fsfitdf <- do.call("rbind", fsfit)
+fsfitdf$sp <- "Fagus"
+qrfitdf <- do.call("rbind", qrfit)
+qrfitdf$sp <- "Quercus"
+psfitdf <- do.call("rbind", psfit)
+psfitdf$sp <- "Pinus"
 
-fsleafi$sp <- "Fagus"
-qrleafi$sp <- "Quercus"
-psleafi$sp <- "Pinus"
+alldat <- rbind(fsfitdf, qrfitdf, psfitdf)
 
-fsmati$sp <- "Fagus"
-qrmati$sp <- "Quercus"
-psmati$sp <- "Pinus"
-
-allsppfithack <- rbind(fsfit, qrfit, psfit)
-allsppleafhack <- rbind(fsleafi, qrleafi, psleafi)
-allsppmathack <- rbind(fsmati, qrmati, psmati)
-
-
-ggfit <- ggplot(allsppfithack, aes(x=year, y=value, color=sp)) +
+ggfit <- ggplot(subset(alldat, metric=="Fitness"), aes(x=year, y=value, color=sp)) +
     geom_line() +
     ylab("fitness") + 
     facet_wrap(lat~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-ggleaf <- ggplot(allsppleafhack, aes(x=year, y=value, color=sp)) +
+ggleaf <- ggplot(subset(alldat, metric=="LeafIndex"), aes(x=year, y=value, color=sp)) +
     geom_line() +
     ylab("leaf index") + 
     facet_wrap(lat~., scales="free") +
@@ -119,7 +119,7 @@ ggleaf <- ggplot(allsppleafhack, aes(x=year, y=value, color=sp)) +
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
     
 
-ggmat <- ggplot(allsppmathack, aes(x=year, y=value, color=sp)) +
+ggmat <- ggplot(subset(alldat, metric=="MaturationIndex"), aes(x=year, y=value, color=sp)) +
     geom_line() +
     ylab("maturation index") + 
     facet_wrap(lat~., scales="free") +
@@ -130,3 +130,89 @@ ggmat <- ggplot(allsppmathack, aes(x=year, y=value, color=sp)) +
 ggsave(filename="graphs/phenofit/historicalggfitness1951.pdf", plot=ggfit, height=8, width=12)
 ggsave(filename="graphs/phenofit/historicalggleaf1951.pdf", plot=ggleaf, height=8, width=12)
 ggsave(filename="graphs/phenofit/historicalggmat1951.pdf", plot=ggmat, height=8, width=12)
+
+# Interpreting the reasons for output
+# TempSurvival is fine, survival seems not super informative ... 
+
+phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
+                   "LeafUnfoldingDate", "MaturationIndex", "Survival", "TempSurvival")
+
+alldatwide <- reshape(alldat, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+
+
+surv <- ggplot(alldatwide, aes(x=value.Survival, y=value.Fitness, col=as.character(lat))) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Survival") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+leafdate <- ggplot(alldatwide, aes(x=value.LeafUnfoldingDate, y=value.Fitness, col=as.character(lat))) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Leaf Unfolding Date") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+frmatdate <- ggplot(alldatwide, aes(x=value.FruitMaturationDate, y=value.Fitness, col=as.character(lat))) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Fruit Maturation Date") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+frleafdate <- ggplot(alldatwide, aes(x=value.LeafUnfoldingDate, y=value.FruitMaturationDate, col=as.character(lat))) +
+    geom_line() +
+    xlab("Leaf Unfolding Date") +
+    ylab("Fruit Maturation Date") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+leafind <- ggplot(alldatwide, aes(x=value.LeafIndex, y=value.Fitness, col=as.character(lat))) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Leaf Index") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+frind <- ggplot(alldatwide, aes(x=value.FruitIndex, y=value.Fitness, col=as.character(lat))) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Fruit Index") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+matind <- ggplot(alldatwide, aes(x=value.MaturationIndex, y=value.Fitness, col=as.character(lat))) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Maturation Index") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+p <- list(leafdate, frmatdate, frleafdate, leafind, frind, matind)
+
+pdf("graphs/phenofit/historicalfitness1951.pdf", height=4, width=10)
+for (i in seq(length(p))) {
+  print(p[[i]])
+}
+dev.off()
+
+
+# by species...
+ggplot(subset(alldatwide, sp="Fagus"), aes(x=value.LeafUnfoldingDate, y=value.Fitness)) +
+    geom_line() +
+    ylab("Fitness") +
+    xlab("Leaf Unfolding Date") +
+    facet_wrap(lat~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
