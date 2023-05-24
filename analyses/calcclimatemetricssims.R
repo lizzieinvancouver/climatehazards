@@ -3,6 +3,7 @@
 
 ## Whoo-hoo, spring! Time to finally get some analyses going on Phenofit project ##
 ## This codes reads in historical climate data and calculates mean and SD by month ##
+## It then makes the simiulated climate data ## 
 
 ## housekeeping
 rm(list=ls()) 
@@ -54,12 +55,13 @@ tmaxlistdet <- getdailydetrendedlist(tmaxdetmonths, tmaxlistanom, unique(tmaxlis
 ## Build simulation data based on detrended data ##
 ###################################################
 
-varchanges <- c(-0.1, 0.1, 0.2)
-tempchanges <-  c(0) # c(0.5, 1, 2)
+varchanges <- c(0, 0.1) # c(0, -0.1, 0.1, 0.2)
+tempchanges <- c(0) # c(0, 0.5, 1, 2)
 allchanges <- expand.grid(varchanges, tempchanges)
 names(allchanges) <- c("sd", "mean")
+allchanges$fakelon <- seq(1:nrow(allchanges))
 
-whichsite <-  unique(tmaxlist[[1]]["latlon"])[4,]
+whichsite <-  unique(tmaxlist[[1]]["latlon"])[5,] # Pick 47.5 based on 20 Apr 2023 with Isabelle
 onesitetmin <- lapply(tminlistdet, function(x) subset(x, latlon == whichsite))
 
 if(FALSE){
@@ -75,6 +77,9 @@ for(i in c(1:length(unique(testingdf$latlon)))){
 
 # calculate mean and SD for each month across time series
 # take z-scored data then add back in mean and SD based on values
+# output is a list of lists!
+# 12 lists (per month) and within EACH list is another list ...
+# which is the length of the different sims requested 
 makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
     resultz <- vector(mode='list', length=12)
     for (i in c(1:12)) {
@@ -93,6 +98,7 @@ makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
             newdf <- data.frame(lat=dfhere$lat, lon=dfhere$lon, year=dfhere$year, day=dfhere$day,
                                 meanttreat=rep(treatdf[["mean"]][j], length(newdata)),
                                 sdtreat=rep(treatdf[["sd"]][j], length(newdata)),
+                                fakelon=rep(treatdf[["fakelon"]][j], length(newdata)),
                                 tempC=newdata)
             resultzwithinmonth[[j]] <- rbind(resultzwithinmonth[[j]], newdf)
         }
@@ -104,7 +110,7 @@ makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
 tminsims <- makesimdata(onesitetmin, 1970, 2000, allchanges)
 
 if(FALSE){
-climatedatadet <-  onesite
+climatedatadet <-  onesitetmin
 startyear <- 1970
 endyear <- 2000
 treatdf <- allchanges
@@ -112,6 +118,7 @@ i <- 2
 j <- 1
 filename <- "tmin3sd"
 simdata <- tminsims
+simshere <- c("", "sd + 10%")
 }
 
 plotsimdataPDF <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
@@ -158,11 +165,47 @@ plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, s
 simshere <- c("sd -10%", "sd + 10%", "sd + 20%")
 plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
 plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+
+
+
+#################################
+## Write out Phenofit sim data ##
+#################################
+# START HERE!!!
+# need tmin and tmax sims (eventually also PET sims)
+# 1 file per year
+# each row is a 'site'
+# ideally format sort of like Victor does (see write_phenofit_data.R)
+# and then need to rep all the other files we need with new lat/lon
+if(FALSE){
+
+# example file
+test <- fread("~/Documents/git/projects/treegarden/misc/climatehazards/data/recdVictor_2023Avr7/ERA5LAND/ERA5LAND_tmx_2006_dly.fit")
+
+onesim <- tminsims[[1]][[1]]
+
+    # START HERE ... get lapply subset to work
+    # helpful: https://stackoverflow.com/questions/70431213/error-in-m-q-r-comparison-1-is-possible-only-for-atomic-and-list-types
+whichyear <- unique(tminsims[[1]][[1]]["year"])[1,]
+tryme <- lapply(tminsims, function(x) subset(x, year == whichyear))
+tryme <- lapply(tminsims, function(x) subset(x, year == 1980)) # still broken.. maybe try which
     
 
-##############
-## Plotting ##
-##############
+test <- subset(tminsims[[1]][[1]], year==1980)
+
+onerowhere <- c()
+for(i in unique(onesim[["year"]]))
+    thisyear <- subset(onesim, year==i)
+for(j in nrow(onesim)){
+    onerowhere[j] <- thisyear[["tempC"]][j]
+    }
+
+    }
+
+
+##############################
+## Plotting historical data ##
+##############################
 
 sitez <- unique(tminlist[[1]]["latlon"])
 
