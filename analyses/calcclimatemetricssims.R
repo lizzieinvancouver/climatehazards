@@ -102,7 +102,8 @@ makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
                                 tempC=newdata)
             resultzwithinmonth[[j]] <- rbind(resultzwithinmonth[[j]], newdf)
         }
-        resultz[[i]] <- rbind(resultz[[i]], resultzwithinmonth)
+        resultzwithinmonthdf <- do.call("rbind", resultzwithinmonth)
+        resultz[[i]] <- rbind(resultz[[i]], resultzwithinmonthdf)
     }
     return(resultz)
 }
@@ -121,6 +122,8 @@ simdata <- tminsims
 simshere <- c("", "sd + 10%")
 }
 
+# Need to fix these functions now that I have made the above a set of DFs within one list
+if(FALSE){
 plotsimdataPDF <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
     colz <- viridis(length(simshere))
     pdf(paste("graphs/simdataPDF", filename, ".pdf", sep=""), width=14, height=10)
@@ -160,11 +163,11 @@ plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, s
     }
     dev.off()
 }
-
+}
 
 simshere <- c("sd -10%", "sd + 10%", "sd + 20%")
-plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
-plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+# plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+# plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
 
 
 
@@ -177,30 +180,56 @@ plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
 # each row is a 'site'
 # ideally format sort of like Victor does (see write_phenofit_data.R)
 # and then need to rep all the other files we need with new lat/lon
-if(FALSE){
 
 # example file
 test <- fread("~/Documents/git/projects/treegarden/misc/climatehazards/data/recdVictor_2023Avr7/ERA5LAND/ERA5LAND_tmx_2006_dly.fit")
+testoneyear <- subset(tminsims[[1]], year==1980)
 
-onesim <- tminsims[[1]][[1]]
-
-    # START HERE ... get lapply subset to work
-    # helpful: https://stackoverflow.com/questions/70431213/error-in-m-q-r-comparison-1-is-possible-only-for-atomic-and-list-types
-whichyear <- unique(tminsims[[1]][[1]]["year"])[1,]
+# START HERE ... get lapply subset to work
+whichyear <- unique(tminsims[[1]]["year"])[1,]
 tryme <- lapply(tminsims, function(x) subset(x, year == whichyear))
-tryme <- lapply(tminsims, function(x) subset(x, year == 1980)) # still broken.. maybe try which
+test1970 <- do.call("rbind", tryme)
+
+# Create the files for each year at the end of their filenames
+listofyearshere <- unlist(unique(tminsims[[1]]["year"]))
+for (i in c(1:length(listofyearshere))) {
+  fileName <- paste0("output/phenofitsims/tminsimsyear", listofyearshere[i], ".csv")
+  write.csv(data.frame(), file = fileName)  # Create empty CSV files
+}
+
+if(FALSE){
+# Build one file for one year ... 
+for (i in c(1:nrow(allchanges))){
+    thistreat <- subset(test1970, fakelon==allchanges[["fakelon"]][i])
+    onerowhere <- c(thistreat[["lat"]][1], thistreat[["fakelon"]][1], 
+        thistreat[["tempC"]])
+    plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
+    onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
+    write.table(onerowheredf, file = "output/phenofitsims/tminsimsyear1970.csv", 
+        append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
     
+}
+}
 
-test <- subset(tminsims[[1]][[1]], year==1980)
-
-onerowhere <- c()
-for(i in unique(onesim[["year"]]))
-    thisyear <- subset(onesim, year==i)
-for(j in nrow(onesim)){
-    onerowhere[j] <- thisyear[["tempC"]][j]
+# Now try to do it across years ... 
+for (i in c(1:length(listofyearshere))) {
+    whichyear <- listofyearshere[i]
+    tryme <- lapply(tminsims, function(x) subset(x, year == whichyear))
+    trymedf <- do.call("rbind", tryme)
+    for (treathere in c(1:nrow(allchanges))){
+        thistreat <- subset(trymedf, fakelon==allchanges[["fakelon"]][treathere])
+        onerowhere <- c(thistreat[["lat"]][1], thistreat[["fakelon"]][1], 
+            thistreat[["tempC"]])
+        plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
+        onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
+        write.table(onerowheredf, file = paste0("output/phenofitsims/tminsimsyear", listofyearshere[i], ".csv"), 
+            append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
     }
+}    
+    
+# Now functionalize it ... 
+# START HERE ... 
 
-    }
 
 
 ##############################
