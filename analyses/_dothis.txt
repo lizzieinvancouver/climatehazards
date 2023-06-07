@@ -6,11 +6,16 @@ Do next ...
 
 BIG main goals to do next are 1-3 below (1 and 2+3 can be done in any order) and report back. 
 
+
+7 June 2023 ...
+* Work on a better outline, need to merge new notes with old notes and get to something I can share with co-authors
+* Check my sims code and see where Dajeong is at, can definitely take over her task if needed
+
 Try get 1-3 done before returning in June (also ideally play around with WHC, so I confirm that I know how), could do PET on return if critical. 
 
 (1) Understand the current historical simulations by plotting data more (see notes in green notebook I believe) -- sort of done, waiting for reply to do more
 
-(2) Clean up simulated data code for temperature then format it for PHENOFIT runs
+(2) Clean up simulated data code for temperature then format it for PHENOFIT runs (almost DONE, waiting on Dajeong)
 	- f(x) to make the simulated data
 	- f(x) to make the data into PHENOFIT format (change lon for each sim)
 
