@@ -60,3 +60,12 @@ Misc:
 - SVN_files should be server versions. 
 - You can launch as many runs as you want. 
 
+
+Which input variables do you need for PHENOFIT4?
+Tmin (tmn)
+tmax (tmx)
+Pet (pet)
+Precip (pre)
+And ....
+
+

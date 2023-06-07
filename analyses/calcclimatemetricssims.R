@@ -19,7 +19,7 @@ library(viridis)
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
 ## To do!
-# (1) Make up new climate series
+# (1) Check what I have below and make tmean from sim data
 # (2) Remember to keeo drafting what we want to say and show in paper, so we (I) do not end up down a rabbit hole
 
 source("source/calcclimatefxs.R")
@@ -55,7 +55,7 @@ tmaxlistdet <- getdailydetrendedlist(tmaxdetmonths, tmaxlistanom, unique(tmaxlis
 ## Build simulation data based on detrended data ##
 ###################################################
 
-varchanges <- c(0, 0.1) # c(0, -0.1, 0.1, 0.2)
+varchanges <- c(-0.2, 0, 0.2) # c(0, -0.1, 0.1, 0.2)
 tempchanges <- c(0) # c(0, 0.5, 1, 2)
 allchanges <- expand.grid(varchanges, tempchanges)
 names(allchanges) <- c("sd", "mean")
@@ -63,6 +63,8 @@ allchanges$fakelon <- seq(1:nrow(allchanges))
 
 whichsite <-  unique(tmaxlist[[1]]["latlon"])[5,] # Pick 47.5 based on 20 Apr 2023 with Isabelle
 onesitetmin <- lapply(tminlistdet, function(x) subset(x, latlon == whichsite))
+onesitetmax <- lapply(tmaxlistdet, function(x) subset(x, latlon == whichsite))
+
 
 if(FALSE){
 # Does SD vary based on whether you subtract mean first? No.
@@ -109,8 +111,11 @@ makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
 }
 
 tminsims <- makesimdata(onesitetmin, 1970, 2000, allchanges)
+tmaxsims <- makesimdata(onesitetmax, 1970, 2000, allchanges)
 
-if(FALSE){
+
+if(FALSE){ 
+# For testing/troubleshooting code above and below
 climatedatadet <-  onesitetmin
 startyear <- 1970
 endyear <- 2000
@@ -119,11 +124,10 @@ i <- 2
 j <- 1
 filename <- "tmin3sd"
 simdata <- tminsims
-simshere <- c("", "sd + 10%")
+simshere <- c("-20%", "sd unchanged", "sd + 20%")
 }
 
-# Need to fix these functions now that I have made the above a set of DFs within one list
-if(FALSE){
+# Functions to plot simulated data
 plotsimdataPDF <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
     colz <- viridis(length(simshere))
     pdf(paste("graphs/simdataPDF", filename, ".pdf", sep=""), width=14, height=10)
@@ -131,17 +135,19 @@ plotsimdataPDF <- function(climatedatadet, simdata, startyear, endyear, filename
     for (i in c(1:12)) {
         dfhereallyears <- climatedatadet[[i]]
         dfhere <- subset(dfhereallyears, year>=startyear & year<=endyear)
-        simlist <- simdata[[i]]
+        simlist <- as.data.frame(simdata[[i]])
+        fakelonlist <- unique(simlist["fakelon"])
         plot(density(dfhere[["tempC"]]), type="n", xlab="Temp C", ylab="Density",
              main=paste("month", i, sep=" "))
         legend("topleft", legend=simshere, pch=rep(16, length(simshere)), col=colz, bty="n")
-        for(j in c(1:length(simlist))){
-            simdatahere <- simlist[[j]]
+        for(j in c(1:nrow(fakelonlist))){
+            simdatahere <- simlist[which(simlist["fakelon"]==fakelonlist[j,]),]
             lines(density(simdatahere[["tempC"]]), col=colz[j], lwd=2)
         }
     }
     dev.off()
 }
+
 
 plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, simshere){
     colz <- viridis(length(simshere))
@@ -150,54 +156,47 @@ plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, s
     for (i in c(1:12)) {
         dfhereallyears <- climatedatadet[[i]]
         dfhere <- subset(dfhereallyears, year>=startyear & year<=endyear)
-        simlist <- simdata[[i]]
+        simlist <- as.data.frame(simdata[[i]])
+        fakelonlist <- unique(simlist["fakelon"])
         plot(dfhere[["tempC"]], dfhere[["tempC"]], type="n", xlab="Original data", ylab="Sim data",
              main=paste("month", i, sep=" "))
         abline(0, 1, col="black")
         legend("topleft", legend=simshere, pch=rep(16, length(simshere)), col=colz, bty="n")
-        for(j in c(1:length(simlist))){
-            simdatahere <- simlist[[j]]
+        for(j in c(1:nrow(fakelonlist))){
+            simdatahere <- simlist[which(simlist["fakelon"]==fakelonlist[j,]),]
             points(simdatahere[["tempC"]]~dfhere[["tempC"]], col=colz[j])
             abline(lm(simdatahere[["tempC"]]~dfhere[["tempC"]]), col=colz[j])
         }
     }
     dev.off()
 }
-}
 
-simshere <- c("sd -10%", "sd + 10%", "sd + 20%")
-# plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
-# plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+simshere <- c("sd -20%", "sd 0%", "sd + 20%")
+plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
 
 
 
 #################################
 ## Write out Phenofit sim data ##
 #################################
-# START HERE!!!
-# need tmin and tmax sims (eventually also PET sims)
+# need tmin and tmax sims (eventually also PET sims) and then tmean from tmin/tmax
 # 1 file per year
 # each row is a 'site'
-# ideally format sort of like Victor does (see write_phenofit_data.R)
+# Formatted with some information on top lines, as Victor does (see write_phenofit_data.R)
 # and then need to rep all the other files we need with new lat/lon
 
+# Some testing code that I am not deleting yet
+if(FALSE){  
 # example file
 test <- fread("~/Documents/git/projects/treegarden/misc/climatehazards/data/recdVictor_2023Avr7/ERA5LAND/ERA5LAND_tmx_2006_dly.fit")
 testoneyear <- subset(tminsims[[1]], year==1980)
 
-# START HERE ... get lapply subset to work
+# testing out lapply subset (me and lapply, always a work in progress)
 whichyear <- unique(tminsims[[1]]["year"])[1,]
 tryme <- lapply(tminsims, function(x) subset(x, year == whichyear))
 test1970 <- do.call("rbind", tryme)
 
-# Create the files for each year at the end of their filenames
-listofyearshere <- unlist(unique(tminsims[[1]]["year"]))
-for (i in c(1:length(listofyearshere))) {
-  fileName <- paste0("output/phenofitsims/tminsimsyear", listofyearshere[i], ".csv")
-  write.csv(data.frame(), file = fileName)  # Create empty CSV files
-}
-
-if(FALSE){
 # Build one file for one year ... 
 for (i in c(1:nrow(allchanges))){
     thistreat <- subset(test1970, fakelon==allchanges[["fakelon"]][i])
@@ -207,11 +206,8 @@ for (i in c(1:nrow(allchanges))){
     onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
     write.table(onerowheredf, file = "output/phenofitsims/tminsimsyear1970.csv", 
         append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
-    
-}
-}
 
-# Now try to do it across years ... 
+# Now do it across years ... 
 for (i in c(1:length(listofyearshere))) {
     whichyear <- listofyearshere[i]
     tryme <- lapply(tminsims, function(x) subset(x, year == whichyear))
@@ -224,12 +220,39 @@ for (i in c(1:length(listofyearshere))) {
         onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
         write.table(onerowheredf, file = paste0("output/phenofitsims/tminsimsyear", listofyearshere[i], ".csv"), 
             append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
-    }
+        }
+    }   
 }    
+}
+
     
 # Now functionalize it ... 
-# START HERE ... 
+writeoutdata <- function(listofyears, simdata, filenamestart){
+    for (i in c(1:length(listofyears))) {
+        whichyear <- listofyears[i]
+        tryme <- lapply(simdata, function(x) subset(x, year == whichyear))
+        trymedf <- do.call("rbind", tryme)
+        filetowrite <- file.path(paste0("output/phenofitsims/", filenamestart, listofyears[i], ".fit"))
+        con <- file(filetowrite, open="wt")
+        writeLines("Simulated climate datafile for Phenofit model", con)
+        writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
+        writeLines(" ", con)
+        close(con)
+        for (treathere in c(1:nrow(allchanges))){
+            thistreat <- subset(trymedf, fakelon==allchanges[["fakelon"]][treathere])
+            onerowhere <- c(thistreat[["lat"]][1], thistreat[["fakelon"]][1], 
+                thistreat[["tempC"]])
+            plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
+            onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
+            write.table(onerowheredf, file = filetowrite, 
+                append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+        }
+    }
+}     
 
+listofyearshere <- unlist(unique(tminsims[[1]]["year"]))
+writeoutdata(listofyearshere, tminsims, "tminsimsyear")
+writeoutdata(listofyearshere, tmaxsims, "tmaxsimsyear")
 
 
 ##############################
