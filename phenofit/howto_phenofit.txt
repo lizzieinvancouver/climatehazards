@@ -60,12 +60,23 @@ Misc:
 - SVN_files should be server versions. 
 - You can launch as many runs as you want. 
 
+Leafindex:
+(From Isabelle on 19 March 2023): I found LeafIndex : it is the leafIndex at the end of the season, the day before senescence date, so it integrates all frost damages since bud set (or almost).
 
-Which input variables do you need for PHENOFIT4?
+
+<><><><><><><><><><><><><><><><><><><><><><><><><><><>
+<> Which input variables do you need for PHENOFIT4 <>
+<><><><><><><><><><><><><><><><><><><><><><><><><><><>
+
+Daily data: 
 Tmin (tmn)
 tmax (tmx)
+Tmean (tmp)
 Pet (pet)
 Precip (pre)
-And ....
+
+PLUS two constant site features: 
+altitude 
+WHC
 
 
