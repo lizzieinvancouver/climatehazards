@@ -22,3 +22,7 @@
 
 \notposting
 /analyses/input/ERA5LAND
+analyses/output/phenofitsims/pet*
+analyses/output/phenofitsims/pre*
+analyses/output/phenofitsims/Altitude*
+analyses/output/phenofitsims/WHC*
