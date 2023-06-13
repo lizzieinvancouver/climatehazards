@@ -16,7 +16,7 @@ setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
 if(FALSE){ # Development code; to delete
 ## We need to match to these files ...
-simsmatch <- fread("output/phenofitsims/tmaxsimsyear1987.fit")
+simsmatch <- fread("output/phenofitsims/ERA5LAND_tmn_1987_dly.fit")
 unique(simsmatch$V1)
 fakelon <- unique(simsmatch$V2)
 
@@ -42,13 +42,13 @@ write.table(daltsims, file = filetowrite,
 
 # Now, let's write the above as a f(x) ... it always uses 47.5 latitude
 repfilesnoyears <- function(simsfile, altorwhcfile, writefilename){
-	simstomatch <- fread(paste0("output/phenofitsims/", simsfile, ".fit", sep=""))
+	simstomatch <- fread(paste0("output/phenofitsims/ERA5LAND_", simsfile, "_dly.fit", sep=""))
 	fakelon <- unique(simstomatch$V2)
 	filetorep <- fread(altorwhcfile)
 	filetorep1site <- filetorep[which(filetorep$V1==47.5),]
 	filerepped <- filetorep1site[rep(seq_len(nrow(filetorep1site)), times=length(fakelon)),]
 	filerepped$V2 <- fakelon
-	filetowrite <- file.path(paste0("output/phenofitsims/", writefilename, ".fit"))
+	filetowrite <- file.path(paste0("output/phenofitsims/ERA5LAND_", writefilename, ".fit"))
 	con <- file(filetowrite, open="wt")
 	writeLines("Repeated climate datafile with sims longitude for Phenofit model", con)
 	writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
@@ -64,7 +64,7 @@ repfilesnoyears <- function(simsfile, altorwhcfile, writefilename){
 ## Now adapt the f(x) to do the multiple year files
 ## WARNING: We don't seem to have the updated latlon, so using 47.3 for now but UPDATE! after chatting with Victor
 repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
-	simstomatch <- fread(paste0("output/phenofitsims/", simsfile, ".fit", sep=""))
+	simstomatch <- fread(paste0("output/phenofitsims/ERA5LAND_", simsfile, "_dly.fit", sep=""))
 	fakelon <- unique(simstomatch$V2)
 	for(i in c(1:length(yearvector))){
 		whichyear <- yearvector[i]
@@ -72,7 +72,7 @@ repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
 		filetorep1site <- filetorep[which(filetorep$V1=="47.3"),]	
 		filerepped <- filetorep1site[rep(seq_len(nrow(filetorep1site)), times=length(fakelon)),]
 		filerepped$V2 <- fakelon
-		filetowrite <- file.path(paste0("output/phenofitsims/", writefilename, whichyear, ".fit"))
+		filetowrite <- file.path(paste0("output/phenofitsims/ERA5LAND_", writefilename, whichyear, "_dly.fit"))
 		con <- file(filetowrite, open="wt")
 		writeLines("Repeated climate datafile with sims longitude for Phenofit model", con)
 		writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
@@ -95,10 +95,10 @@ i <- 1
 }
 	
 	
-repfilesnoyears("tmaxsimsyear1987", "input/ERA5LAND/ERA5LAND_Altitude.fit", "Altitude")
-repfilesnoyears("tmaxsimsyear1987", "input/ERA5LAND/ERA5LAND_WHC.fit", "WHC")
+repfilesnoyears("tmx_1987", "input/ERA5LAND/ERA5LAND_Altitude.fit", "Altitude")
+repfilesnoyears("tmx_1987", "input/ERA5LAND/ERA5LAND_WHC.fit", "WHC")
 yearz <- c(1950:2020) # these are our sims years
-repfileswyears("tmaxsimsyear1987", yearz, "pet_", "pet_")
-repfileswyears("tmaxsimsyear1987", yearz, "pre_", "pre_")
+repfileswyears("tmx_1987", yearz, "pet_", "pet_")
+repfileswyears("tmx_1987", yearz, "pre_", "pre_")
 
 

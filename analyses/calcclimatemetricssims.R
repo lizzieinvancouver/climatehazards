@@ -218,7 +218,7 @@ for (i in c(1:length(listofyearshere))) {
             thistreat[["tempC"]])
         plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
         onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
-        write.table(onerowheredf, file = paste0("output/phenofitsims/tminsimsyear", listofyearshere[i], ".csv"), 
+        write.table(onerowheredf, file = paste0("output/phenofitsims/tmn_", listofyearshere[i], ".csv"), 
             append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
         }
     }   
@@ -232,7 +232,7 @@ writeoutdata <- function(listofyears, simdata, filenamestart){
         whichyear <- listofyears[i]
         tryme <- lapply(simdata, function(x) subset(x, year == whichyear))
         trymedf <- do.call("rbind", tryme)
-        filetowrite <- file.path(paste0("output/phenofitsims/", filenamestart, listofyears[i], ".fit"))
+        filetowrite <- file.path(paste0("output/phenofitsims/ERA5LAND_", filenamestart, listofyears[i], "_dly.fit"))
         con <- file(filetowrite, open="wt")
         writeLines("Simulated climate datafile for Phenofit model", con)
         writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
@@ -251,8 +251,21 @@ writeoutdata <- function(listofyears, simdata, filenamestart){
 }     
 
 listofyearshere <- unlist(unique(tminsims[[1]]["year"]))
-writeoutdata(listofyearshere, tminsims, "tminsimsyear")
-writeoutdata(listofyearshere, tmaxsims, "tmaxsimsyear")
+writeoutdata(listofyearshere, tminsims, "tmn_")
+writeoutdata(listofyearshere, tmaxsims, "tmx_")
+
+# Also need the mean (tmp), which I will caculate from the sims
+# There is likely a smarter way to do this, but I am just doing a loop
+tmeansims <- list()
+for(i in c(1:length(tminsims))){
+    tminhere <- tminsims[[i]]
+    tmaxhere <- tmaxsims[[i]]
+    # Remarkably the below seems to work! 
+    # Added benefit of showing up any impossible error where tmax and tmin formatting is not the same
+    tmeanhere <- (tminhere + tmaxhere)/2 
+    tmeansims[[i]] <- tmeanhere
+}
+writeoutdata(listofyearshere, tmeansims, "tmp_")
 
 
 ##############################
