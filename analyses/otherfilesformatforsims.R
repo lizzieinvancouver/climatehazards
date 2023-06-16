@@ -62,7 +62,6 @@ repfilesnoyears <- function(simsfile, altorwhcfile, writefilename){
 
 
 ## Now adapt the f(x) to do the multiple year files
-## WARNING: We don't seem to have the updated latlon, so using 47.3 for now but UPDATE! after chatting with Victor
 repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
 	simstomatch <- fread(paste0("output/phenofitsims/ERA5LAND_", simsfile, "_dly.fit", sep=""))
 	fakelon <- unique(simstomatch$V2)
