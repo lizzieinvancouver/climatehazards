@@ -69,7 +69,7 @@ repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
 	for(i in c(1:length(yearvector))){
 		whichyear <- yearvector[i]
 		filetorep <- fread(paste0("input/ERA5LAND/ERA5LAND_", climatefile, whichyear, "_dly.fit", sep=""))
-		filetorep1site <- filetorep[which(filetorep$V1=="47.3"),]	
+		filetorep1site <- filetorep[which(filetorep$V1=="47.5"),]	
 		filerepped <- filetorep1site[rep(seq_len(nrow(filetorep1site)), times=length(fakelon)),]
 		filerepped$V2 <- fakelon
 		filetowrite <- file.path(paste0("output/phenofitsims/ERA5LAND_", writefilename, whichyear, "_dly.fit"))
