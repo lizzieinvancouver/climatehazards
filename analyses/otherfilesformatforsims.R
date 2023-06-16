@@ -37,7 +37,7 @@ writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()),
 writeLines(" ", con)
 close(con)
 write.table(daltsims, file = filetowrite, 
-   append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+   append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
 }
 
 # Now, let's write the above as a f(x) ... it always uses 47.5 latitude
@@ -55,7 +55,7 @@ repfilesnoyears <- function(simsfile, altorwhcfile, writefilename){
 	writeLines(" ", con)
 	close(con)
 	write.table(filerepped, file = filetowrite, 
-                append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+                append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
 
 
 }
@@ -79,7 +79,7 @@ repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
 		writeLines(" ", con)
 		close(con)
 		write.table(filerepped, file = filetowrite, 
-                append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+                append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
 	}
 }
 	
@@ -97,7 +97,7 @@ i <- 1
 	
 repfilesnoyears("tmx_1987", "input/ERA5LAND/ERA5LAND_Altitude.fit", "Altitude")
 repfilesnoyears("tmx_1987", "input/ERA5LAND/ERA5LAND_WHC.fit", "WHC")
-yearz <- c(1950:2020) # these are our sims years
+yearz <- c(1950:2000) # these are our sims years
 repfileswyears("tmx_1987", yearz, "pet_", "pet_")
 repfileswyears("tmx_1987", yearz, "pre_", "pre_")
 

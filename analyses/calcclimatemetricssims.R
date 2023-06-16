@@ -110,14 +110,14 @@ makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
     return(resultz)
 }
 
-tminsims <- makesimdata(onesitetmin, 1970, 2000, allchanges)
-tmaxsims <- makesimdata(onesitetmax, 1970, 2000, allchanges)
+tminsims <- makesimdata(onesitetmin, 1950, 2000, allchanges)
+tmaxsims <- makesimdata(onesitetmax, 1950, 2000, allchanges)
 
 
 if(FALSE){ 
 # For testing/troubleshooting code above and below
 climatedatadet <-  onesitetmin
-startyear <- 1970
+startyear <- 1950
 endyear <- 2000
 treatdf <- allchanges
 i <- 2
@@ -172,8 +172,8 @@ plotsimdata <- function(climatedatadet, simdata, startyear, endyear, filename, s
 }
 
 simshere <- c("sd -20%", "sd 0%", "sd + 20%")
-plotsimdata(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
-plotsimdataPDF(onesitetmin, tminsims, 1970, 2000, "tmin3sd", simshere)
+plotsimdata(onesitetmin, tminsims, 1950, 2000, "tmin3sd", simshere)
+plotsimdataPDF(onesitetmin, tminsims, 1950, 2000, "tmin3sd", simshere)
 
 
 
@@ -205,7 +205,7 @@ for (i in c(1:nrow(allchanges))){
     plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
     onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
     write.table(onerowheredf, file = "output/phenofitsims/tminsimsyear1970.csv", 
-        append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+        append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
 
 # Now do it across years ... 
 for (i in c(1:length(listofyearshere))) {
@@ -219,7 +219,7 @@ for (i in c(1:length(listofyearshere))) {
         plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
         onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
         write.table(onerowheredf, file = paste0("output/phenofitsims/tmn_", listofyearshere[i], ".csv"), 
-            append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+            append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
         }
     }   
 }    
@@ -245,7 +245,7 @@ writeoutdata <- function(listofyears, simdata, filenamestart){
             plot(onerowhere[3:length(onerowhere)]~c(1:(length(onerowhere)-2)), type="l")
             onerowheredf <- as.data.frame(matrix(onerowhere, ncol = length(onerowhere)))
             write.table(onerowheredf, file = filetowrite, 
-                append = TRUE, sep = ",", col.names = FALSE, row.names = FALSE)
+                append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
         }
     }
 }     
