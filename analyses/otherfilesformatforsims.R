@@ -34,6 +34,7 @@ filetowrite <- file.path(paste0("output/phenofitsims/", "Altitude", ".fit"))
 con <- file(filetowrite, open="wt")
 writeLines("Repeated climate datafile with sims longitude for Phenofit model", con)
 writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
+writeLines("First two columns are latitude and fake longitude", con)
 writeLines(" ", con)
 close(con)
 write.table(daltsims, file = filetowrite, 
@@ -52,6 +53,7 @@ repfilesnoyears <- function(simsfile, altorwhcfile, writefilename){
 	con <- file(filetowrite, open="wt")
 	writeLines("Repeated climate datafile with sims longitude for Phenofit model", con)
 	writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
+	writeLines("First two columns are latitude and fake longitude", con)
 	writeLines(" ", con)
 	close(con)
 	write.table(filerepped, file = filetowrite, 
@@ -75,6 +77,7 @@ repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
 		con <- file(filetowrite, open="wt")
 		writeLines("Repeated climate datafile with sims longitude for Phenofit model", con)
 		writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
+		writeLines("First two columns are latitude and fake longitude", con)
 		writeLines(" ", con)
 		close(con)
 		write.table(filerepped, file = filetowrite, 

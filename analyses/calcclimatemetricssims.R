@@ -236,6 +236,7 @@ writeoutdata <- function(listofyears, simdata, filenamestart){
         con <- file(filetowrite, open="wt")
         writeLines("Simulated climate datafile for Phenofit model", con)
         writeLines(paste0("Created in R by ", Sys.getenv("LOGNAME")," on ", Sys.Date()), con)
+        writeLines("First two columns are latitude and fake longitude", con)
         writeLines(" ", con)
         close(con)
         for (treathere in c(1:nrow(allchanges))){
