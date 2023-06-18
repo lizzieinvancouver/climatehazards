@@ -92,7 +92,7 @@ makesimdata <- function(climatedatadet, startyear, endyear, treatdf){
         dfhere$ztempC <- (dfhere$tempC-meanhere)/sdhere
         resultzwithinmonth <- vector(mode='list', length=nrow(treatdf))
         for (j in c(1:nrow(treatdf))){
-            newmean <- meanhere*(1+treatdf[["mean"]][j])
+            newmean <- meanhere+(1+treatdf[["mean"]][j])
             newsd <- sdhere*(1+treatdf[["sd"]][j])
             newdata <- (dfhere$ztempC*newsd)+newmean
             # plot(dfhere$tempC~newdata)
