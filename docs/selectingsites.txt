@@ -64,3 +64,9 @@ Lat 46 or 47 would be good for main site I think.
 Update 18 avril 2023
 From Victor: Concerning the 42N site, its altitude seems to be greater than the other sites, which may explain in part its Tmin trend.
 Perhaps we should select a site closer to the coast (41.900386, 2.740856 ?), where the 3 species can still co-exist ?
+
+
+<><><><><><><><><>
+Update 19 juin 2023
+
+Meeting with Victor today at CEFE we found out he already changed the most southern site to one he recommended, but I don't have those data yet. So he will give them to me and I need to rerun the historical output. 

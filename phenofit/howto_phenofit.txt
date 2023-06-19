@@ -64,11 +64,13 @@ Leafindex:
 (From Isabelle on 19 March 2023): I found LeafIndex : it is the leafIndex at the end of the season, the day before senescence date, so it integrates all frost damages since bud set (or almost).
 
 
-<><><><><><><><><><><><><><><><><><><><><><><><><><><>
-<> Which input variables do you need for PHENOFIT4 <>
-<><><><><><><><><><><><><><><><><><><><><><><><><><><>
+<><><><><><><><><><><><><><><><><><><><><><><><><>
+<> Formatting input climate data for PHENOFIT4 <>
+<><><><><><><><><><><><><><><><><><><><><><><><><>
 
-Daily data: 
+You must always have 4 comment lines before climate data. 
+
+You need daily data for these variables: 
 Tmin (tmn)
 tmax (tmx)
 Tmean (tmp)

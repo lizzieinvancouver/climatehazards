@@ -4,12 +4,24 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 Do next ...
 
+What to do right now ...
+
+- Make the historical plots of x versus y be points but also write on top the % of data that is effectively NA
+- Finalize the histogram plots (maybe add transparency)
+
+
+While in Montpellier ... 
+*) Try looking at which index is minimal: when equal prioritize survival over fruit index and maturation 
+1) Get updated historical data (including new lower latitude site) from Victor and run again
+2) Get temperature forecasted data
+3) Work on PET
+4) Try other soil moisture
+
+*) Review 'Before 19 June 2023 notes' and make sure they are done someday
+
+Before 19 June 2023 notes:
+
 BIG main goals to do next are 1-3 below (1 and 2+3 can be done in any order) and report back. 
-
-
-7 June 2023 ...
-* Work on a better outline, need to merge new notes with old notes and get to something I can share with co-authors
-* Check my sims code and see where Dajeong is at, can definitely take over her task if needed
 
 Try get 1-3 done before returning in June (also ideally play around with WHC, so I confirm that I know how), could do PET on return if critical. 
 
