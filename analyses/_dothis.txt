@@ -4,10 +4,18 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 Do next ...
 
-What to do right now ...
+What to do right now ... (while in Montpellier)
 
-- Make the historical plots of x versus y be points but also write on top the % of data that is effectively NA
-- Finalize the histogram plots (maybe add transparency)
+- Make the historical plots of x versus y be points but also write on top the % of data that is effectively NA (DONE) 
+- Finalize the histogram plots (DONE for now)
+
+- Check the frost resistance of the 3 spp.
+
+SIMS plotting ... 
+- Set up the sims so the simulated climate data is also plotted (write out the treat DF at end of 12 month list?)
+- Make sp means code work with varying SD and varying mean; and somehow add the info on PET and WHC
+- Plot histograms for each sim (and write out when leaf unfold and mat dates are >365)
+- Also plot the sims by subtracting out the 0 change year (delta change)
 
 
 While in Montpellier ... 

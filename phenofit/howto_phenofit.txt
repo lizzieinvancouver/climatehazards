@@ -44,7 +44,7 @@ Type 'capsis' at the prompt and it should launch.
 	- You can restrict the geographical zone (but then you need a file with the coordinates set up)
 	- SKIP activer le temperature moyenne
      Next Box
-	- Start the year before the event ALWAYS 
+	- Start the year before the event ALWAYS (meaning the year here should be the first year of climate data; but you will only get the output data starting with the following year because you need climate data from the year before to start the model)
 	- Always select 'activer l'esport a la vollee' -- this gives you the output (otherwise you can try to get it from exporting the last year of results on the next screen)
 	- You can also change the folder here that it writes out to ... it's set to tmp now. 
 	- Next it will ask about 'clearing output directory' (tmp) -- overwriting should be okay if you picked a good directory to write out files 
