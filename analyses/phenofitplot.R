@@ -58,7 +58,7 @@ qrfit <- cleanphenofitdata(phenofitfiles, "querob_19512020/", sitez)
 
 ## plot the data
 
-makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
+makequickplotsyrs <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
     colz <- viridis(nrow(sitez))
     pdf(paste("graphs/phenofit/", filename, ".pdf", sep=""), width=12, height=4)
     par(mfrow=c(1, 3))
@@ -88,11 +88,11 @@ makequickplots <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){
 dev.off()
 }
 
-makequickplots(fsfit[["Fitness"]], fsfit[["LeafIndex"]], fsfit[["MaturationIndex"]],
+makequickplotsyrs(fsfit[["Fitness"]], fsfit[["LeafIndex"]], fsfit[["MaturationIndex"]],
                "historical3metricsSitesOverlayFagus", c(0,1.1), c(1945, 2021))
-makequickplots(qrfit[["Fitness"]], qrfit[["LeafIndex"]], qrfit[["MaturationIndex"]],
+makequickplotsyrs(qrfit[["Fitness"]], qrfit[["LeafIndex"]], qrfit[["MaturationIndex"]],
                "historical3metricsSitesOverlayQuercus", c(0,1.1), c(1945, 2021))
-makequickplots(psfit[["Fitness"]], psfit[["LeafIndex"]], psfit[["MaturationIndex"]],
+makequickplotsyrs(psfit[["Fitness"]], psfit[["LeafIndex"]], psfit[["MaturationIndex"]],
                "historical3metricsSitesOverlayPinus", c(0,1.1), c(1945, 2021))
 
 fsfitdf <- do.call("rbind", fsfit)
@@ -137,11 +137,107 @@ ggsave(filename="graphs/phenofit/historicalggmat1951.pdf", plot=ggmat, height=8,
 phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
                    "LeafUnfoldingDate", "MaturationIndex", "Survival", "TempSurvival")
 
-alldatwide <- reshape(alldat, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+alldatwidewNA <- reshape(alldat, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+alldatwide <- alldatwidewNA
+alldatwide[alldatwide == -999] <- 366
 
+
+## Doing the plots with base R
+if(FALSE){
+    par(mfrow=c(1,3))
+    for(sphere in c("Fagus", "Pinus", "Quercus")){
+        dhere <- alldatwide[which(alldatwide$sp==sphere),]
+        plot(value.Fitness~value.LeafUnfoldingDate, data=dhere, type="n", 
+            main=paste0("Historical data results for ", sphere))
+        percentz <- c()
+        for(i in c(1:length(unique(dhere$lat)))){
+            subby <- dhere[which(dhere$lat==unique(dhere$lat)[i]),]
+            subbywleafout <- subset(subby, value.LeafUnfoldingDate<365)
+            points(value.Fitness~value.LeafUnfoldingDate, data=subbywleafout, col=colz[i])
+            percentnoleafout <- 100*(1-(nrow(subbywleafout)/nrow(subby)))
+            percentz[i] <- paste0(unique(dhere$lat)[i], " deg; % no leafout: ", round(percentnoleafout, 1))
+        }
+        legend("right", legend=percentz, lty=rep(1, length(percentz)), col=colz, bty="n", cex = 0.75)
+    }
+}
+
+makephenofitxyplots_withlatedatesprinted <- function(df, xcolname, ycolname, filename){
+pdf(paste("graphs/phenofit/historical/allspp_xypoints_wprint_", filename, ".pdf", sep=""), width=12, height=4)
+par(mfrow=c(1,3))
+for(sphere in c("Fagus", "Pinus", "Quercus")){
+    dhere <- df[which(df["sp"]==sphere),]
+    plot(unlist(dhere[ycolname])~unlist(dhere[xcolname]), type="n", 
+        xlab=xcolname, ylab=ycolname,
+        main=paste0("Historical data results for ", sphere))
+    percentz <- c()
+    for(i in c(1:length(unique(dhere$lat)))){
+        subby <- dhere[which(dhere$lat==unique(dhere$lat)[i]),]
+        subbywleafout <- subby[which(as.numeric(unlist(subby[xcolname]))<365),]
+        points(unlist(subbywleafout[ycolname])~unlist(subbywleafout[xcolname]), col=colz[i], pch=16)
+        percentnoleafout <- 100*(1-(nrow(subbywleafout)/nrow(subby)))
+        percentz[i] <- paste0(unique(dhere$lat)[i], " deg; % no event: ", round(percentnoleafout, 1))
+    }
+    legend("right", legend=percentz, lty=rep(1, length(percentz)), col=colz, bty="n", cex = 0.75)
+}
+dev.off()
+}
+
+
+makephenofitxyplots<- function(df, xcolname, ycolname, filename){
+pdf(paste("graphs/phenofit/historical/allspp_xypoints_", filename, ".pdf", sep=""), width=12, height=4)
+par(mfrow=c(1,3))
+for(sphere in c("Fagus", "Pinus", "Quercus")){
+    dhere <- df[which(df["sp"]==sphere),]
+    plot(unlist(dhere[ycolname])~unlist(dhere[xcolname]), type="n", 
+        xlab=xcolname, ylab=ycolname,
+        main=paste0("Historical data results for ", sphere))
+    for(i in c(1:length(unique(dhere$lat)))){
+        subby <- dhere[which(dhere$lat==unique(dhere$lat)[i]),]
+        points(unlist(subby[ycolname])~unlist(subby[xcolname]), col=colz[i], pch=16)
+    }
+    legend("left", legend=unique(dhere$lat), lty=rep(1, length(unique(dhere$lat))), col=colz, bty="n", cex = 0.75)
+}
+dev.off()
+}
+
+colz <- alpha(viridis(nrow(sitez)), 0.5)
+makephenofitxyplots_withlatedatesprinted(alldatwide, "value.LeafUnfoldingDate", "value.Fitness", "leafunfolddate_vsfitness")
+makephenofitxyplots_withlatedatesprinted(alldatwide, "value.FruitMaturationDate", "value.Fitness", "fruitmatdate_vsfitness")
+
+makephenofitxyplots(alldatwide, "value.Survival", "value.Fitness", "survival_vsfitness")
+makephenofitxyplots(alldatwide, "value.LeafIndex", "value.Fitness", "leafindex_vsfitness")
+makephenofitxyplots(alldatwide, "value.FruitIndex", "value.Fitness", "fruitindex_vsfitness")
+makephenofitxyplots(alldatwide, "value.MaturationIndex", "value.Fitness", "fruitmatindex_vsfitness")
+
+
+
+makephenofithistplots<- function(df, xcolname, filename){
+pdf(paste("graphs/phenofit/historical/allspp_hist_", filename, ".pdf", sep=""), width=12, height=4)
+par(mfrow=c(1,3))
+for(sphere in c("Fagus", "Pinus", "Quercus")){
+    dhere <- df[which(df["sp"]==sphere),]
+    histoverall <- hist(unlist(dhere[xcolname]), breaks=20, 
+        plot = FALSE) 
+    plot(histoverall, xlab = xcolname, freq = FALSE, main = paste0("Historical data results for ", sphere))
+    for(i in c(1:length(unique(dhere$lat)))){
+        subby <- dhere[which(dhere$lat==unique(dhere$lat)[i]),]
+        histadd <- hist(unlist(subby[xcolname]),  breaks=20, plot=FALSE)
+        plot (histadd, xaxt = 'n', yaxt = 'n', col=colz[i], add = TRUE, freq = FALSE)
+    }
+    legend("left", legend=unique(dhere$lat), lty=rep(1, length(unique(dhere$lat))), col=colz, bty="n", cex = 0.75)
+}
+dev.off()
+}
+
+makephenofithistplots(alldatwide, "value.Fitness", "fitness")
+
+xcolname <- "value.Survival"
+df <- alldatwide
+
+## Doing the plots with ggplot2
 
 surv <- ggplot(alldatwide, aes(x=value.Survival, y=value.Fitness, col=as.character(lat))) +
-    geom_line() +
+    geom_point() +
     ylab("Fitness") +
     xlab("Survival") +
     facet_wrap(sp~., scales="free") +
@@ -216,3 +312,67 @@ ggplot(subset(alldatwide, sp="Fagus"), aes(x=value.LeafUnfoldingDate, y=value.Fi
     facet_wrap(lat~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+## QUICK NEW historgrams
+
+fitplot <- ggplot(alldatwide, aes(x=value.Fitness, col=as.character(lat), fill=as.character(lat)))  +
+    geom_histogram() +
+    xlab("Fitness") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+surv <- ggplot(alldatwide, aes(x=value.Survival, col=as.character(lat), fill=as.character(lat))) +
+    geom_histogram() +
+    xlab("Survival") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+leafdate <- ggplot(alldatwide, aes(x=value.LeafUnfoldingDate, col=as.character(lat), fill=as.character(lat)))  +
+    geom_histogram() +
+    xlab("Leaf Unfolding Date") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+frmatdate <- ggplot(alldatwide, aes(x=value.FruitMaturationDate, col=as.character(lat), fill=as.character(lat)))  +
+    geom_histogram() +
+    xlab("Fruit Maturation Date") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+leafind <- ggplot(alldatwide, aes(x=value.LeafIndex, col=as.character(lat), fill=as.character(lat)))  +
+    geom_histogram() +
+    xlab("Leaf Index") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+frind <- ggplot(alldatwide, aes(x=value.FruitIndex, col=as.character(lat), fill=as.character(lat)))  +
+    geom_histogram() +
+    xlab("Fruit Index") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+matind <- ggplot(alldatwide, aes(x=value.MaturationIndex, col=as.character(lat), fill=as.character(lat)))  +
+    geom_histogram() +
+    xlab("Maturation Index") +
+    facet_wrap(sp~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+p <- list(fitplot, surv, leafdate, frmatdate, leafind, frind, matind)
+
+pdf("graphs/phenofit/historicalfitness1951hist.pdf", height=4, width=10)
+for (i in seq(length(p))) {
+  print(p[[i]])
+}
+dev.off()
+
