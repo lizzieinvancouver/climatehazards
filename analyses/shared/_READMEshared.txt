@@ -18,3 +18,7 @@ I guess it depends on the input format.
 I do have an R function which creates Phenofit file and "fills" it with data - where data should be a table already in the required format (lat, lon, daily data).
 It was made to be used after processing of hourly raster data from ERA5-Land. I don’t know if this is really gonna help you!
 I wrote this function at the very beginning of my PhD, might not be the best way to do it. See the file attached.
+
+
+compute_PET_for_Phenofit.R -- updated function to compute evapotranspiration (Penman Monteith FAO standard method for PET estimates)
+Required (in PHENOFIT format): temperatures, wind speed and dewpoint temperature (+altitude)
