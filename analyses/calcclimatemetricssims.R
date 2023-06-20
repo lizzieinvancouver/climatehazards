@@ -268,6 +268,11 @@ for(i in c(1:length(tminsims))){
 }
 writeoutdata(listofyearshere, tmeansims, "tmp_")
 
+# Also write out the full lists to have for plotting
+save(tminsims, file="output/phenofitsims/tminsims.Rdata")
+save(tmaxsims, file="output/phenofitsims/tmaxsims.Rdata")
+write.csv(allchanges, file="output/phenofitsims/simsrun.csv", row.names=FALSE)
+
 
 ##############################
 ## Plotting historical data ##

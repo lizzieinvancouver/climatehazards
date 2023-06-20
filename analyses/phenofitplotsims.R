@@ -13,33 +13,125 @@ options(stringsAsFactors = FALSE)
 
 ## packages
 library(data.table)
+library(plyr)
 library(ggplot2)
 library(gridExtra)
 library(viridis)
 
 ## set working directory
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
+source("source/plotsimsfxs.R")
 
-cleanphenofitdata <- function(phenofitfilelist, filename, sitedf){
-    df <- list()
-    for (phenometric in phenofitfilelist){     
-        d <- read.delim(paste("input/phenofit/", filename, phenometric, ".txt", sep=""),
-                    skip=3, header=FALSE)
-        dfhere <- data.frame(metric=character(), lat=numeric(), lon=numeric(), year=numeric(),
-                             year=numeric(), value=numeric())
-        for(i in c(1:nrow(sitedf))){
-            dftobind <- data.frame(metric=rep(phenometric, nrow(d)),
-                           lat=rep(sitedf[["lat"]][i], nrow(d)),
-                           lon=rep(sitedf[["lon"]][i], nrow(d)),
-                           year=as.numeric(unlist(d["V1"])),
-                           value=as.numeric(unlist(d[,i+1])))
-            dfhere <- rbind(dfhere, dftobind)
-        }
-       df[[phenometric]] <- dfhere
-        }
-   return(df)
+ whichsim <- "sims1"
+
+# Now get the sim data for one species to start
+sitezsimsmessy <- read.delim(paste0("input/phenofit/sims/", whichsim, "/fagsyl/Fitness.txt"), nrows=3, header=FALSE)
+
+row.names(sitezsimsmessy) <- sitezsimsmessy$V1
+sitezsimsmessy$V1 <- NULL
+sitezsims <- as.data.frame(t(sitezsimsmessy))
+names(sitezsims) <- c("loc", "lat", "lon")
+
+phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
+                   "LeafUnfoldingDate", "MaturationIndex", "Survival", "TempSurvival")
+
+fsfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
+psfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/pinsyl/"), sitezsims)
+qrfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/querob/"), sitezsims)
+
+# Get the simulation runs here ...
+treatz <- read.csv(paste0("output/phenofitsims/", whichsim, "run.csv"))
+controlrun <- treatz[which(treatz$mean==0 & treatz$sd==0), 3] # identidy the control run's fakelon
+
+
+# And diff the files from from no change treatment
+fsdiff <- getdiffsims(fsfitsims, treatz)
+psdiff <- getdiffsims(psfitsims, treatz)
+qrdiff <- getdiffsims(qrfitsims, treatz)
+# Count years with issues ...
+fsbadyrs <- countbadyrs(fsfitsims, treatz)
+psbadyrs <- countbadyrs(psfitsims, treatz)
+qrbadyrs <- countbadyrs(qrfitsims, treatz)
+
+
+if(FALSE){
+uniquemeanz <- length(unique(fsbadyrs$mean))
+uniquedsz <- length(unique(fsbadyrs$sd))
+ncolhere <- if(uniquemeanz>1){
+    uniquemeanz} else {
+        1
+    }
+nrowhere <- if(uniquedsz>1){
+    uniquedsz} else {
+        1
+    }
 }
 
+fsdiffdf <- do.call("rbind", fsdiff)
+fsdiffdf$sp <- "Fagus"
+qrdiffdf <- do.call("rbind", qrdiff)
+qrdiffdf$sp <- "Quercus"
+psdiffdf <- do.call("rbind", psdiff)
+psdiffdf$sp <- "Pinus"
+
+alldiff <- rbind(fsdiffdf, qrdiffdf, psdiffdf)
+
+if(whichsim=="sims1"){
+fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(sd))) +
+    geom_violin() + 
+    facet_wrap(metric~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+qrdiffplot <- ggplot(qrdiffdf, aes(y=value, x=as.character(sd))) +
+    geom_violin() + 
+    facet_wrap(metric~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+psdiffplot <- ggplot(psdiffdf, aes(y=value, x=as.character(sd))) +
+    geom_violin() + 
+    facet_wrap(metric~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsFS.pdf"), plot=fsdiffplot, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsQR.pdf"), plot=qrdiffplot, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
+}
+
+if(whichsim=="sims2"){
+fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(mean))) +
+    geom_violin() + 
+    facet_wrap(metric~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+qrdiffplot <- ggplot(qrdiffdf, aes(y=value, x=as.character(mean))) +
+    geom_violin() + 
+    facet_wrap(metric~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+psdiffplot <- ggplot(psdiffdf, aes(y=value, x=as.character(mean))) +
+    geom_violin() + 
+    facet_wrap(metric~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsFS.pdf"), plot=fsdiffplot, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsQR.pdf"), plot=qrdiffplot, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
+}
+
+
+
+
+
+
+# Need to review below ...
+if(FALSE){ 
+##
 ## SIDE BAR: Historical versus 0% change output
 ## get the data for one species from historical data to compare
 sitezmessy <- read.delim("input/phenofit/fagsyl_19512020/Fitness.txt", nrows=3, header=FALSE)
@@ -47,17 +139,8 @@ row.names(sitezmessy) <- sitezmessy$V1
 sitezmessy$V1 <- NULL
 sitez <- as.data.frame(t(sitezmessy))
 names(sitez) <- c("loc", "lat", "lon")
-phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
-                   "LeafUnfoldingDate", "MaturationIndex", "Survival", "TempSurvival")
+
 fsfit <- cleanphenofitdata(phenofitfiles, "fagsyl_19512020/", sitez)
-
-# Now get the sim data for one species to start
-sitezsimsmessy <- read.delim("input/phenofit/sims/sims2/fagsyl/Fitness.txt", nrows=3, header=FALSE)
-
-row.names(sitezsimsmessy) <- sitezsimsmessy$V1
-sitezsimsmessy$V1 <- NULL
-sitezsims <- as.data.frame(t(sitezsimsmessy))
-names(sitezsims) <- c("loc", "lat", "lon")
 
 fsfitsims <- cleanphenofitdata(phenofitfiles, "sims/sims2/fagsyl/", sitezsims)
 
@@ -76,15 +159,12 @@ dhist475 <- dhist[5,]
 dsims <- fread("output/phenofitsims/ERA5LAND_tmn_1952_dly.fit")
 dsims2 <- dsims[2,]
 ## END SIDE BAR: Historical versus 0% change output
+## 
+
 
 # plot the data 
 
-fsfitsims <- cleanphenofitdata(phenofitfiles, "sims/sims2/fagsyl/", sitezsims)
-psfitsims <- cleanphenofitdata(phenofitfiles, "sims/sims2/pinsyl/", sitezsims)
-qrfitsims <- cleanphenofitdata(phenofitfiles, "sims/sims2/querob/", sitezsims)
 
-
-sitezsims$treat <- c("0C", "1C", "2C")
 
 makequickplotsyrs <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere, sitezdf){
     colz <- viridis(nrow(sitezdf))
@@ -195,4 +275,4 @@ for (i in seq(length(p))) {
   print(p[[i]])
 }
 dev.off()
-
+}

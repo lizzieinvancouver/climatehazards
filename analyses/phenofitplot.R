@@ -101,6 +101,23 @@ qrfitdf$sp <- "Quercus"
 psfitdf <- do.call("rbind", psfit)
 psfitdf$sp <- "Pinus"
 
+## Working on getting the most limiting factor
+library(matrixStats)
+
+threemetrics <- c("Fitness", "Survival",  "FruitIndex", "MaturationIndex")
+fsfit3prep<-  fsfitdf[which(fsfitdf$metric %in% threemetrics),]
+fsfit3 <- reshape(fsfit3prep, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+test <- as.matrix(fsfit3[1:3,c(8,6,7)])
+test[2,2] <-   0.999
+test[1,]  <- 1.0
+rowRanks(test, ties.method = c("first"))
+# Need to pull out the value that gets ranked '1'
+# START HERE  ... 
+
+## End working on getting the most limiting factor
+
+
+
 alldat <- rbind(fsfitdf, qrfitdf, psfitdf)
 
 ggfit <- ggplot(subset(alldat, metric=="Fitness"), aes(x=year, y=value, color=sp)) +
