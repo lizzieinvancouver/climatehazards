@@ -1,12 +1,14 @@
 Started 18 June 2023
-QUICK update 21 June 2023 -- NEED to update this file!!!!
+Updated 21 June 2023 
 
-PhenoFit model using tmn and tmx (and tmp) with different SD (only):
-As in commit 1664d09418e82e3afefddc4a32a75dd58ec6e1a7
-Fakelon for each treatment and the treatment:
+PhenoFit model using tmn and tmx (and tmp) simulated from detrended climate data. 
 
-1 	-0.2% SD
-2 	0 SD
-3 	+0.2% SD
+Info on this run from: calcclimatemetricssims.R
+
+if(simstorun=="sims1sd"){
+    varchanges <- c(-0.5, -0.25, 0, 0.25, 0.5) # c(0, -0.1, 0.1, 0.2)
+    tempchanges <- c(0) # c(0, 0.5, 1, 2)
+    simshere <- c("sd -50%", "sd -25%", "sd 0%", "sd + 25", "sd + 50%")
+}
 
 All the other data (including PET) was just repeated. 
