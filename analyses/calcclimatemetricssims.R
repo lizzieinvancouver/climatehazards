@@ -55,8 +55,8 @@ tmaxlistdet <- getdailydetrendedlist(tmaxdetmonths, tmaxlistanom, unique(tmaxlis
 ## Build simulation data based on detrended data ##
 ###################################################
 
-simstorun <- "sims2mean" # sims2mean sims1sd
-sitetouse <- 5 # Pick 47.5 based on 20 Apr 2023 with Isabelle
+simstorun <- "sims1sd" # sims2mean sims1sd
+sitetouse <- 9 # Pick 47.5 (5) based on 20 Apr 2023 with Isabelle
 # We now also plan to try the most southern and northern site ... which are 1 and 9
 
 if(simstorun=="sims1sd"){
@@ -102,9 +102,6 @@ tmaxsims <- makesimdata(onesitetmax, 1950, 2000, allchanges)
 plotsimdata(onesitetmin, tminsims, 1950, 2000, paste0(simstorun, whichsitewrite), simshere)
 plotsimdataPDF(onesitetmin, tminsims, 1950, 2000, paste0(simstorun, whichsitewrite), simshere)
 
-# Now write out the other files too... 
-source("source/otherfilesformatforsims.R")
-
 #################################
 ## Write out Phenofit sim data ##
 #################################
@@ -132,7 +129,8 @@ save(tmaxsims, file=paste0("output/simsRformat/tmax", simstorun, whichsitewrite,
 write.csv(allchanges, file=paste0("output/simsRformat/", simstorun, whichsitewrite, ".csv"), row.names=FALSE)
 # write.csv(allchanges, file="output/phenofitsims/sims2run475mean.csv", row.names=FALSE)
 
-
+# Now write out the other files too... 
+source("source/otherfilesformatforsims.R")
 
 ##############################
 ## Plotting historical data ##
