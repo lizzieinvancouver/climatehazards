@@ -3,16 +3,7 @@
 
 ## Format the other files we need for phenofit based on the simulated temperature data ##
 
-## housekeeping
-rm(list=ls()) 
-options(stringsAsFactors = FALSE)
-
-## packages
-library(data.table)
-
-
-## set working directory
-setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
+## Sourced file in calcclimatemetricssims.R
 
 if(FALSE){ # Development code; to delete
 ## We need to match to these files ...
@@ -23,8 +14,8 @@ fakelon <- unique(simsmatch$V2)
 ## Let's start with just altitude
 dalt <- fread("input/ERA5LAND/ERA5LAND_Altitude.fit")
 unique(dalt$V1) 
-# this file has data for many locations, but we only want the 47.5 one
-dalt1site <- dalt[which(dalt$V1==47.5),]
+# but udpated later to work with other locations
+dalt1site <- dalt[which(dalt$V1==whichsiteotherfiles),]
 # Now we repeat it as many different sims (fakelon) as we have and replace the longitude with the fakelon
 daltsims <- dalt1site[rep(seq_len(nrow(dalt1site)), times=length(fakelon)),]
 daltsims$V2 <- fakelon
@@ -41,12 +32,12 @@ write.table(daltsims, file = filetowrite,
    append = TRUE, sep = "\t", col.names = FALSE, row.names = FALSE)
 }
 
-# Now, let's write the above as a f(x) ... it always uses 47.5 latitude
+# Now, let's write the above as a f(x) 
 repfilesnoyears <- function(simsfile, altorwhcfile, writefilename){
 	simstomatch <- fread(paste0("output/phenofitsims/ERA5LAND_", simsfile, "_dly.fit", sep=""))
 	fakelon <- unique(simstomatch$V2)
 	filetorep <- fread(altorwhcfile)
-	filetorep1site <- filetorep[which(filetorep$V1==47.5),]
+	filetorep1site <- filetorep[which(filetorep$V1==whichsiteotherfiles),]
 	filerepped <- filetorep1site[rep(seq_len(nrow(filetorep1site)), times=length(fakelon)),]
 	filerepped$V2 <- fakelon
 	filetowrite <- file.path(paste0("output/phenofitsims/ERA5LAND_", writefilename, ".fit"))
@@ -70,7 +61,7 @@ repfileswyears <- function(simsfile, yearvector, climatefile, writefilename){
 	for(i in c(1:length(yearvector))){
 		whichyear <- yearvector[i]
 		filetorep <- fread(paste0("input/ERA5LAND/ERA5LAND_", climatefile, whichyear, "_dly.fit", sep=""))
-		filetorep1site <- filetorep[which(filetorep$V1=="47.5"),]	
+		filetorep1site <- filetorep[which(filetorep$V1==whichsiteotherfiles),]	
 		filerepped <- filetorep1site[rep(seq_len(nrow(filetorep1site)), times=length(fakelon)),]
 		filerepped$V2 <- fakelon
 		filetowrite <- file.path(paste0("output/phenofitsims/ERA5LAND_", writefilename, whichyear, "_dly.fit"))

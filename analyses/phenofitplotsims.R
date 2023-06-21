@@ -22,7 +22,7 @@ library(viridis)
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 source("source/plotsimsfxs.R")
 
- whichsim <- "sims1"
+ whichsim <-  "sims1sd47" # "sims2mean47" 
 
 # Now get the sim data for one species to start
 sitezsimsmessy <- read.delim(paste0("input/phenofit/sims/", whichsim, "/fagsyl/Fitness.txt"), nrows=3, header=FALSE)
@@ -40,7 +40,7 @@ psfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/pinsyl
 qrfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/querob/"), sitezsims)
 
 # Get the simulation runs here ...
-treatz <- read.csv(paste0("output/phenofitsims/", whichsim, "run.csv"))
+treatz <- read.csv(paste0("output/simsRformat/", whichsim, ".csv"))
 controlrun <- treatz[which(treatz$mean==0 & treatz$sd==0), 3] # identidy the control run's fakelon
 
 
@@ -76,7 +76,7 @@ psdiffdf$sp <- "Pinus"
 
 alldiff <- rbind(fsdiffdf, qrdiffdf, psdiffdf)
 
-if(whichsim=="sims1"){
+if(whichsim=="sims1sd47"){
 fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(sd))) +
     geom_violin() + 
     facet_wrap(metric~., scales="free") +
@@ -100,7 +100,7 @@ ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsQR.pdf"),
 ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
 }
 
-if(whichsim=="sims2"){
+if(whichsim=="sims2mean47"){
 fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(mean))) +
     geom_violin() + 
     facet_wrap(metric~., scales="free") +

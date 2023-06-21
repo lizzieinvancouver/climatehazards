@@ -114,6 +114,33 @@ rowRanks(test, ties.method = c("first"))
 # Need to pull out the value that gets ranked '1'
 # START HERE  ... 
 
+
+
+# Make the plot of each adding up ... 
+qrfit3prep<-  qrfitdf[which(qrfitdf$metric %in% threemetrics),]
+qrfit3 <- reshape(qrfit3prep, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+
+psfit3prep<-  psfitdf[which(psfitdf$metric %in% threemetrics),]
+psfit3 <- reshape(psfit3prep, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+
+par(mfrow=c(1,3))
+plot(value.Fitness~lat, data=fsfit3, main="Fagus")
+fsfit3$lathack <- fsfit3$lat + 0.15
+fsfit3$lathack1 <- fsfit3$lat + 0.3
+fsfit3$lathack2 <- fsfit3$lat + 0.45
+points(value.Survival~lathack, data=fsfit3, col="red")
+points(value.Survival*value.FruitIndex~lathack1, data=fsfit3, col="pink")
+# points(value.Survival*value.FruitIndex*value.MaturationIndex~lathack2, data=fsfit3, col="purple") # just checking
+
+plot(value.Fitness~lat, data=psfit3, main="Pinus")
+points(psfit3$value.Survival~fsfit3$lathack, col="red")
+points(psfit3$value.Survival*psfit3$value.FruitIndex~fsfit3$lathack1, col="pink")
+
+plot(value.Fitness~lat, data=qrfit3, main="Quercus")
+points(qrfit3$value.Survival~fsfit3$lathack, col="red")
+points(qrfit3$value.Survival*qrfit3$value.FruitIndex~fsfit3$lathack1, col="pink")
+
+
 ## End working on getting the most limiting factor
 
 
