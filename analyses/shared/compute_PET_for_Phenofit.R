@@ -90,7 +90,7 @@ compute_PET_for_Phenofit <- function(years, data_folder, climate_name){
     net_rad <- ns_rad - nl_rad
     
     # Wind speed at 2 meters
-    wind_spd_2m <- wind_spd * 4.87/log(67.8 * wind_z - 5.42)
+    wind_spd_2m <- wind_spd * 4.87/log(67.8 * wind_spd - 5.42)
     
     # Potential evapotranspiration
     PET <- (0.408 * delta * (net_rad - G) + gamma * 900 * wind_spd_2m * (es - ea)/(tmp + 273))/(delta + gamma * (1 + 0.34 * wind_spd_2m))

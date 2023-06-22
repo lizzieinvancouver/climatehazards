@@ -131,6 +131,9 @@ write.csv(allchanges, file=paste0("output/simsRformat/", simstorun, whichsitewri
 
 # Now write out the other files too... 
 source("source/otherfilesformatforsims.R")
+# And then update PET ...
+source("shared/compute_PET_for_Phenofit.R")
+compute_PET_for_Phenofit(1950:2000, "output/phenofitsims", "ERA5LAND")
 
 ##############################
 ## Plotting historical data ##

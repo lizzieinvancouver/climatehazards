@@ -93,5 +93,11 @@ repfilesnoyears("tmx_1987", "input/ERA5LAND/ERA5LAND_WHC.fit", "WHC")
 yearz <- c(1950:2000) # these are our sims years
 repfileswyears("tmx_1987", yearz, "pet_", "pet_")
 repfileswyears("tmx_1987", yearz, "pre_", "pre_")
+# wait, I need more files for computing PET ...
+repfileswyears("tmx_1987", yearz, "dtm_", "dtm_")
+repfileswyears("tmx_1987", yearz, "glo_", "glo_")
+repfileswyears("tmx_1987", yearz, "wnd_", "wnd_")
+
+
 
 
