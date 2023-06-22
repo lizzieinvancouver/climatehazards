@@ -22,8 +22,12 @@ library(viridis)
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 source("source/plotsimsfxs.R")
 
- whichsim <-  "sims2mean53" #  sims1sd41 sims1sd47 sims1sd53 sims2mean41 sims2mean47 sims2mean53
+whichsim <-  "sims1sd41" #  sims1sd41 sims1sd47 sims1sd53 sims2mean41 sims2mean47 sims2mean53
+allsims <- c("sims1sd41", "sims1sd47", "sims1sd53", 
+    "sims2mean41", "sims2mean47", "sims2mean53")
 
+for(i in allsims){
+whichsim <- i 
 # Now get the sim data for one species to start
 sitezsimsmessy <- read.delim(paste0("input/phenofit/sims/", whichsim, "/fagsyl/Fitness.txt"), nrows=3, header=FALSE)
 
@@ -76,7 +80,7 @@ psdiffdf$sp <- "Pinus"
 
 alldiff <- rbind(fsdiffdf, qrdiffdf, psdiffdf)
 
-if(grep("sd", whichsim)>0){
+if(grepl("sd", whichsim)){
 fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(sd))) +
     geom_violin() + 
     facet_wrap(metric~., scales="free") +
@@ -100,7 +104,7 @@ ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsQR.pdf"),
 ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
 }
 
-if(grep("mean", whichsim)>0){
+if(grepl("mean", whichsim)){
 fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(mean))) +
     geom_violin() + 
     facet_wrap(metric~., scales="free") +
@@ -123,8 +127,7 @@ ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsFS.pdf"),
 ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsQR.pdf"), plot=qrdiffplot, height=8, width=12)
 ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
 }
-
-
+}
 
 
 
