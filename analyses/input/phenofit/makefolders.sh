@@ -1,0 +1,42 @@
+# Started 22 June 2023
+# By Lizzie
+# making folders ...
+cd projects/treegarden/misc/climatehazards/
+cd analyses/input/phenofit/sims/
+# SD
+mkdir sims1sd41
+cd sims1sd41
+mkdir fagsyl
+mkdir pinsyl
+mkdir querob
+cd ..//
+mkdir sims1sd47
+cd sims1sd47
+mkdir fagsyl
+mkdir pinsyl
+mkdir querob
+cd ..//
+mkdir sims1sd53
+cd sims1sd53
+mkdir fagsyl
+mkdir pinsyl
+mkdir querob
+mkdir sims1sd41
+# mean
+mkdir sims2mean41
+cd sims2mean41
+mkdir fagsyl
+mkdir pinsyl
+mkdir querob
+cd ..//
+mkdir sims2mean47
+cd sims2mean47
+mkdir fagsyl
+mkdir pinsyl
+mkdir querob
+cd ..//
+mkdir sims2mean53
+cd sims2mean53
+mkdir fagsyl
+mkdir pinsyl
+mkdir querob
