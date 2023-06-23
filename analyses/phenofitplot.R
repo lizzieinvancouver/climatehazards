@@ -101,6 +101,8 @@ qrfitdf$sp <- "Quercus"
 psfitdf <- do.call("rbind", psfit)
 psfitdf$sp <- "Pinus"
 
+alldat <- rbind(fsfitdf, qrfitdf, psfitdf)
+
 ## Working on getting the most limiting factor
 library(matrixStats)
 
@@ -111,41 +113,43 @@ test <- as.matrix(fsfit3[1:3,c(8,6,7)])
 test[2,2] <-   0.999
 test[1,]  <- 1.0
 rowRanks(test, ties.method = c("first"))
-# Need to pull out the value that gets ranked '1'
-# START HERE  ... 
+# Need to pull out the value that gets ranked '1' ... if I want this mwau of plotting
 
+#
+# For now, just plot them building up
+onedf4 <- alldat[which(alldat$metric %in% threemetrics),]
+onedf3 <- onedf4[which(onedf4$metric!="MaturationIndex"),]
+onedf3wide <- reshape(onedf3, idvar=c("lat", "lon", "year", "sp"), timevar="metric", 
+    direction = "wide")
+onedf3wide$SurvFruitIndex <- onedf3wide$value.Survival*onedf3wide$value.FruitIndex
+onedf3wide$value.FruitIndex <- NULL
 
+onedf3long <- reshape(onedf3wide, idvar=c("lat", "lon", "year", "sp"), 
+    varying=list(c("value.Survival", "SurvFruitIndex","value.Fitness")), v.names="value",
+    direction = "long")
+names(onedf3long)[which(names(onedf3long)=="time")] <- "metric"
+onedf3long$metric[which(onedf3long$metric==2)] <- "2_value.SurvFruitIndex"
+onedf3long$metric[which(onedf3long$metric==1)] <- "1_value.Survival"
+onedf3long$metric[which(onedf3long$metric==3)] <- "3_value.Fitness"
 
-# Make the plot of each adding up ... 
-qrfit3prep<-  qrfitdf[which(qrfitdf$metric %in% threemetrics),]
-qrfit3 <- reshape(qrfit3prep, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
+threemetricsplot <- ggplot(onedf3long, aes(y=value, x=as.character(lat))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    facet_wrap(sp~metric, scales="free") +
+    ylim(-0.25, 1.2) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-psfit3prep<-  psfitdf[which(psfitdf$metric %in% threemetrics),]
-psfit3 <- reshape(psfit3prep, idvar=c("lat", "lon", "year", "sp"), timevar="metric", direction = "wide")
-
-par(mfrow=c(1,3))
-plot(value.Fitness~lat, data=fsfit3, main="Fagus")
-fsfit3$lathack <- fsfit3$lat + 0.15
-fsfit3$lathack1 <- fsfit3$lat + 0.3
-fsfit3$lathack2 <- fsfit3$lat + 0.45
-points(value.Survival~lathack, data=fsfit3, col="red")
-points(value.Survival*value.FruitIndex~lathack1, data=fsfit3, col="pink")
-# points(value.Survival*value.FruitIndex*value.MaturationIndex~lathack2, data=fsfit3, col="purple") # just checking
-
-plot(value.Fitness~lat, data=psfit3, main="Pinus")
-points(psfit3$value.Survival~fsfit3$lathack, col="red")
-points(psfit3$value.Survival*psfit3$value.FruitIndex~fsfit3$lathack1, col="pink")
-
-plot(value.Fitness~lat, data=qrfit3, main="Quercus")
-points(qrfit3$value.Survival~fsfit3$lathack, col="red")
-points(qrfit3$value.Survival*qrfit3$value.FruitIndex~fsfit3$lathack1, col="pink")
-
+ggsave(filename="graphs/phenofit/historical/fitnessBuildup.pdf", plot=threemetricsplot, height=8, width=12)
+# losing rows here due to ylim(-0.25, 1.2) code, see fitnessBuildup_varyingylim.pdf for what it looks like without
 
 ## End working on getting the most limiting factor
 
 
 
-alldat <- rbind(fsfitdf, qrfitdf, psfitdf)
 
 ggfit <- ggplot(subset(alldat, metric=="Fitness"), aes(x=year, y=value, color=sp)) +
     geom_line() +

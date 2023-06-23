@@ -5,8 +5,6 @@
 ## Currently pretty messy; should clean up how we do this as we move forward... ##
 ## Would be good to always plot the climate data and some basics of the fitness perhaps? ##
 
-## CURRENTLY set to sims2 ## 
-
 ## housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
@@ -119,30 +117,30 @@ alldiff <- rbind(fsdiffdf, qrdiffdf, psdiffdf)
 
 if(grepl("sd", whichsim)){
 fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(sd))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qrdiffplot <- ggplot(qrdiffdf, aes(y=value, x=as.character(sd))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 psdiffplot <- ggplot(psdiffdf, aes(y=value, x=as.character(sd))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -155,30 +153,30 @@ ggsave(filename=paste0("graphs/phenofit/sims/", whichsim, "_diffmetricsPS.pdf"),
 
 if(grepl("mean", whichsim)){
 fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(mean))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qrdiffplot <- ggplot(qrdiffdf, aes(y=value, x=as.character(mean))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 psdiffplot <- ggplot(psdiffdf, aes(y=value, x=as.character(mean))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -283,10 +281,10 @@ for(whichlat in unique(onesddf$latforsim)){
     dfhere <- subset(onesddf, latforsim==whichlat)
 
 fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     scale_x_discrete(labels = sdlabels) + 
@@ -294,10 +292,10 @@ fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lo
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     scale_x_discrete(labels = sdlabels) + 
@@ -305,10 +303,10 @@ qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     scale_x_discrete(labels = sdlabels) + 
@@ -324,30 +322,30 @@ for(whichlat in unique(onemeandf$latforsim)){
     dfhere <- subset(onemeandf, latforsim==whichlat)
 
 fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     facet_wrap(metric~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
@@ -368,62 +366,67 @@ onesddf4 <- onesddf[which(onesddf$metric %in% fourmajormetrics),]
 
 # https://www.datanovia.com/en/lessons/ggplot-violin-plot/
 fs4metricsplot <- ggplot(subset(onesddf4, sp=="Fagus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     scale_x_discrete(labels = sdlabels) + 
+    ylim(-0.25, 1.2) + 
     facet_wrap(as.character(latforsim)~metric, scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qr4metricsplot <- ggplot(subset(onesddf4, sp=="Quercus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     scale_x_discrete(labels = sdlabels) + 
+    ylim(-0.25, 1.2) + 
     facet_wrap(as.character(latforsim)~metric, scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 ps4metricsplot <- ggplot(subset(onesddf4, sp=="Pinus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
     scale_x_discrete(labels = sdlabels) + 
+    ylim(-0.25, 1.2) + 
     facet_wrap(as.character(latforsim)~metric, scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-ggsave(filename=paste0("graphs/phenofit/sims/fourmetrics/sdsim_4metricsFS.pdf"), plot=fs4metricsplot, height=8, width=12)
-ggsave(filename=paste0("graphs/phenofit/sims/fourmetrics/sdsim_4metricsQR.pdf"), plot=qr4metricsplot, height=8, width=12)
-ggsave(filename=paste0("graphs/phenofit/sims/fourmetrics/sdsim_4metricsPS.pdf"), plot=ps4metricsplot, height=8, width=12)
-
+ggsave(filename=paste0("graphs/phenofit/sims/metrics4/sdsim_4metricsFS.pdf"), plot=fs4metricsplot, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics4/sdsim_4metricsQR.pdf"), plot=qr4metricsplot, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics4/sdsim_4metricsPS.pdf"), plot=ps4metricsplot, height=8, width=12)
+# losing rows here due to ylim(-0.25, 1.2) code
 
 onemeandf4 <- onemeandf[which(onemeandf$metric %in% fourmajormetrics),]
 
 
 fs4metricsplotm <- ggplot(subset(onemeandf4, sp=="Fagus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
+    ylim(-0.25, 1.2) + 
     facet_wrap(as.character(latforsim)~metric, scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qr4metricsplotm <- ggplot(subset(onemeandf4, sp=="Quercus"), aes(y=value, x=as.character(lon))) +
-    geom_violin(trim=FALSE) + 
+    geom_violin(trim=FALSE, col="lightgray") + 
     stat_summary(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
-        geom = "pointrange", color = "black"
+        geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
+    ylim(-0.25, 1.2) + 
     facet_wrap(as.character(latforsim)~metric, scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
@@ -434,29 +437,132 @@ ps4metricsplotm <- ggplot(subset(onemeandf4, sp=="Pinus"), aes(y=value, x=as.cha
     fun.data = "mean_sdl",  fun.args = list(mult = 1), 
     geom = "pointrange", color = "black"
     ) +
+    ylim(-0.25, 1.2) + 
     facet_wrap(as.character(latforsim)~metric, scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-ggsave(filename=paste0("graphs/phenofit/sims/fourmetrics/meansim_4metricsFS.pdf"), plot=fs4metricsplotm, height=8, width=12)
-ggsave(filename=paste0("graphs/phenofit/sims/fourmetrics/meansim_4metricsQR.pdf"), plot=qr4metricsplotm, height=8, width=12)
-ggsave(filename=paste0("graphs/phenofit/sims/fourmetrics/meansim_4metricsPS.pdf"), plot=ps4metricsplotm, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics4/meansim_4metricsFS.pdf"), plot=fs4metricsplotm, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics4/meansim_4metricsQR.pdf"), plot=qr4metricsplotm, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics4/meansim_4metricsPS.pdf"), plot=ps4metricsplotm, height=8, width=12)
+# losing rows here due to ylim(-0.25, 1.2) code
 
-
-# TO DO FRIDAY !!!
+# Fitness component building plots 
 # Finally, also quick and dirty ... 
 # Make up fitness, survival, survival x fruitindex file ... 
-# Start with onemeandf4 (and sd version), delete out matindex metric
-# Then make the file wide (reshape) by metric, then calculate ...
-# ... survival x fruitindex, then delete fruitindex
-# Make it long again and should be able to use above code.
+onemeandf3 <- onemeandf4[which(onemeandf4$metric!="MaturationIndex"),]
+onemeandf3wide <- reshape(onemeandf3, idvar=c("lat", "lon", "year", "sp", "latforsim"), timevar="metric", 
+    direction = "wide")
+onemeandf3wide$SurvFruitIndex <- onemeandf3wide$value.Survival*onemeandf3wide$value.FruitIndex
+onemeandf3wide$value.FruitIndex <- NULL
+
+# I need to get this to preserve names: https://stackoverflow.com/questions/47928328/converting-data-from-wide-to-long-using-multiple-columns
+# Here's a hack for now ...
+# MEAN 
+onemeandf3long <- reshape(onemeandf3wide, idvar=c("lat", "lon", "year", "sp", "latforsim"), 
+    varying=list(c("value.Survival", "SurvFruitIndex","value.Fitness")), v.names="value",
+    direction = "long")
+names(onemeandf3long)[which(names(onemeandf3long)=="time")] <- "metric"
+onemeandf3long$metric[which(onemeandf3long$metric==2)] <- "2_value.SurvFruitIndex"
+onemeandf3long$metric[which(onemeandf3long$metric==1)] <- "1_value.Survival"
+onemeandf3long$metric[which(onemeandf3long$metric==3)] <- "3_value.Fitness"
 
 
+fs3metricsplotm <- ggplot(subset(onemeandf3long, sp=="Fagus"), aes(y=value, x=as.character(lon))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    ylim(-0.25, 1.2) + 
+    facet_wrap(as.character(latforsim)~metric, scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+qr3metricsplotm <- ggplot(subset(onemeandf3long, sp=="Quercus"), aes(y=value, x=as.character(lon))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    ylim(-0.25, 1.2) + 
+    facet_wrap(as.character(latforsim)~metric, scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ps3metricsplotm <- ggplot(subset(onemeandf3long, sp=="Pinus"), aes(y=value, x=as.character(lon))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    ylim(-0.25, 1.2) + 
+    facet_wrap(as.character(latforsim)~metric, scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename=paste0("graphs/phenofit/sims/metrics3/meansim_3metricsFS.pdf"), plot=fs3metricsplotm, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics3/meansim_3metricsQR.pdf"), plot=qr3metricsplotm, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics3/meansim_3metricsPS.pdf"), plot=ps3metricsplotm, height=8, width=12)
+# losing rows here due to ylim(-0.25, 1.2) code
 
 
+# SD 
+onesddf3 <- onesddf4[which(onesddf4$metric!="MaturationIndex"),]
+onesddf3wide <- reshape(onesddf3, idvar=c("lat", "lon", "year", "sp", "latforsim"), timevar="metric", 
+    direction = "wide")
+onesddf3wide$SurvFruitIndex <- onesddf3wide$value.Survival*onesddf3wide$value.FruitIndex
+onesddf3wide$value.FruitIndex <- NULL
+
+onesddf3long <- reshape(onesddf3wide, idvar=c("lat", "lon", "year", "sp", "latforsim"), 
+    varying=list(c("value.Survival", "SurvFruitIndex","value.Fitness")), v.names="value",
+    direction = "long")
+names(onesddf3long)[which(names(onesddf3long)=="time")] <- "metric"
+onesddf3long$metric[which(onesddf3long$metric==2)] <- "2_value.SurvFruitIndex"
+onesddf3long$metric[which(onesddf3long$metric==1)] <- "1_value.Survival"
+onesddf3long$metric[which(onesddf3long$metric==3)] <- "3_value.Fitness"
 
 
+fs3metricsplotsd <- ggplot(subset(onesddf3long, sp=="Fagus"), aes(y=value, x=as.character(lon))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    ylim(-0.25, 1.2) + 
+    facet_wrap(as.character(latforsim)~metric, scales="free") +
+    scale_x_discrete(labels = sdlabels) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
+qr3metricsplotsd <- ggplot(subset(onesddf3long, sp=="Quercus"), aes(y=value, x=as.character(lon))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    ylim(-0.25, 1.2) + 
+    facet_wrap(as.character(latforsim)~metric, scales="free") +
+    scale_x_discrete(labels = sdlabels) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ps3metricsplotsd <- ggplot(subset(onesddf3long, sp=="Pinus"), aes(y=value, x=as.character(lon))) +
+    geom_violin(trim=FALSE, col="lightgray") + 
+    stat_summary(
+        fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+        geom = "pointrange", color = "dodgerblue", lwd=1
+    ) +
+    ylim(-0.25, 1.2) + 
+    facet_wrap(as.character(latforsim)~metric, scales="free") +
+    scale_x_discrete(labels = sdlabels) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename=paste0("graphs/phenofit/sims/metrics3/sdsim_3metricsFS.pdf"), plot=fs3metricsplotsd, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics3/sdsim_3metricsQR.pdf"), plot=qr3metricsplotsd, height=8, width=12)
+ggsave(filename=paste0("graphs/phenofit/sims/metrics3/sdsim_3metricsPS.pdf"), plot=ps3metricsplotsd, height=8, width=12)
+# losing rows here due to ylim(-0.25, 1.2) code
 
 
 
