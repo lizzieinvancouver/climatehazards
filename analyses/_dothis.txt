@@ -6,6 +6,8 @@ Do next ...
 
 What to do right now ... (while in Montpellier)
 
+- Consider adding a new metric which is yes/no for leafout and other dates each year ... then we could also plot this. 
+- Have not yet made f(x)s to get minimum most important variable, but could...
 - Make the historical plots of x versus y be points but also write on top the % of data that is effectively NA (DONE) 
 - Finalize the histogram plots (DONE for now)
 

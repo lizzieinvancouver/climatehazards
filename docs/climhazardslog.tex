@@ -24,22 +24,34 @@
 
 \section{Meeting notes}
 
+\subsection{23 juin 2023 with Isabelle \& Victor}
+{\bf Last day in Montpellier!}
 
-\subsection{22 juin, Stuff I did today and chatting with Victor}
+\subsection{22 juin: Stuff I did today \& chatting with Victor}
 
-Using Victor's nice file, I updated my code the PET is adjusted depending on temperature. On quick glance, it did not do much.
+Discussed authorship with Isabelle, she does not care too much, but in her lab she usually puts herself last. 
+
+Using Victor's nice file, I updated my code the PET is adjusted depending on temperature. On quick glance, it did not do much. But Victor and I checked and it did impact FruitIndex, which was expect (not DroughtIndex as also expected). 
 
 I tested whether increasing SD in a simple threshold model should make the leafout date earlier. Answer is no. 
+
+Victor does not use GUI for PHENOFIT, so someday I should probably switch to doing it without the GUI for safety? Especially if doing many rooms. 
+
+Drought effects are separate from temperature effects; no interaction... Isabelle thinks they are multiplicative effects. Limit for growth is 0.4 relative extractable water for all C3 species. Isabelle will send the reference. 
 
 \emph{Victor}:
 PET should effect FruitIndex (and it does! Phew). It should not effect DroughIndex in PHENOFIT4 (also appears true). I compared between the PHENOFIT output before fixing PET and after. \\
 It looks like the fixed dates for PHENOFIT must be the same date for all years, to discuss with Isabelle.\\
 
-\subsection{20 juin, with Victor \& Isabelle}
+\subsection{20 juin with Victor \& Isabelle}
+
+Today we agreed to focus on mean shifts (0-5C over baseline) and variance shifts (need to look at at data but should do lower and higher) and then we could someday later put together a FEW of the combos, but not all of them (not the full factorial I have been coding; this is sort of a relief as we have a lot going on). 
 
 Maybe don't change the WHC, if we are interested better to change the precipitation regimes.... 
 
-\subsection{19 juin, with Victor \& Isabelle; email from Ben}
+We talked a lot about how to know what is driving total fitness and how that is changing over simulations (or time or space). We discussed Mahalanobis distance to look at distance from where the three components of fitness (Survival, FruitIndex, MaturationIndex) all equal 1 (1 is highest possible). Maybe also PCA (perhaps across all metrics, but then you do not get the fact that some metrics matter more (survival more critical than FruitIndex for example). 
+
+\subsection{19 juin 2023 with Victor \& Isabelle; email from Ben}
 
 {\bf I am back in Montpellier!} Lots of stuff happening ....
 
@@ -51,6 +63,9 @@ Start year in phenofit (should be the first year you have data -- it will just b
 \item The 0 (zero) FruitIndex for Fagus probably due to 0 LeafIndex (which is probably due to frost)
 \item For Quercus there is -999 for FruitMaturationDate (only twice); Isabelle looked this up and it means the data is not set. For now I set the code to replace the -999 with 366. 
 \end{itemize}
+
+\emph{Breaking down PHENOFIT model:} See scan I should take of 22 juin merged notes.
+
 
 Check the frost resistance of the 3 spp (I added to my \_dothis list). 
 
