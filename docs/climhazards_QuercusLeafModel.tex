@@ -1,0 +1,87 @@
+\documentclass[11pt,letter]{article}
+\usepackage[top=1.00in, bottom=1.0in, left=1.1in, right=1.1in]{geometry}
+\renewcommand{\baselinestretch}{1}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\def\labelitemi{--}
+\parindent=0pt
+\parskip=5pt
+
+\begin{document}
+\bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
+\renewcommand{\refname}{\CHead{}}
+
+\title{Comparing \emph{Quercus} Leaf model from \\ Duputie vs. van der Meersch}
+\author{Lizzie, Isabelle Chuine, Ben Cook, Victor van der Meersch}
+\date{\today}
+\maketitle
+
+\section*{Based on historical climate}
+
+See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are similar (MaturationIndex dominates fitness) but now fitness is VERY low as of latitude 44.
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup_DuputieQuercus.pdf}
+  \caption{\emph{Quercus} fitness across latitude (historical climate data) based on Duputie parameters. You can see PHENOFIT4 output at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/input/phenofit/querob_19512020_Duputie}.}
+  \label{fig:histdup}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
+  \caption{\emph{Quercus} fitness across latitude (historical climate data) based on updated Leaf Model parameters. You can see PHENOFIT4 output at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/input/phenofit/querob_19512020}.}
+  \label{fig:histdnew}
+  \end{center}
+\end{figure}
+
+\clearall
+\section*{Based on simulated climate with mean warming}
+
+See Fig. \ref{fig:simsmeanDup}-\ref{fig:simsmeanUp}. Fitness is now dominated by a mix depending on latitude (Survival at low latitude, MaturationIndex at mid and high). 
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/querob_Duputie/meansim_3metricsQR.pdf}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) mean warming, based on Duputie parameters. To see the underlying components of the model, look for `meansim' QR files at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims/querob_Duputie}.}
+  \label{fig:simsmeanDup}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsQR.pdf}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) mean warming, based on updated parameters. To see the underlying components of the model, look for `meansim' QR files in \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims}}
+  \label{fig:simsmeanUp}
+  \end{center}
+\end{figure}
+
+
+\clearall
+\section*{Based on simulated climate with changing variance}
+
+See Fig. \ref{fig:simssdDup}-\ref{fig:simssdUp}. Fitness dominated by MaturationIndex with extremely low fitness for reduced variance at low latitudes and all variance at mid and high latitudes.
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/querob_Duputie/sdsim_3metricsQR.pdf}
+  \caption{\emph{Quercus} across changing variance, based on Duputie parameters. To see the underlying components of the model, look for `dssim' QR files at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims/querob_Duputie}.}
+  \label{fig:simssdDup}
+  \end{center}
+\end{figure}
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/sdsim_3metricsQR.pdf}
+  \caption{\emph{Quercus} across changing variance, based on updated parameters. To see the underlying components of the model, look for `sdsim' QR files in \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims}}
+  \label{fig:simssdUp}
+  \end{center}
+\end{figure}
+
+
+
+\end{document}
