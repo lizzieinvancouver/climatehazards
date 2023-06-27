@@ -29,9 +29,9 @@ load("output/detclimate/tmaxlist.Rdata")
 load("output/detclimate/tminlistdet.Rdata")
 load("output/detclimate/tmaxlistdet.Rdata")
 
-simstorun <- "sims2mean" # sims2mean sims1sd
+simstorun <- "sims1sd" # sims2mean sims1sd
 sitetouse <- 9 # 1 5 9 
-# Picked 47.5 (5) based on 20 Apr 2023 with Isabelle
+# Picked site at latitude 47.5 (5) based on 20 Apr 2023 with Isabelle
 # We now also plan to try the most southern and northern site ... which are 1 and 9
 
 if(simstorun=="sims1sd"){

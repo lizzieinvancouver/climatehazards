@@ -4,6 +4,13 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 Do next ...
 
+To do items from Montpellier visit:
+- For Quercus, try the new model parameterization. 
+- Do the historical PhenoFit runs with 1950-2000 or maybe 1950-1990
+- Add flowering date and flower dormancy date to all figures
+- Superimpose the the curve for flowering dormancy for Pinus on the temperature curves (SD sims) for one one sample site (perhaps in one year or average across years?). Ask Isabelle for equation and I look up a, b, c parameters. 
+- Do one sim where we covary temperature and SD (I would do 0.25 x + 3 C I think)
+
 What to do right now ... (while in Montpellier)
 
 - Consider adding a new metric which is yes/no for leafout and other dates each year ... then we could also plot this. 

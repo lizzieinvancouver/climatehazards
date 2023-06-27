@@ -25,7 +25,50 @@
 \section{Meeting notes}
 
 \subsection{23 juin 2023 with Isabelle \& Victor}
-{\bf Last day in Montpellier!}
+{\bf Last day in Montpellier!} With Victor and Isabelle, we went through results to date:
+
+We reviewed first the historical results, see Fig. \ref{fig:historicalfitnessl}. 
+
+Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \ref{fig:fagusmean3}) we discussed how we could see that at low latitudes (Fig. \ref{fig:fagusmean41}) that there was reduced CarbonSurvival (not enough cold means late dormancy) and thus FruitMaturationDate gets later. While at higher latitudes (Fig. \ref{fig:fagusmean53} ) there is an increase in the FruitIndex as FruitMaturation is higher. 
+
+I should review the \emph{Pinus} results in Duputie et al. 2015. For our mean results, it looks like carbon could be the issue again. 
+
+For the mean results for \emph{Quercus} we wondered whether the Leaf model parameterization was driving the results. It's currently set to have a -4.5 maximum temperature. To check this we created an updated file (\verb|Quercus_robur_ADuputie_updated23June2023.species|) using the leaf model parameterization from Van der Meersch \& Chuine 2023 (\verb|cmaes_fit_subset2_rep2.species|). I need to run this new model parameterization.
+
+Then we reviewed the SD sims. I took less notes, but there was a fair bit of similar drivers for each species (e.g., for \emph{Fagus}, which is more frost sensitive we see lower LeafIndex at the higher latitude models likely due to frost) but also a lot of discussion over the balance of where higher SD would put some of the non-linear curves. 
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
+  \caption{These results build through the multiplicative components of fitness (which are multiplied together): Survival (left), Survival$*$FruitIndex (middle) and Fitness, which is Survival$*$FruitIndex*MaturationIndex (right). Given high survival and little change between the middle and right panels we can see that \emph{Fagus} is determined mainly by FruitIndex (this makes sense as it is often affected by frost damage, having a low tolerance of low temperatures). We see next the for \emph{Pinus} survival dominates (often it does not meet the chill requirement for leafout and thus has no carbon and low CarbonSurvival so low total Survival) and finally, fir \emph{Quercus} it's MaturationIndex (this makes sense as the fruits are quite large and can take a long time to mature---it doesn't always happen according to this model). }
+  \label{fig:historicalfitnessl}
+  \end{center}
+\end{figure}
+
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsFS.pdf}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming.}
+  \label{fig:fagusmean3}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsFS.pdf}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components.}
+  \label{fig:fagusmean41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsFS.pdf}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components.}
+  \label{fig:fagusmean53}
+  \end{center}
+\end{figure}
 
 \subsection{22 juin: Stuff I did today \& chatting with Victor}
 
