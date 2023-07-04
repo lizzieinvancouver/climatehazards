@@ -5,6 +5,7 @@ Train back to Montpellier
 Do next ...
 
 To do items from Montpellier visit:
+- Do the forecasted min and max from Victor (just plot the data for mean and variance estimates)
 - For Quercus, try the new model parameterization. DONE -- see docs/climhazards_QuercusLeafModel.pdf
 - Do the historical PhenoFit runs with 1950-2000 or maybe 1950-1990 (meh, not a priority)
 - Add flowering date and flower dormancy date to all figures
