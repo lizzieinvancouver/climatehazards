@@ -14,17 +14,25 @@
 \bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
 \renewcommand{\refname}{\CHead{}}
 
-\title{Comparing \emph{Quercus} Leaf model from \\ Duputie vs. van der Meersch}
+\title{Comparing \emph{Quercus} model from \\ Duputie vs. van der Meersch}
 \author{Lizzie, Isabelle Chuine, Ben Cook, Victor van der Meersch}
 \date{\today}
 \maketitle
 
 \section*{Overview}
-For the mean results for \emph{Quercus} we wondered whether the Leaf model parameterization was driving the results. It's currently set to have a -4.5 maximum temperature. To check this we created an updated file (\verb|Quercus_robur_ADuputie_updated23June2023.species|) using the leaf model parameterization from Van der Meersch \& Chuine 2023 (\verb|cmaes_fit_subset2_rep2.species|). Below is a comparison of the results.
+For the mean results for \emph{Quercus} we wondered whether the Leaf model parameterization was driving the results. It's currently set to have a -4.5 maximum temperature. To check this we created an updated file (\verb|Quercus_robur_ADuputie_updated23June2023.species|) using the leaf model parameterization from Van der Meersch \& Chuine 2023 (\verb|cmaes_fit_subset2_rep2.species|). After reviewing the results, Victor replied:
+
+\begin{quote}
+I am surprised by the fitness with the updated parameters, which seems veeery low, though there are Quercus indivuals in these latitude.
+Maybe it is because we only extracted the leaf/flower parameters from the inverse calibration set?
+If it is not time consuming, you could try to run simulations directly with the "cmaes\_fit\_subset2\_rep2.species" file, even though extra precautions must be taken when analysing the results.
+\end{quote}
+
+And Isabelle agreed so now I ran with the new parameter set. Below is a comparison of the results between the FULL updated parameters and Duputie.
 
 \section*{Based on historical climate}
 
-See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are similar (MaturationIndex dominates fitness) but now fitness is VERY low as of latitude 44.
+See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are similar (MaturationIndex dominates fitness) but now fitness is now low as of latitudes 41 and 44 and higher.
 
 \begin{figure}[h!]
  \begin{center}
@@ -37,7 +45,7 @@ See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are simil
 \begin{figure}[h!]
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
-  \caption{\emph{Quercus} fitness across latitude (historical climate data) based on updated Leaf Model parameters. You can see PHENOFIT4 output at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/input/phenofit/querob_19512020}.}
+  \caption{\emph{Quercus} fitness across latitude (historical climate data) based on updated ALL model parameters. You can see PHENOFIT4 output at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/input/phenofit/querob_19512020}.}
   \label{fig:histdnew}
   \end{center}
 \end{figure}
@@ -45,7 +53,7 @@ See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are simil
 \clearall
 \section*{Based on simulated climate with mean warming}
 
-See Fig. \ref{fig:simsmeanDup}-\ref{fig:simsmeanUp}. Fitness is now dominated by a mix depending on latitude (Survival at low latitude, MaturationIndex at mid and high). 
+See Fig. \ref{fig:simsmeanDup}-\ref{fig:simsmeanUp}. Fitness is again affected mostly by MaturationIndex, and low at high warming.
 
 \begin{figure}[h!]
  \begin{center}
@@ -67,8 +75,7 @@ See Fig. \ref{fig:simsmeanDup}-\ref{fig:simsmeanUp}. Fitness is now dominated by
 \clearall
 \section*{Based on simulated climate with changing variance}
 
-See Fig. \ref{fig:simssdDup}-\ref{fig:simssdUp}. Fitness dominated by MaturationIndex with extremely low fitness for reduced variance at low latitudes and all variance at mid and high latitudes.
-
+See Fig. \ref{fig:simssdDup}-\ref{fig:simssdUp}. Fitness dominated by FruitIndex (I think) and decreasing with increasing variance.
 \begin{figure}[h!]
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/querob_Duputie/sdsim_3metricsQR.pdf}
