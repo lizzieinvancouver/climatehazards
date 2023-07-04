@@ -29,7 +29,7 @@ load("output/detclimate/tmaxlist.Rdata")
 load("output/detclimate/tminlistdet.Rdata")
 load("output/detclimate/tmaxlistdet.Rdata")
 
-simstorun <- "sims2mean" # sims2mean sims1sd
+simstorun <- "sims1sd" # sims2mean sims1sd
 sitetouse <- 9 # 1 5 9 
 # Picked site at latitude 47.5 (5) based on 20 Apr 2023 with Isabelle
 # We now also plan to try the most southern and northern site ... which are 1 and 9
@@ -77,6 +77,7 @@ tmaxsims <- makesimdata(onesitetmax, 1950, 2000, allchanges)
 plotsimdata(onesitetmin, tminsims, 1950, 2000, paste0(simstorun, whichsitewrite), simshere)
 plotsimdataPDF(onesitetmin, tminsims, 1950, 2000, paste0(simstorun, whichsitewrite), simshere)
 
+
 #################################
 ## Write out Phenofit sim data ##
 #################################
@@ -97,6 +98,8 @@ for(i in c(1:length(tminsims))){
     tmeansims[[i]] <- tmeanhere
 }
 writeoutdata(listofyearshere, tmeansims, "tmp_")
+
+# source("source/pinusflowerdorm.R") # for checking what is up with Pinus endodormancy
 
 # Also write out the full lists to have for plotting
 save(tminsims, file=paste0("output/simsRformat/tmin", simstorun, whichsitewrite, ".Rdata"))
