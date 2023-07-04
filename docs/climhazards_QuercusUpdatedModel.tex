@@ -28,11 +28,11 @@ Maybe it is because we only extracted the leaf/flower parameters from the invers
 If it is not time consuming, you could try to run simulations directly with the "cmaes\_fit\_subset2\_rep2.species" file, even though extra precautions must be taken when analysing the results.
 \end{quote}
 
-And Isabelle agreed so now I ran with the new parameter set. Below is a comparison of the results between the FULL updated parameters and Duputie.
+And Isabelle agreed so now I ran with the new parameter set. Below is a comparison of the results between the FULL updated parameters and Duputie (se Fig. \ref{fig:fruitmatdate}) which now clearly gets laters at higher latitudes, and matters to fitness (whereas before neither of these things happened). 
 
 \section*{Based on historical climate}
 
-See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are similar (MaturationIndex dominates fitness) but now fitness is now low as of latitudes 41 and 44 and higher.
+See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are similar (MaturationIndex dominates fitness) but now fitness is now low as of latitudes 41 and 44 and higher. I was also struck by how the FruitMatDate changed, 
 
 \begin{figure}[h!]
  \begin{center}
@@ -49,6 +49,16 @@ See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are simil
   \label{fig:histdnew}
   \end{center}
 \end{figure}
+
+
+\begin{figure}[h!]
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/allspp_xypoints_wprint_fruitmatdate_vsfitness.pdf}
+  \caption{\emph{Quercus} fitness as a function of FruitMaturationDate (historical climate data) based on updated ALL model parameters. You can see the previous plot using the Duputie parameters at \url{https://github.com/lizzieinvancouver/climatehazards/blob/faaca3adcab9bf8d615732abf1ebfe00a1d52370/analyses/graphs/phenofit/historical/allspp_xypoints_wprint_fruitmatdate_vsfitness.pdf}.}
+  \label{fig:fruitmatdate}
+  \end{center}
+\end{figure}
+
 
 \clearall
 \section*{Based on simulated climate with mean warming}
