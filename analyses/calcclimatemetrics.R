@@ -18,10 +18,7 @@ library(viridis)
 ## set working directory
 setwd("~/Documents/git/projects/treegarden/misc/climatehazards/analyses")
 
-## To do!
-# (1) Check what I have below and make tmean from sim data
-# (2) Remember to keep drafting what we want to say and show in paper, so we (I) do not end up down a rabbit hole
-
+# source useful f(x)s
 source("source/calcclimatefxs.R")
 
 

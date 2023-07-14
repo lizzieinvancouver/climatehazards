@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Species>
+  <Provenance>
+    <Name>Quercus_robur</Name>
+    <Leaf Model="5">
+      <t0>-66.4213391433539</t0>
+      <Topt>2.95965015229806</Topt>
+      <Tmin>-18.3121720440559</Tmin>
+      <Tmax>47.2032659229308</Tmax>
+      <d>-1.08392660529272</d>
+      <e>10.379890202192</e>
+      <Ccrit>147.014603223554</Ccrit>
+      <Fcrit>32.1746410790133</Fcrit>
+    </Leaf>
+    <Flower Model="5">
+      <t0>-66.4213391433539</t0>
+      <Topt>2.95965015229806</Topt>
+      <Tmin>-18.3121720440559</Tmin>
+      <Tmax>47.2032659229308</Tmax>
+      <d>-1.08392660529272</d>
+      <e>10.379890202192</e>
+      <Ccrit>147.014603223554</Ccrit>
+      <Fcrit>48.8205016763692</Fcrit>
+    </Flower>
+    <FruitMaturation Model="1">
+      <aa>1.92989601282646</aa>
+      <bb>18.9263572149386</bb>
+      <Fcrit>22.2553472048792</Fcrit>
+      <Top>5.03069719787982</Top>
+      <matmoy>93.8156930803241</matmoy>
+      <sigma>9.73692990281295</sigma>
+      <pfe50>0.447867571589068</pfe50>
+      <photosType>2</photosType>
+    </FruitMaturation>
+    <Senescence Model="6">
+      <Pb>8.81072677111314</Pb>
+      <Tb>7.30893111326531</Tb>
+      <alpha>1.43955002273063</alpha>
+      <beta>1.5600562157321</beta>
+      <Scrit>51.0643377251344</Scrit>
+      <sigmaSen>0.951076075577923</sigmaSen>
+    </Senescence>
+    <CompoundBud>2</CompoundBud>
+    <LeafHabit>1</LeafHabit>
+    <Tdeath>-90</Tdeath>
+    <Frost>
+      <FHfrmax1>-9.68119281751257</FHfrmax1>
+      <FHfrmax2>-29.3135284219944</FHfrmax2>
+      <FHminfe>-7.6512173920254</FHminfe>
+      <FHminfl>-7.93029513764361</FHminfl>
+      <Te1>11.2311911377553</Te1>
+      <Te2>-13.999190362289</Te2>
+      <FHtfemax>-10.0218685148623</FHtfemax>
+      <FHtflmax>-14.0758200304712</FHtflmax>
+      <FHpfemax>-19.4800197400495</FHpfemax>
+      <FHpflmax>-19.5935385863996</FHpflmax>
+      <NL1>6.91067608628485</NL1>
+      <NL2>12.5840906641106</NL2>
+    </Frost>
+    <Drought Model="6">
+      <ppextremelow>428.823241511546</ppextremelow>
+      <!-- 0th quantile -->
+      <pplow>451.835823323088</pplow>
+      <!-- 5% quantile -->
+      <pphigh>2131.04078785791</pphigh>
+      <!-- 95% quantile -->
+      <ppextremehigh>3177.48951687681</ppextremehigh>
+      <!-- 100% -->
+    </Drought>
+    <!-- <Evapotranspiration Model="1"/> -->
+  </Provenance>
+</Species>
