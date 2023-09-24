@@ -20,9 +20,9 @@ testclim.avg <- seq(-5,42, length.out=200)
 
 # Wang & Engel model seems to want static values for first 4 inputs:
 # WangEngelfx <- function(Tmin, Tmax, Topt, Alpha, Tavg)
-wangeng24 <- WangEngelfx(0, 41, 26, 2.85, testclim.avg) # Nacho's budburst (with alpha from Inakis other models)
-wangeng27 <- WangEngelfx(0, 41, 29, 2.85, testclim.avg) # Nacho's flowering
-wangeng26 <- WangEngelfx(0, 41, 22, 2.85, testclim.avg) # Nacho's veraison
+wangeng24 <- WangEngelfx(0, 40, 26, 2.85, testclim.avg) # Nacho's budburst (with alpha from Inakis other models)
+wangeng27 <- WangEngelfx(0, 40, 29, 2.85, testclim.avg) # Nacho's flowering
+wangeng26 <- WangEngelfx(0, 40, 22, 2.85, testclim.avg) # Nacho's veraison
 #should all Tmax be 40 that's what Inaki and Nacho use - NOPE, graph gets weird
 
 # Now just format and plot

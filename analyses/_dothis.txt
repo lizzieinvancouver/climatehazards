@@ -5,10 +5,10 @@ Train back to Montpellier
 Do next ... (Isabelle on break through 12 August)
 
 To do for projections:
-- moving average AND stitch together the historical and model data (see log of notes)
+- moving average AND stitch together the historical and model data (see log of notes). -- done for now, see calcclimatemetricsfuture.R (24 Sep 2023), but waiting on tmx projections. 
 
 To do items from Montpellier visit:
-- Maybe make historical data a moving average mean, instead of binding by 10 years (could just change the years change code I think and LEAVE everything else)
+- Maybe make historical data a moving average mean, instead of binding by 10 years (could just change the years change code I think and LEAVE everything else -- see how I did it in calcclimatemetricsfuture.R)
 - Add flowering date and flower dormancy date to all figures? ORGANIZE code notes soon
 - Organize these notes soon. 
 - Prep the figures we may want in paper (including the conceptual ones)
