@@ -24,6 +24,27 @@
 
 \section{Meeting notes}
 
+
+\subsection{25 September 2023: Email from Victor about how many days are in a model year...}
+Victor wrote:
+\begin{quote}
+I also forgot to tell you that not all models have the same calendar:\\
+- IPSL, MPI and MRI have a gregorian (``true") calendar, with either 365 or 366 days\\
+- GFDL has a 365-day calendar (no leap year)\\
+- UKESM has a 360-day calendar (12 months of 30 days each)\\
+
+Most of the time, February 29 is interpolated from February 28 and March 1.\\
+For 360-day calendar, it is a bit more tricky. I've seen three different approaches:\\
+- insert a new day every 72 days in order to add 5 days in a year - this new day is randomly selected in the 72-day block\\
+or\\
+- drop Feb. 30 and 29 (except in leap years), and interpolate 31st of Jan, Mar, May, Jul, Aug, Oct, and Dec from the days before and after\\
+or\\
+- directly interpolate one day every 72 days (and Feb 29 when needed)\\
+
+Anyway, I think in our case we can keep the model initial calendar, but we may want to adapt your monthly calculations?\\
+If you prefer, I can also send you the data with interpolated extra days (when needed).\\
+\end{quote}
+
 \subsection{24 September 2023: No meeting, just work notes}
 
 No meeting, but I feel like some notes would be good as I fall out of practice on this project.... \\

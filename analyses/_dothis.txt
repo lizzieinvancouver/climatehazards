@@ -15,6 +15,7 @@ To do items from Montpellier visit:
 
 - Some day: ask Ben about forecasted data plots (which seem weird)
 - Some day: Do one sim where we covary temperature and SD (I would do 0.25 x + 3 C I think)
+- Some day: See log on 25 Sep 2023, where Victor mentions that some projections only have 360 d per year
 
 - Lower priority: Do the historical PhenoFit runs with 1950-2000 or maybe 1950-1990 (meh, not a priority)
 
