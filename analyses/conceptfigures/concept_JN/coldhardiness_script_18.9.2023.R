@@ -32,5 +32,5 @@ cold_plot <- cold %>%
   ylim(0,1e-06)
   
 cold_plot  
-ggsave("plots/coldhazards_concept.png",plot=cold_plot,scale=1,dpi=600,units = "in",height=7,width=10.9)
+# ggsave("plots/coldhazards_concept.png",plot=cold_plot,scale=1,dpi=600,units = "in",height=7,width=10.9)
 
