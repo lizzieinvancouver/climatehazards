@@ -20,8 +20,8 @@
 \maketitle
 
 \section*{Overview}
-For the mean results for \emph{Quercus} we wondered whether the Leaf model parameterization was driving the results. To check this we created an updated file
- (\verb|Quercus_robur_ADuputie_updated23June2023.species|) using the leaf model parameterization from Van der Meersch \& Chuine 2023 (\verb|cmaes_fit_subset2_rep2.species|). After reviewing the results, Victor replied:
+For the mean results for \emph{Quercus} we wondered whether the Leaf model parameterization was driving the results. To check this we created an updated file\\
+ (\verb|Quercus_robur_ADuputie_updated23June2023.species|) using the leaf model parameterization from Van der Meersch \& Chuine 2023 \\(\verb|cmaes_fit_subset2_rep2.species|). After reviewing the results, Victor replied:
 
 \begin{quote}
 I am surprised by the fitness with the updated parameters, which seems veeery low, though there are Quercus indivuals in these latitude.
@@ -29,7 +29,9 @@ Maybe it is because we only extracted the leaf/flower parameters from the invers
 If it is not time consuming, you could try to run simulations directly with the "cmaes\_fit\_subset2\_rep2.species" file, even though extra precautions must be taken when analysing the results.
 \end{quote}
 
-And Isabelle agreed so now I ran with the new parameter set. Below is a comparison of the results between the FULL updated parameters and Duputie.
+And Isabelle agreed so now I ran with the new parameter set. So in July 2023, I ran with the FULL updated parameters and Duputie. Fitness was higher for the historical data and declined with higher levels of warming (compared to the historical where it was lowest for the lower warming scenarios). 
+
+And then on 15 november 2023, I updated to \verb|Quercus_robur_ADuputie_updated23June2023| which is (similar to our Pinsyl and Fagsyl models) based on `expert opinion,' not on inverse calibration as "cmaes\_fit\_subset2\_rep2.species" is. Below is a comparison of the results between this new `expert opinion' version and Duputie. 
 
 \section*{Based on historical climate}
 
@@ -46,7 +48,7 @@ See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are simil
 \begin{figure}[h!]
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
-  \caption{\emph{Quercus} fitness across latitude (historical climate data) based on updated ALL model parameters. You can see PHENOFIT4 output at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/input/phenofit/querob_19512020}.}
+  \caption{\emph{Quercus} fitness across latitude (historical climate data) based on updated model (ending in `updated23June2023'). You can see PHENOFIT4 output at \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/input/phenofit/querob_19512020}.}
   \label{fig:histdnew}
   \end{center}
 \end{figure}
@@ -55,7 +57,7 @@ See bottom panels of Fig. \ref{fig:histdup}-\ref{fig:histdnew}, trends are simil
 \begin{figure}[h!]
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/allspp_xypoints_wprint_fruitmatdate_vsfitness.pdf}
-  \caption{\emph{Quercus} fitness as a function of FruitMaturationDate (historical climate data) based on updated ALL model parameters. You can see the previous plot using the Duputie parameters at \url{https://github.com/lizzieinvancouver/climatehazards/blob/faaca3adcab9bf8d615732abf1ebfe00a1d52370/analyses/graphs/phenofit/historical/allspp_xypoints_wprint_fruitmatdate_vsfitness.pdf}.}
+  \caption{\emph{Quercus} fitness as a function of FruitMaturationDate (historical climate data) based on updated model (ending in `updated23June2023'). You can see the previous plot using the Duputie parameters at \url{https://github.com/lizzieinvancouver/climatehazards/blob/faaca3adcab9bf8d615732abf1ebfe00a1d52370/analyses/graphs/phenofit/historical/allspp_xypoints_wprint_fruitmatdate_vsfitness.pdf}.}
   \label{fig:fruitmatdate}
   \end{center}
 \end{figure}
@@ -77,7 +79,7 @@ See Fig. \ref{fig:simsmeanDup}-\ref{fig:simsmeanUp}. Fitness is again affected m
 \begin{figure}[h!]
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsQR.pdf}
-  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) mean warming, based on updated parameters. To see the underlying components of the model, look for `meansim' QR files in \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims}}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) mean warming, based on updated model (`updated23June2023'). To see the underlying components of the model, look for `meansim' QR files in \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims}}
   \label{fig:simsmeanUp}
   \end{center}
 \end{figure}
@@ -98,7 +100,7 @@ See Fig. \ref{fig:simssdDup}-\ref{fig:simssdUp}. Fitness dominated by FruitIndex
 \begin{figure}[h!]
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/sdsim_3metricsQR.pdf}
-  \caption{\emph{Quercus} across changing variance, based on updated parameters. To see the underlying components of the model, look for `sdsim' QR files in \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims}}
+  \caption{\emph{Quercus} across changing variance, based on updated model (`updated23June202'). To see the underlying components of the model, look for `sdsim' QR files in \url{https://github.com/lizzieinvancouver/climatehazards/tree/main/analyses/graphs/phenofit/sims}}
   \label{fig:simssdUp}
   \end{center}
 \end{figure}

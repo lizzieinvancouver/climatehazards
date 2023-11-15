@@ -5,10 +5,9 @@
 \usepackage{natbib}
 \usepackage{amsmath}
 \usepackage{hyperref}
-\usepackage{parksip}
 
 \def\labelitemi{--}
-\parindent=0pt
+
 
 \begin{document}
 \bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
@@ -20,10 +19,57 @@
 \maketitle
 \tableofcontents
 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+
 % \section*{Some current issues}
 
 \section{Meeting notes}
 
+
+\subsection{15 novembre 2023: Meeting at CEFE with Isabelle \& Victor}
+
+To do ...
+\begin{enumerate}
+\item Use the new parameter set for Quercus from Victor. It is based on expert opinion, whereas the one I have now is based on inverse calibration. 
+\item Fagus simulations future -- calculate the mean C 1 Nov to 1 Fev for 41 N site (we expect it to be around 13 at 0; and a little less than 13 at reduced SD), and for the other sites -- we expect more days above 13 with higher SD in all sites. 
+\item And for Fagus, get the number of days in the week after leafunfolingdate below -5.3  (freezing for leaves near the time of leafunfolding date, there's a different temperature for further before leafunfolding date.) {\bf Should try to functionalize this to work for other temperatures and other temporal windows.} % <FHminfe>-5.3</FHminfe>
+\end{enumerate}
+
+Notes during meeting (in addition to to do above):
+\begin{enumerate}
+\item Remember:
+\begin{enumerate}
+\item Drought survival uses only precip; but fruit maturation depends on precip-ET
+\item FruitIndex is affected by flower development (frost on flowers will reduce fruit). 
+\end{enumerate}
+\item With mean warming the effects -- and their drivers -- depend on where you start (with latitude). With SD the results and drivers are very similar (expect the effect on whether leafunfolding date gets later depends on latitude, likely because further north the later leafdormancy break date happens when it is too cold to unfold): leafdormancybreakdate gets later and likely drives more frost (need to check, see above task); leafunfoldingdate also gets more variable consistently. Note: MaturationIndex depends on LeafIndex. 
+\end{enumerate}
+
+
+\subsection{14 novembre 2023: Prep for meeting at CEFE this week}
+
+
+\begin{enumerate}
+\item Need to review our simulation findings -- most notes are in 23 juin 2023. 
+\item Are we happy with the \emph{Quercus} parameters? We now use \verb{cmaes fit subset2 rep2.species} which I think (CHECK) is the full updated parameter set (not just the leaf and flower parameters)? 
+\item Check my notes on Pinus results below with Isabelle.
+\item Review results with future sims -- agree we can ignore calendar issue (and just toss plots in supp)?
+\item Decide on SD and mean for one run with both ... do it, and interpret it. Do we have any predictions?
+\item Which figures? Question: What do we want to present? We have a lot ....
+\item Start writing up section on PHENOFIT so we can agree on it.
+\item Questions for colleagues file. (DONE)
+\item Smaller items
+\begin{enumerate}
+\item We will skip changing WHC, right?
+\item I should write up the METHODS before I go, including:
+\begin{enumerate}
+\item Penman-Montieth
+\item Where we got the species parameter files
+\item Where the climate data comes from.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 
 \subsection{25 September 2023: Email from Victor about how many days are in a model year...}
 Victor wrote:
@@ -139,7 +185,7 @@ Then we reviewed the SD sims. I took less notes, but there was a fair bit of sim
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
-  \caption{These results build through the multiplicative components of fitness (which are multiplied together): Survival (left), Survival$*$FruitIndex (middle) and Fitness, which is Survival$*$FruitIndex*MaturationIndex (right). Given high survival and little change between the middle and right panels we can see that \emph{Fagus} is determined mainly by FruitIndex (this makes sense as it is often affected by frost damage, having a low tolerance of low temperatures). We see next the for \emph{Pinus} survival dominates (often it does not meet the chill requirement for leafout and thus has no carbon and low CarbonSurvival so low total Survival) and finally, fir \emph{Quercus} it's MaturationIndex (this makes sense as the fruits are quite large and can take a long time to mature---it doesn't always happen according to this model). }
+  \caption{These results build through the multiplicative components of fitness (which are multiplied together): Survival (left), Survival$*$FruitIndex (middle) and Fitness, which is Survival$*$FruitIndex*MaturationIndex (right). Given high survival and little change between the middle and right panels we can see that \emph{Fagus} is determined mainly by FruitIndex (this makes sense as it is often affected by frost damage, having a low tolerance of low temperatures). We see next the for \emph{Pinus} survival dominates (often it does not meet the chill requirement for leafout and thus has no carbon and low CarbonSurvival so low total Survival) and finally, for \emph{Quercus} it's MaturationIndex (this makes sense as the fruits are quite large and can take a long time to mature---it doesn't always happen according to this model). }
   \label{fig:historicalfitnessl}
   \end{center}
 \end{figure}
@@ -148,7 +194,7 @@ Then we reviewed the SD sims. I took less notes, but there was a fair bit of sim
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsFS.pdf}
-  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming.}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming showing three latitudes. In June 2023, we discussed: at low latitudes (see next figure) that there was reduced CarbonSurvival (not enough cold means late dormancy) and thus FruitMaturationDate gets later. While at higher latitudes (see Fig. \ref{fig:fagusmean53}) there is an increase in the FruitIndex as FruitMaturation is higher.}
   \label{fig:fagusmean3}
   \end{center}
 \end{figure}
@@ -156,7 +202,7 @@ Then we reviewed the SD sims. I took less notes, but there was a fair bit of sim
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsFS.pdf}
-  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components.}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 41 latitude. Low fitness is driven by low carbonsurvival, which occurs because of late dormancy break date (because leafdormancybreakdate is variable that's the driver; if it were frost, we'd see more constant leafdormancybreakdate and variable in leafindex).}
   \label{fig:fagusmean41}
   \end{center}
 \end{figure}
@@ -164,7 +210,7 @@ Then we reviewed the SD sims. I took less notes, but there was a fair bit of sim
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsFS.pdf}
-  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components.}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 53\degree N latitude. Here's warming reduces frost and thus fruitindex goes up and survival goes up. Note that the leafdormancybreakdate also gets a little later but leafunfolding does not because the warming is still enough for get earlier leafout (and there is a buffer where early dormancybreakdate does not matter because it's too cold leaf unfolding to start. }
   \label{fig:fagusmean53}
   \end{center}
 \end{figure}
