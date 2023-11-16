@@ -16,8 +16,11 @@ par(mfrow=c(1,5))
 dormlist <- list()
 for (i in c(1:length(varchanges))){
     dfhere <- subset(check, sdtreat==varchanges[i])
-    dormlist [[i]] <- (1 / ( 1+exp(0.06*(dfhere$tempC-6)^2+(dfhere$tempC-6))))
+    dormlist[[i]] <- (1 / ( 1+exp(0.06*(dfhere$tempC-6)^2+(dfhere$tempC-6))))
      hist(dfhere$tempC, xlab="Mean Temp from Jan-Mar (50 years)", main=paste0("Variance at ", varchanges[i]))
+     dormcurvex <- seq(-20,30, length.out=1000)
+     dormcurve <- (1 / ( 1+exp(0.06*(dormcurvex-6)^2+(dormcurvex-6))))
+     points(dormcurve*500~dormcurvex, pch=16)
 }
 dev.off()
 
