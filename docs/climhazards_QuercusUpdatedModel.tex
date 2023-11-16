@@ -20,6 +20,7 @@
 \date{\today}
 \maketitle
 
+
 \section*{Overview}
 For the mean results for \emph{Quercus} we wondered whether the Leaf model parameterization was driving the results. To check this we created an updated file\\
  (\verb|Quercus_robur_ADuputie_updated23June2023.species|) using the leaf model parameterization from Van der Meersch \& Chuine 2023 \\(\verb|cmaes_fit_subset2_rep2.species|). After reviewing the results, Victor replied:
@@ -56,6 +57,17 @@ For \verb|cmaes_fit_subset2_rep2.species|: trends are similar (MaturationIndex d
   \end{center}
 \end{figure}
 
+
+\section*{Understanding the results using updated model}
+
+On 16 November 2023, Isabelle, Victor and I spent several hours trying to understand why the updated model (ending in `updated23June2023') had such high fitness. I put related files from today in \verb|querob_Nov2023| folder inside analyses/input/phenofit. 
+
+\begin{enumerate}
+\item We know the distribution from this parameter set makes sense (see distribution figure in folder) so why is there no decrease in fitness?
+\item We used the trace function to follow it carefully and found that with warming you get very early leafout and NEED to UPDATE HERE. 
+\item We may see reduced fitness if we lowered WHC.... I am still thinking on this (to 50 or 100; Peuchabon is 50). 
+\item The reason the \verb|cmaes_fit_subset2_rep2.species| parameter set makes sense is that it doesn't really! It leads to really weird fruitmatdate because its leafout model has a very low max (compared to the updated model, ending in `updated23June2023'). 
+\end{enumerate}
 
 \clearall
 \section*{Based on simulated climate with mean warming}

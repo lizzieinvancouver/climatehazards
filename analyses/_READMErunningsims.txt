@@ -13,4 +13,6 @@ How to run the simulations ...
 	cd /Applications/Capsis/
 	sh capsis.sh -l en
 
+Set the years to 1950-2000 (and remember that you just select the folder in the phenofit GUI, you do not click into it). 
+
 3) I then manually move output to input/phenofit/sims

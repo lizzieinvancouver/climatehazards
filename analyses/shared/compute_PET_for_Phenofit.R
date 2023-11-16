@@ -96,6 +96,7 @@ compute_PET_for_Phenofit <- function(years, data_folder, climate_name){
     PET <- (0.408 * delta * (net_rad - G) + gamma * 900 * wind_spd_2m * (es - ea)/(tmp + 273))/(delta + gamma * (1 + 0.34 * wind_spd_2m))
     
     # Write data
+    save(PET, file=paste0("output/simsRformat/pet", simstorun, whichsitewrite, ".Rdata"))
     filename <- paste0(data_folder, "/", climate_name, "_pet_", yr, "_dly.fit")
     con <- file(filename, open="wt")
     writeLines("Climate datafile for Phenofit model", con)

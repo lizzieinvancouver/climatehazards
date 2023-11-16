@@ -29,8 +29,8 @@ load("output/detclimate/tmaxlist.Rdata")
 load("output/detclimate/tminlistdet.Rdata")
 load("output/detclimate/tmaxlistdet.Rdata")
 
-simstorun <- "sims1sd" # sims2mean sims1sd
-sitetouse <- 5 # 1 5 9 
+simstorun <- "sims2mean" # sims2mean sims1sd
+sitetouse <- 1 # 1 5 9 
 # Picked site at latitude 47.5 (5) based on 20 Apr 2023 with Isabelle
 # We now also plan to try the most southern and northern site ... which are 1 and 9
 
@@ -111,4 +111,5 @@ write.csv(allchanges, file=paste0("output/simsRformat/", simstorun, whichsitewri
 source("source/otherfilesformatforsims.R")
 # And then update PET ...
 source("shared/compute_PET_for_Phenofit.R")
+# source("shared/compute_PETnodtm_for_Phenofit.R") # version using tmn (min temp) in place of dtm (dewpoint temp)
 compute_PET_for_Phenofit(1950:2000, "output/phenofitsims", "ERA5LAND")

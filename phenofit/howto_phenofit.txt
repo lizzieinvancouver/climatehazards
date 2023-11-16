@@ -82,3 +82,9 @@ altitude
 WHC
 
 
+<><><><><><><><><><>
+<> Miscellaneous <>
+<><><><><><><><><><>
+
+16 nov 2023: We used the trace feature today, which lets you see the daily values. At the execution screen, it's at the bottom and you need to specify the locations ... for example: `1, 1951' means site 1, in 1951 (I think).
+
