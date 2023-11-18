@@ -18,6 +18,8 @@ for (i in c(1:length(varchanges))){
     dfhere <- subset(check, sdtreat==varchanges[i])
     dormlist[[i]] <- (1 / ( 1+exp(0.06*(dfhere$tempC-6)^2+(dfhere$tempC-6))))
      hist(dfhere$tempC, xlab="Mean Temp from Jan-Mar (50 years)", main=paste0("Variance at ", varchanges[i]))
+     # Quick way to show the f(x) on the data, but hacked y vale, so ignore the height of the curve
+     # could improve this someday by using density anove instead of histogram
      dormcurvex <- seq(-20,30, length.out=1000)
      dormcurve <- (1 / ( 1+exp(0.06*(dormcurvex-6)^2+(dormcurvex-6))))
      points(dormcurve*500~dormcurvex, pch=16)

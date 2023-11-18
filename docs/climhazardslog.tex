@@ -24,18 +24,25 @@
 
 % \section*{Some current issues}
 
+For Pinus at southern site, see Scots Pine in Duputie. At 47 N, wamring leads to same effect as at southern site (carbon survival due to late leafunfolding)
+
+FHminfe -- this is the minimum temperature for no leaf damage after budbreak, check in any species file for this. The only other way to get a low leafindex is when the leaves do not unfold (leadunfoldingdate of 365). Need a plot that shows leaf unfolding date and the number of frost days together. 
+FHminfl -- this is the minimum temperature for no flower damage after budbreak, check in any species file for this
+
 \section{Meeting notes}
 \subsection{16 novembre 2023: Meeting at CEFE with Isabelle \& Victor}
 
 We spent the morning talking about Victor's very cool project on forecasting the Holocene, then spent the afternoon on the new results from  new parameter set for Quercus. 
 See \verb|climhazards_QuercusUpdatedModel.pdf| for more on that. 
 
+I also added the curve for the f(x) to the pinusflowerendodorm.pdf figure (ignore the height of the curve) so we could better see the f(x) versus the temperatures. 
+
 \subsection{15 novembre 2023: Meeting at CEFE with Isabelle \& Victor}
 
 To do ...
 \begin{enumerate}
 \item Use the new parameter set for Quercus from Victor. It is based on expert opinion, whereas the one I have now is based on inverse calibration. 
-\item Fagus simulations future -- calculate the mean C 1 Nov to 1 Fev for 41 N site (we expect it to be around 13 at 0; and a little less than 13 at reduced SD), and for the other sites -- we expect more days above 13 with higher SD in all sites. 
+\item Fagus simulations future -- to look at LeafDormancyBreakDate -- calculate the mean C 1 Nov to 1 Fev for 41 N site (we expect it to be around 13 at 0; and a little less than 13 at reduced SD), and for the other sites -- we expect more days above 13 with higher SD in all sites. 
 \item And for Fagus, get the number of days in the week after leafunfolingdate below -5.3  (freezing for leaves near the time of leafunfolding date, there's a different temperature for further before leafunfolding date.) {\bf Should try to functionalize this to work for other temperatures and other temporal windows.} % <FHminfe>-5.3</FHminfe>
 \end{enumerate}
 

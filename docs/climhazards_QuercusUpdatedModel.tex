@@ -64,7 +64,7 @@ On 16 November 2023, Isabelle, Victor and I spent several hours trying to unders
 
 \begin{enumerate}
 \item We know the distribution from this parameter set makes sense (see distribution figure in folder) so why is there no decrease in fitness?
-\item We used the trace function to follow it carefully and found that with warming you get very early leafout and NEED to UPDATE HERE. 
+\item We used the trace function to follow it carefully and found that with warming you get earlier leafout and -- later fruit maturity due to drought, but not enough to impact matindex, but if fruit mate date continues to get later we would expect matindex to go down. Remember that drought survival depends only on precip and so should be lower and only impacts fruitmatdate (and it should also impact leafindex, which it does not even though they see these effects). WHC affects fruitmat.
 \item We may see reduced fitness if we lowered WHC.... I am still thinking on this (to 50 or 100; Peuchabon is 50). 
 \item The reason the \verb|cmaes_fit_subset2_rep2.species| parameter set makes sense is that it doesn't really! It leads to really weird fruitmatdate because its leafout model has a very low max (compared to the updated model, ending in `updated23June2023'). 
 \end{enumerate}
