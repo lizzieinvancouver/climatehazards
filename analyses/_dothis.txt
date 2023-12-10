@@ -6,8 +6,9 @@ Do next ...
 Updated December 2023, after November 2023 meeting in person
 
 To do higher priority:
-- Plots to get a better sense of leaf damage drivers (freezing) and when dates are >365. We discussed this a lot 15-17 November 2023. 
-- Add flowering date and flower dormancy date to all figures? (Note from fall 2023, before Nov 2023 meeting)
+- Plots to get a better sense of leaf damage drivers (freezing) and when dates are >365. We discussed this a lot 15-17 November 2023.
+	- I think this would add to phenofitplotsims.R and need to pull FHminfe from the species parameter files. 
+- Add flowering date and flower dormancy date to all figures? (Note from fall 2023, before Nov 2023 meeting) -- relates to pinusflowerendodormMeanTemp.pdf and other file in same folder, which is a similar task. 
 - for projections: moving average AND stitch together the historical and model data (see log of notes). -- done for now, see calcclimatemetricsfuture.R (24 Sep 2023), but waiting on tmx projections. 
 - Maybe make historical temperature data a moving average mean, instead of binding by 10 years (could just change the years change code I think and LEAVE everything else -- see how I did it in calcclimatemetricsfuture.R)
  
