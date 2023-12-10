@@ -3,7 +3,7 @@
 
 ## Testing if higher SD has to mean earlier leafout ##
 ## Because it's a threshold, maybe you always get there sooner? ##
-## Copied some code from biaglag.R from J Auerbach ##
+## Copied some code from biaslag.R from J Auerbach ##
 
 n_sim <- 1e4
 thermal_sum <- 2000

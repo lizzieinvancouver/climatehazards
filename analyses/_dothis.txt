@@ -2,128 +2,25 @@ Started 1 avril 2023
 Train back to Montpellier
 
 <><><><><><><><><><><><><><>
-Do next ... (Isabelle on break through 12 August)
+Do next ... 
+Updated December 2023, after November 2023 meeting in person
 
-To do for projections:
-- moving average AND stitch together the historical and model data (see log of notes). -- done for now, see calcclimatemetricsfuture.R (24 Sep 2023), but waiting on tmx projections. 
-
-To do items from Montpellier visit:
-- Maybe make historical data a moving average mean, instead of binding by 10 years (could just change the years change code I think and LEAVE everything else -- see how I did it in calcclimatemetricsfuture.R)
-- Add flowering date and flower dormancy date to all figures? ORGANIZE code notes soon
-- Organize these notes soon. 
-- Prep the figures we may want in paper (including the conceptual ones)
-
-- Some day: ask Ben about forecasted data plots (which seem weird)
-- Some day: Do one sim where we covary temperature and SD (I would do 0.25 x + 3 C I think)
-- Some day: See log on 25 Sep 2023, where Victor mentions that some projections only have 360 d per year
-
-- Lower priority: Do the historical PhenoFit runs with 1950-2000 or maybe 1950-1990 (meh, not a priority)
+To do higher priority:
+- Plots to get a better sense of leaf damage drivers (freezing) and when dates are >365. We discussed this a lot 15-17 November 2023. 
+- Add flowering date and flower dormancy date to all figures? (Note from fall 2023, before Nov 2023 meeting)
+- for projections: moving average AND stitch together the historical and model data (see log of notes). -- done for now, see calcclimatemetricsfuture.R (24 Sep 2023), but waiting on tmx projections. 
+- Maybe make historical temperature data a moving average mean, instead of binding by 10 years (could just change the years change code I think and LEAVE everything else -- see how I did it in calcclimatemetricsfuture.R)
+ 
+To do, but longer time-horizon:
+- Some day: Fagus simulations future -- to look at LeafDormancyBreakDate see 15 Nov 2023 notes on this.
+- Some day: Re-order and consider best plots to show all the phenofit metrics. See notes in log from 17 novembre 2023. 
+- Some day: Prep the figures we may want in paper (including the conceptual ones)
+- Some day: Do sims where we covary temperature and SD. Which sims? See notes in log from 17 novembre 2023.
 
 
-What to do right now ... (while in Montpellier)
-
-- Consider adding a new metric which is yes/no for leafout and other dates each year ... then we could also plot this. 
-- Have not yet made f(x)s to get minimum most important variable, but could...
-- Make the historical plots of x versus y be points but also write on top the % of data that is effectively NA (DONE) 
-- Finalize the histogram plots (DONE for now)
-
-- Check the frost resistance of the 3 spp.
-
-SIMS plotting ... 
-- Set up the sims so the simulated climate data is also plotted (write out the treat DF at end of 12 month list?)
-- Make sp means code work with varying SD and varying mean; and somehow add the info on PET and WHC
-- Plot histograms for each sim (and write out when leaf unfold and mat dates are >365)
-- Also plot the sims by subtracting out the 0 change year (delta change)
-
-
-While in Montpellier ... 
-*) Try looking at which index is minimal: when equal prioritize survival over fruit index and maturation 
-1) Get updated historical data (including new lower latitude site) from Victor and run again
-2) Get temperature forecasted data
-3) Work on PET
-4) Try other soil moisture
-
-*) Review 'Before 19 June 2023 notes' and make sure they are done someday
-
-Before 19 June 2023 notes:
-
-BIG main goals to do next are 1-3 below (1 and 2+3 can be done in any order) and report back. 
-
-Try get 1-3 done before returning in June (also ideally play around with WHC, so I confirm that I know how), could do PET on return if critical. 
-
-(1) Understand the current historical simulations by plotting data more (see notes in green notebook I believe) -- sort of done, waiting for reply to do more
-
-(2) Clean up simulated data code for temperature then format it for PHENOFIT runs (almost DONE, waiting on Dajeong)
-	- f(x) to make the simulated data
-	- f(x) to make the data into PHENOFIT format (change lon for each sim)
-
-(3) RUN simulated data (do it first, without worrying about fixing PET) 
-* Make (bash? R?) code to copy over all the other data beyond temperature and PET for the runs somehow with the new lat/lon (just need to edit the locations, but otherwise REP the data) ... and then maybe delete it as it will be duplicated.  ... check with Isabelle what input files are NEEDED (or guess and add on as needed, may not need GLO, WND ...)
-* Make (start on) ms plots of historical shifts in mean and variance
-* Consider trials with different WHC
-* Trials with static leaf unfolding (use the historical leaf unfolding dates)
-* Eventually, make the new PET data and redo all runs
-
-NEED:
-- Projections (at least temperature) -- for checking shifts in mean and variability 
+Lower priority: 
+- See log on 25 Sep 2023, where Victor mentions that some projections only have 360 d per year (discussed very briefly in Nov 2023 -- my feeling is that these are currently not a big part of project so whatever he did is FINE). 
+- Do the historical PhenoFit runs with 1950-2000 or maybe 1950-1990 (meh, not a priority)
 
 
 
-<><><><><><><><><><><><><><>
-<> How to detrend: START <>
-<><><><><><><><><><><><><><>
-
-22 March 2023 
-From Ben
-
-Yeah, these are the right approaches I think. To estimate st. dev. And the mean for the scaling, I would pool all days from each month for all years. For example, for January, that would be 31 days X 20 years = 620 days, and then calculate st. dev. and mean from this pooled distribution. 
-
-One suggestion to simplify things, since this is meant to be a constrained demonstration of the fitness ideas using PhenoFit: before doing anything, detrend the data to remove any warming trend. How I would do it:
-
-(1) For each month, calculate monthly average TMEAN. You should then have a time series of monthly average tmean for 1970-2000 (this is basically what you have in the mean_toben.pdf, I think).
-
-(2) Subtract these monthly tmean values from the daily values for the associated month. For example, subtract monthly tmean for January 1970 from the daily values for January 1970, monthly Jan 1971 from daily Jan 1971, etc. You will then be left with daily tmean ANOMALIES.
-
-(3) For each monthly time series, run a linear regression of the values against year (time). Retain the residuals, which will be the monthly temperature anomalies with the trend removed.
-
-(4) For each monthly residual time series, add on the long term mean monthly temperature. For example, for January time series of monthly detrended residuals, add on the mean monthly temperature calculated for 1970-2000.
-
-(5) You should now now have a time series for each month of average TMEAN, with any trend removed by the variability retained and everything centered on the long term average.
-
-(6) You can then take these monthly average time series and add it back on to the anomalies you calculated in step (2) above to now recover daily tmean data to use for the calculations, but just with the long term trend removed. You could then use all the data to estimate mean and st. dev.
-
-Sorry if this is confusing (or mansplainy)! Happy to schedule some time to talk through if you like.
-
-
-<><><><><><><><><>
-SENT to BEN on 3 April 2023
-"I want to make sure I am doing the detrending correctly, as all my checks make me sure that I am not. Can you take a look at my updated methods (my notes in []) below?"
-He confirmed I had this correct 
-
-(1) For each month, calculate monthly average TMEAN. You should then have a time series of monthly average tmean for 1970-2000 (this is basically what you have in the mean_toben.pdf, I think). 
-
-[Okay.]
-
-(2) Subtract these monthly tmean values from the daily values for the associated month. For example, subtract monthly tmean for January 1970 from the daily values for January 1970, monthly Jan 1971 from daily Jan 1971, etc. You will then be left with daily tmean ANOMALIES. 
-
-[When done, I set these `daily tmean ANOMALIES' aside until step 6.]
-
-(3) For each monthly time series [12 datapoints per year], run a linear regression of the values against year (time) [run 12 separate regressions, one for each month]. Retain the residuals, which will be the monthly temperature anomalies with the trend removed.
-
-[I am NOT running this regression on the daily anomalies from (2) -- I tried that see plotforBenTake1.pdf. Instead, I run this on the monthly means by year, see ploforBenTake2.[df]
-
-(4) For each monthly residual time series, add on the long term mean monthly temperature. For example, for January time series of monthly detrended residuals, add on the mean monthly temperature calculated for 1970-2000.
-
-[I take residuals in (3) and add on long-term mean for that month (one value across the whole time series.]
-
-(5) You should now now have a time series for each month of average TMEAN, with any trend removed by the variability retained and everything centered on the long term average.
-
-[Okay.]
-
-(6) You can then take these monthly average time series and add it back on to the anomalies you calculated in step (2) above to now recover daily tmean data to use for the calculations, but just with the long term trend removed. You could then use all the data to estimate mean and st. dev.
-
-[I take output of (4) and add it to (2), right?. Right now that seems to recreate the original data... but I will check my code if you confirm I have this right.]
-
-<><><><><><><><><><><><><><>
-<> How to detrend: END <>
-<><><><><><><><><><><><><><>

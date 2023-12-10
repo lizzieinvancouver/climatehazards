@@ -22,20 +22,49 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{3pt}
 
+\section{Meeting notes}
+
+\subsection{9 December 2023:  My notes on scheduling and cleaning up folders}
+Isabelle is free in May, but Ascension is the second week (though now it seems that I am busy in May); she is probably away first and second weeks of June. So options might be April 29-2 May (week before is 22-26 April) or 17-21 June.
+
+In cleaning up \verb|climhazards_QuercusUpdatedModel.pdf| I kept referring to our new parameter file as 'ending in updated23June2023' but that was the very first parameter change file we tried. When I opened PHENOFIT I was using the species file added in November 2023 (ending in `Chuine') and the trace files we kept are also using this new file, so I updated my language throughout the document. 
+
+\subsection{3 december 2023: Good ref}
+
+From wheat paper by I\~naki and colleagues: ``Tillering stands out as the most resistant with the lowest mean threshold. These results are in agreement with previous studies showing that the reproductive stage is more sensitive to cold stress than the vegetative stage (Manasa S et al. 2022).''  Manasa S, Lekshmi, Madhusmita Panigrahy, Kishore C. S. Panigrahi, et Gyana R. Rout. 2022. Overview of Cold Stress Regulation in Plants. The Botanical Review 88 (3): 359‑87. \url{https://doi.org/10.1007/s12229-021-09267-x.}
 % \section*{Some current issues}
 
-For Pinus at southern site, see Scots Pine in Duputie. At 47 N, wamring leads to same effect as at southern site (carbon survival due to late leafunfolding)
+\subsection{17 novembre 2023: Meeting at CEFE with Isabelle} % Victor away
 
-FHminfe -- this is the minimum temperature for no leaf damage after budbreak, check in any species file for this. The only other way to get a low leafindex is when the leaves do not unfold (leadunfoldingdate of 365). Need a plot that shows leaf unfolding date and the number of frost days together. 
-FHminfl -- this is the minimum temperature for no flower damage after budbreak, check in any species file for this
+{\bf We agreed to do mean x SD simulations of the following:} All warming (my idea, it's easy and helps you see the pattern) x SD decline of 50\% and SD increase of 50\%. We think this is the best way to understand what we find. 
 
-\section{Meeting notes}
+We also discussed re-arranging the plots of all metrics (e.g., \verb|meansim47_allmetricsFS.pdf|): 
+\begin{itemize}
+\item Remove drought and temperature survival if they never change?
+\item Add flowering date and flowering dormancy date perhaps?
+\item Row 1: fitness, survival, fruitindex, matindex
+\item Row 2: Carbon, leafindex, dorm break date, leaf unfolding date
+\item Row 3: Drought survival, fruit mat index, fruit (can't read: le nes?), temp survival
+\end{itemize}
+
+\emph{Other notes from today:}
+
+Relevant reference: Caignard et al. 2017 (Sci Reports).
+
+For Pinus at southern site, see `Scots Pine' discussion in Duputie. At 47 N, warming leads to same effect as at southern site (carbon survival due to late leafunfolding).
+
+FHminfe -- this is the minimum temperature for no leaf damage after budbreak, check in any species file for this. The only other way to get a low leafindex is when the leaves do not unfold (leadunfoldingdate of 365). Need a plot that shows leaf unfolding date and the number of frost days together. \\
+FHminfl -- this is the minimum temperature for no flower damage after budbreak, check in any species file for this.\\
+
+
 \subsection{16 novembre 2023: Meeting at CEFE with Isabelle \& Victor}
 
-We spent the morning talking about Victor's very cool project on forecasting the Holocene, then spent the afternoon on the new results from  new parameter set for Quercus. 
-See \verb|climhazards_QuercusUpdatedModel.pdf| for more on that. 
+We spent the morning talking about Victor's very cool project on forecasting the Holocene, then spent the afternoon on the new results from new parameter set for Quercus. \\
+
+See \verb|climhazards_QuercusUpdatedModel.pdf| for more on the results of the new parameter set. Related to this, we checked if the PET adjustments were okay (see \verb|testpetoutput.R|... why? I cannot recall, but we were worried about them) and they seem fine. 
 
 I also added the curve for the f(x) to the pinusflowerendodorm.pdf figure (ignore the height of the curve) so we could better see the f(x) versus the temperatures. 
+
 
 \subsection{15 novembre 2023: Meeting at CEFE with Isabelle \& Victor}
 
@@ -57,22 +86,24 @@ Notes during meeting (in addition to to do above):
 \end{enumerate}
 
 
-\subsection{14 novembre 2023: Prep for meeting at CEFE this week}
-
+\subsection{14 novembre 2023: Prep for meeting at CEFE this week (may want to revisit in 2024)}
+These are my notes before the meeting; I updated them on 9 December 2023. 
 
 \begin{enumerate}
-\item Need to review our simulation findings -- most notes are in 23 juin 2023. 
-\item Are we happy with the \emph{Quercus} parameters? We now use \verb{cmaes fit subset2 rep2.species} which I think (CHECK) is the full updated parameter set (not just the leaf and flower parameters)? 
-\item Check my notes on Pinus results below with Isabelle.
-\item Review results with future sims -- agree we can ignore calendar issue (and just toss plots in supp)?
-\item Decide on SD and mean for one run with both ... do it, and interpret it. Do we have any predictions?
-\item Which figures? Question: What do we want to present? We have a lot ....
-\item Start writing up section on PHENOFIT so we can agree on it.
+\item Need to review our simulation findings -- most notes are in 23 juin 2023. (We did this.)
+\item Are we happy with the \emph{Quercus} parameters? 
+
+We now use \verb|cmaes fit subset2_rep2.species| which is the full updated parameter set (not just the leaf and flower parameters)? (Answer was no; we fit a new version that we will go with.)
+\item Check my notes on Pinus results below with Isabelle. (Done, but I still need to review Scots Pine in Duputie paper)
+\item Review results with future sims -- agree we can ignore calendar issue (and just toss plots in supp)? (I think we can ignore it.)
+\item Decide on SD and mean for one run with both ... do it, and interpret it. Do we have any predictions? (Done.)
+\item Which figures? Question: What do we want to present? We have a lot .... (NOT done.)
+\item Start writing up section on PHENOFIT so we can agree on it.  (NOT done.)
 \item Questions for colleagues file. (DONE)
 \item Smaller items
 \begin{enumerate}
-\item We will skip changing WHC, right?
-\item I should write up the METHODS before I go, including:
+\item We will skip changing WHC, right? (This came up again when looking at results; basically was left up to me to decide as it is more work. Notes are in \verb|climhazards_QuercusUpdatedModel.pdf|
+\item I should write up the METHODS before I go, including: (NOT done.)
 \begin{enumerate}
 \item Penman-Montieth
 \item Where we got the species parameter files
