@@ -17,19 +17,19 @@ dormlist <- list()
 for (i in c(1:length(varchanges))){
     dfhere <- subset(check, sdtreat==varchanges[i])
     dormlist[[i]] <- (1 / ( 1+exp(0.06*(dfhere$tempC-6)^2+(dfhere$tempC-6))))
-     hist(dfhere$tempC, xlab="Mean Temp from Jan-Mar (50 years)", main=paste0("Variance at ", varchanges[i]))
-     # Quick way to show the f(x) on the data, but hacked y vale, so ignore the height of the curve
-     # could improve this someday by using density anove instead of histogram
+     plot(density(dfhere$tempC), xlab="Mean Temp from Jan-Mar (50 years)", main=paste0("Variance at ", varchanges[i]))
+     # Below, quick way to show the f(x) on the data, but hacked y value (by multiplying by 0.1) so it shows up on the same graph well ...
+     # ... so ignore the height of the f(x) curve
      dormcurvex <- seq(-20,30, length.out=1000)
      dormcurve <- (1 / ( 1+exp(0.06*(dormcurvex-6)^2+(dormcurvex-6))))
-     points(dormcurve*500~dormcurvex, pch=16)
+     points(dormcurve*0.1~dormcurvex, pch=16, col="lightblue")
 }
 dev.off()
 
 pdf("graphs/phenofit/sims/extras/pinusflowerendodorm.pdf", width=12, height=4)
 par(mfrow=c(1,5))
 for (i in c(1:length(varchanges))){
-    hist(dormlist[[i]], xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
+    plot(density(dormlist[[i]]), xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
 }
 dev.off()
 
