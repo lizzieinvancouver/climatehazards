@@ -7,8 +7,7 @@ Updated December 2023, after November 2023 meeting in person
 
 To do higher priority:
 - Plots to get a better sense of leaf damage drivers (freezing) and when dates are >365. We discussed this a lot 15-17 November 2023 (notes in climhazardslog.pdf).
-	- I think this would add to phenofitplotsims.R and need to pull FHminfe from the species parameter files. 
-	- See: Additional notes (A) below
+	- I have worked on this! See Additional notes (A) below. 
 - Add flowering date and flower dormancy date to all figures? (Note from fall 2023, before Nov 2023 meeting) -- relates to pinusflowerendodormMeanTemp.pdf and other file in same folder, which is a similar task. 
 - for projections: moving average AND stitch together the historical and model data (see log of notes). -- done for now, see calcclimatemetricsfuture.R (24 Sep 2023), but waiting on tmx projections. 
 - Maybe make historical temperature data a moving average mean, instead of binding by 10 years (could just change the years change code I think and LEAVE everything else -- see how I did it in calcclimatemetricsfuture.R)
@@ -34,5 +33,5 @@ We need then the PHENOFIT output *and* the the climate data ...
 Okay so, for Fagus -- FHminfe (and FHminfl) is -5.3 ... 
 Does the climate sim data have any randomness run-to-run to worry about? No, as best I can tell. 
 
-See phenofitleafindexplots.R for progress
+See phenofitleafindexplots.R for progress (and leafindex_decompose_Fagus.pdf)
 <><><><><><><><><><>
