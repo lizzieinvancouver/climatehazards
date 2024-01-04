@@ -24,8 +24,7 @@ source("source/plotsimsfxs.R")
 ### 
 
 # Took some code from phenofitplotsims.R to use later, perhaps
-allsims <- c("sims1sd41", "sims1sd47", "sims1sd53", 
-    "sims2mean41", "sims2mean47", "sims2mean53")
+allsims <- c("sims1sd41", "sims1sd47", "sims1sd53") #     "sims2mean41", "sims2mean47", "sims2mean53"
 
 # Write out dataframe to fill in ... 
 frosts <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), 
