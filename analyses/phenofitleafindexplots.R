@@ -52,11 +52,14 @@ for(i in allsims){
 	fsfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
 	leafindexsims <- cleanphenofitdata(c("LeafIndex") , paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
 	leafindexdf <- do.call("rbind", leafindexsims)
+	dormbreaksims <- cleanphenofitdata(c("LeafDormancyBreakDate") , paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
+	dormbreakdf <- do.call("rbind", dormbreaksims)
 	fsdf <- do.call("rbind", fsfitsims)
 	fsdf$sp <- "Fagus"
 
 	# Now, get the number of days in a period AFTER leaf unfolding 
 	FHminfe <- -5.3 # I made this 3 and got up to 8 frost days, so I think it is working.
+	daysbefore <- 7
 	daysafter <- 7
 
 	for(i in c(1:nrow(fsdf))){ # i <- 1
@@ -64,11 +67,13 @@ for(i in allsims){
 		df <- do.call("rbind", timsimsubby) 
 		df$counter <- 1:nrow(df)
 		# df$date <- as.Date(paste(df$counter, df$year, sep="-"), format="%j-%Y")
-		tempcinwindow <- df$tempC[which(df$counter>=round(fsdf[i, "value"]) & df$counter<=(round(fsdf[i, "value"])+daysafter))]
+		tempcinwindow <- df$tempC[which(df$counter>=(round(fsdf[i, "value"])-daysbefore) & df$counter<=(round(fsdf[i, "value"])+daysafter))]
 		leafindexhere <- subset(leafindexdf, lat==fsdf[i,"lat"] & lon==fsdf[i, "lon"] & year==fsdf[i,"year"])
+		dormbreakhere <- subset(dormbreakdf, lat==fsdf[i,"lat"] & lon==fsdf[i, "lon"] & year==fsdf[i,"year"])
 	    frostsadd <- data.frame(sim=whichsim, sp=fsdf[i,"sp"],
 	    	lat=fsdf[i,"lat"], lon=fsdf[i,"lon"], year=fsdf[i,"year"], 
 	    	leafoutdoy=round(fsdf[i, "value"]),
+	    	dormbreakdoy=round(dormbreakhere[i, "value"]),
 	    	frostdays=length(tempcinwindow[which(tempcinwindow<FHminfe)]),
 	    	meantempinwindow=mean(tempcinwindow),
 	    	leafindex=leafindexhere$value)
@@ -87,8 +92,10 @@ for(i in allsims){
 table(frosts$lon, frosts$sim)
 
 # plot results
-par(mfrow=c(1,2))
+par(mfrow=c(1,3))
 plot(leafoutdoy~meantempinwindow, data=frosts, xlab="Mean temperature after leafout", ylab="Leafout day")
 plot(leafindex~leafoutdoy, data=frosts, xlab="Leafout day", ylab="Leaf Index (frost days in blue)")
 points(frostdays~leafoutdoy, data=frosts, pch=16, col="skyblue")
+plot(leafindex~dormbreakdoy, data=frosts, xlab="LeafDormancyBreakDate day", ylab="Leaf Index (frost days in blue)")
+points(frostdays~dormbreakdoy, data=frosts, pch=16, col="skyblue")
 subset(frosts, frostdays>0)
