@@ -1,9 +1,9 @@
 Repeated climate datafile with sims longitude for Phenofit model
-Created in R by lizzie on 2024-01-02
+Created in R by lizzie on 2024-02-26
 First two columns are latitude and fake longitude
  
-41.9	1	273.461
-41.9	2	273.461
-41.9	3	273.461
-41.9	4	273.461
-41.9	5	273.461
+53.1	1	311.471
+53.1	2	311.471
+53.1	3	311.471
+53.1	4	311.471
+53.1	5	311.471

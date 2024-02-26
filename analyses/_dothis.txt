@@ -2,6 +2,30 @@ Started 1 avril 2023
 Train back to Montpellier
 
 <><><><><><><><><><><><><><>
+UPDATE from 26 February 2024: I edited calcclimatesims.R to run one site and one sim (I did not save the edits to calcclimatesims.r to do this, as it is just this:
+
+sitetouse <- 9 # 1 5 9 
+# Picked site at latitude 47.5 (5) based on 20 Apr 2023 with Isabelle
+# We now also plan to try the most southern and northern site ... which are 1 and 9
+
+if(simstorun=="sims1sd"){
+    varchanges <- c(0.5) # c(0, -0.1, 0.1, 0.2)
+    tempchanges <- c(0) # c(0, 0.5, 1, 2)
+    simshere <- c("sd + 50%")
+}
+
+if(simstorun=="sims2mean"){
+    varchanges <- c(0) # c(0, -0.1, 0.1, 0.2)
+    tempchanges <- c(0, 1, 2, 3, 4, 5) # c(0, 0.5, 1, 2)
+    simshere <- c("0C", "+1C", "+2C", "+3C", "+4C", "+5")
+}
+
+
+And then looked at TRACE plots in PhenoFit (Capsis).
+
+Then I calcclimatesims.R again (for site 1 and 9) so I had the correct (complete) sims to run the R code for the leafindexplots. 
+<><><><><><>
+
 Do next ... 
 Updated December 2023, after November 2023 meeting in person
 

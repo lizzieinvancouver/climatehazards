@@ -28,11 +28,11 @@ allsims <- c("sims1sd41", "sims1sd47", "sims1sd53") #     "sims2mean41", "sims2m
 
 # Write out dataframe to fill in ... 
 frosts <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), 
-	year=numeric(), leafoutdoy=numeric(), frostdays=numeric(), meantempinwindow=numeric(), leafindex=c())
+	year=numeric(), leafoutdoy=numeric(), dormbreakdoy=numeric(), frostdays=numeric(), meantempinwindow=numeric(), leafindex=numeric())
 lateleafout <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), latedays=numeric())
 
-for(i in allsims){
-	whichsim <- i 
+for(onesim in allsims){ # whichsim  <- "sims1sd53"
+	whichsim <- onesim
 
 	# Get the climate data
 	# Reminder that tminsims is 12 dataframes (1 month per df) in a list with...
@@ -73,7 +73,7 @@ for(i in allsims){
 	    frostsadd <- data.frame(sim=whichsim, sp=fsdf[i,"sp"],
 	    	lat=fsdf[i,"lat"], lon=fsdf[i,"lon"], year=fsdf[i,"year"], 
 	    	leafoutdoy=round(fsdf[i, "value"]),
-	    	dormbreakdoy=round(dormbreakhere[i, "value"]),
+	    	dormbreakdoy=dormbreakhere$value,
 	    	frostdays=length(tempcinwindow[which(tempcinwindow<FHminfe)]),
 	    	meantempinwindow=mean(tempcinwindow),
 	    	leafindex=leafindexhere$value)
