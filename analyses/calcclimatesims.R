@@ -28,8 +28,8 @@ load("output/detclimate/tmaxlist.Rdata")
 load("output/detclimate/tminlistdet.Rdata")
 load("output/detclimate/tmaxlistdet.Rdata")
 
-simstorun <- "sims1sd" # sims2mean sims1sd
-sitetouse <- 1 # 1 5 9 
+simstorun <- "sims3meansd" # sims2mean sims1sd sims3meansd
+sitetouse <- 9 # 1 5 9 
 # Picked site at latitude 47.5 (5) based on 20 Apr 2023 with Isabelle
 # We now also plan to try the most southern and northern site ... which are 1 and 9
 
@@ -45,6 +45,13 @@ if(simstorun=="sims2mean"){
     simshere <- c("0C", "+1C", "+2C", "+3C", "+4C", "+5")
 }
 
+if(simstorun=="sims3meansd"){
+    varchanges <- c(-0.5, 0.5) 
+    tempchanges <- c(1, 2, 3, 4, 5) # Deleted 0 degrees since we have that run above (sims1sd)
+    simshere <- c("+1C x sd -50%", "+1C x sd +50%", "+2C x sd -50%", "+2C x sd +50%", 
+        "+3C x sd -50%", "+3C x sd +50%", "+4C x sd -50%", "+4C x sd +50%", 
+        "+5C x sd -50%", "+5C x sd +50%")
+}
 
 allchanges <- expand.grid(varchanges, tempchanges)
 names(allchanges) <- c("sd", "mean")

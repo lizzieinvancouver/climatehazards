@@ -40,7 +40,7 @@ To do, but longer time-horizon:
 - Some day: Fagus simulations future -- to look at LeafDormancyBreakDate see 15 Nov 2023 notes on this.
 - Some day: Re-order and consider best plots to show all the phenofit metrics. See notes in log from 17 novembre 2023. 
 - Some day: Prep the figures we may want in paper (including the conceptual ones)
-- Some day: Do sims where we covary temperature and SD. Which sims? See notes in log from 17 novembre 2023.
+- Some day: Do sims where we covary temperature and SD. Which sims? See notes in log from 17 novembre 2023. Started on this, I think I have the phenofit results, but I need to update the phenofitplotsims.R to write out useful figures for this ... 
 
 
 Lower priority: 

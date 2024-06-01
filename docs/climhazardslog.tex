@@ -22,7 +22,82 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{3pt}
 
-\section{Meeting notes}
+\section{Meeting notes (including emailed discussions)}
+
+\subsection{3 June 2024: Return to Montpellier!}
+
+\begin{itemize}
+\item Confirm which Quercus species set we wanted to use... I am using DuptieChuine
+\item Are there any general take-home messages from our simulations?
+\item How much do historical trends inform or help our understanding of simulation results?
+\end{itemize}
+
+
+\subsection{3 January -- 27 February 2024: Understanding low leaf index in \emph{Fagus}}
+\emph{Lizzie wrote this up on 1 June 2024: Yes, big gap due to teaching through April and then visiting Zurich in May. But, here we are.}\\
+
+
+From Victor on 27 February: 2024
+\begin{quote}
+From what I can see in the trace:
+
+Year 1952:
+\begin{itemize}
+\item a hard frost event happened on April 2nd (DOY 93, leap year), with a Tmin = -11 (min Tmin in the year = -16, Nov. 17th) $\rightarrow$ leaf index dropped to 0.48
+\item it was 24 days before leaf unfolding date (April 26th, DOY 117)
+\item the day before (DOY 92), the Tmin = -7 did not have any effect... I guess the bud cold-hardiness state was enough to resist to -7 but not to -11?
+\end{itemize}
+
+Year 1955:
+\begin{itemize}
+\item an extreme frost event happened on Feb. 17th, with a Tmin = -18 (min Tmin in the year = -23, Feb. 23rd) $\rightarrow$ leaf index drop to 0
+\item it was 83 days before (potential) leaf unfolding date (May 10th, DOY 130)
+\item the maximum frost resistance for Fagus is -20, so at -18/-23 injuries must occur... 
+\end{itemize}
+
+In these two examples, frost happened several weeks ($>$15 days) before leaf unfolding (up to 83 days!).
+In the first case, in early April, I guess we can still talk about a `late spring frost.' 
+But in 1955 it seems to be more related to hard conditions during winter. 
+
+So it makes sense you did not see anything $\pm$15 days before leafout...
+\end{quote}
+
+And I replied to Isabelle (26 February 2024, with 3 files: \verb|leafindex_decompose_Fagus.pdf| and \verb|fit4Trace_loc_1_pheno_1954.txt| and \verb|fit4Trace_loc_1_pheno_1951.txt| and ):
+\begin{quote}
+I increased the days to look for frost to ±$\pm$ 7 days before leafout 
+(results attached) and tried $\pm$ 15 days (not shown but it added a couple 
+more frost days=1 but not so many to explain things). Each of these 
+picks up more frost days, but not so many. I have also plotted the 
+dormancy break date.
+
+None of these seemed insightful to me, so I have attached trace plots 
+for the requested location and sims, for two years.
+\end{quote}
+
+
+Isabelle replied (16 January 2024):
+\begin{quote}
+We look at your figures with Victor yesterday. The decrease of the 
+LeafIndex cannot be due to something else than increased frost damage 
+but it is difficult to show it on a simple graph because frost damage 
+depend on the development of the buds and the temperature and 
+daylength conditions with a memory effect. What is strange though is 
+that you see no frost days (Tmin$<$5.3C) within 7 days after BB in any 
+case while sometime the BB is 30 days earlier than normal. Two ideas:
+
+increase the window around BB $\pm$ 7 days, $\pm$ 15 days
+
+Look at the dormancy break date.
+
+Last option is to look at a Trace for one site and one year for $+$50\%  sd for sim53
+\end{quote}
+
+On 3 January 2024 I emailed: 
+\begin{quote}
+We discussed getting the number of frost days and late leaf unfolding days, especially for Fagus ... (See file: \verb|leafindex_decompose_Fagus.pdf|) I used the FHminfe value (-5.3) and counted up days $<$FHminfe the day of and 7 days
+after leafout. 
+\end{quote}
+
 
 \subsection{9 December 2023:  My notes on scheduling and cleaning up folders}
 Isabelle is free in May, but Ascension is the second week (though now it seems that I am busy in May); she is probably away first and second weeks of June. So options might be April 29-2 May (week before is 22-26 April) or 17-21 June.

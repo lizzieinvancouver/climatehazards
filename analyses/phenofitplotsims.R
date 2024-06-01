@@ -25,8 +25,12 @@ source("source/plotsimsfxs.R")
 ####
 
 whichsim <-  "sims1sd41" #  sims1sd41 sims1sd47 sims1sd53 sims2mean41 sims2mean47 sims2mean53
+    # sims3meansd41 sims3meansd47 sims3meansd53
+# ALERT! 1 June 2024: the code below currently is not designed to handle the mean x SD sims 
+
 allsims <- c("sims1sd41", "sims1sd47", "sims1sd53", 
-    "sims2mean41", "sims2mean47", "sims2mean53")
+    "sims2mean41", "sims2mean47", "sims2mean53",
+    "sims3meansd41", "sims3meansd47", "sims3meansd53")
 
 sdlabels <- c("-50%", "-25%", "0%", "25", "50%")
 
