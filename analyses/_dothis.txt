@@ -1,6 +1,15 @@
 Started 1 avril 2023
 Train back to Montpellier
 
+
+<><><><><><><><><><><><><><>
+UPDATE from 2 June 2024: 
+
+I made some notes in the log for meeting. The prep I could do it to FIRST, update the figures to print out all of them and in a better order (and maybe suppress a couple if identical across all sims) and THEN (only then) start working on the SD x means sims.  
+
+
+<><><><><><><><><><><><><><>
+
 <><><><><><><><><><><><><><>
 UPDATE from 26 February 2024: I edited calcclimatesims.R to run one site and one sim (I did not save the edits to calcclimatesims.r to do this, as it is just this:
 
