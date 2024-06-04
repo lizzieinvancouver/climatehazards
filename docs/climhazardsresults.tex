@@ -5,6 +5,7 @@
 \usepackage{natbib}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{gensymb}
 \usepackage{parskip}
 
 \def\labelitemi{--}
@@ -28,7 +29,7 @@
 
 \begin{itemize}
 \item \emph{Fagus} is determined mainly by FruitIndex (related to frost damage). 
-\item \emph{Pinus} survival dominates (due to carbon problems) 
+\item \emph{Pinus} survival dominates (due to carbon problems which comes from not enough chilling.) 
 \item \emph{Quercus} is determined mainly MaturationIndex (does not mature in time) a little, but mostly it is fine. 
 \end{itemize}
 
@@ -58,7 +59,7 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsFS.pdf}
-  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) mean warming across fitness components at 41 latitude. Low fitness is driven by low carbonsurvival, which occurs because of late dormancy break date (because leafdormancybreakdate is variable that's the driver; if it were frost, we'd see more constant leafdormancybreakdate and variable in leafindex).}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) mean warming across fitness components at 41\degree N latitude. Low fitness is driven by low carbonsurvival, which occurs because of late dormancy break date (because leafdormancybreakdate is variable that's the driver; if it were frost, we'd see more constant leafdormancybreakdate and variable in leafindex).}
   \label{fig:fagusmean41}
   \end{center}
 \end{figure}
@@ -66,19 +67,19 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsFS.pdf}
-  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) mean warming across fitness components at 53\degree N latitude. Here's warming reduces frost and thus fruitindex goes up and survival goes up. Note that the leafdormancybreakdate also gets a little later but leafunfolding does not because the warming is still enough for get earlier leafout (and there is a buffer where early dormancybreakdate does not matter because it's too cold leaf unfolding to start. }
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) mean warming across fitness components at 53\degree N latitude. Here's warming reduces frost and thus fruitindex goes up (less flowering damage probably) and survival goes up. MatIndex also goes up (likely due to a mix of leafindex going up and there is a direct effect of temperature on MatIndex). Note that the leafdormancybreakdate also gets a little later but leafunfolding does not because the warming is still enough for get earlier leafout (and there is a buffer where early dormancybreakdate does not matter because it's too cold leaf unfolding to start. }
   \label{fig:fagusmean53}
   \end{center}
 \end{figure}
 
 \clearpage
 \subsection{For our mean results for  \emph{Pinus}}...
-... it looks like carbon could be the issue again, which is close to 0 at low latitudes and declines with warming at the higher latitude. 
+... it looks like carbon could be the issue again, which is close to 0 (minimum is 0.1 in PhenoFit for C survival) at low latitudes and declines with warming at the higher latitude. Check out dormancybreakdates which show that it must not get enough chilling. 
 
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsPS.pdf}
-  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) mean warming showing three latitudes. There is no survival at low latitudes, while at higher latitudes (see Fig. \ref{fig:pinusmean53}) there is ....}
+  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) mean warming showing three latitudes. There is no survival at low latitudes, while at higher latitudes (see Fig. \ref{fig:pinusmean53}) warming leads to lower fitness due to low carbon survival (not enough chilling, so late dormancy break).}
   \label{fig:pinusmean3}
   \end{center}
 \end{figure}
@@ -86,7 +87,7 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsPS.pdf}
-  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) mean warming across fitness components at 41 latitude. .}
+  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) mean warming across fitness components at 41\degree N latitude.}
   \label{fig:pinusmean41}
   \end{center}
 \end{figure}
@@ -94,14 +95,14 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsPS.pdf}
-  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) mean warming across fitness components at 53\degree N latitude. }
+  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) mean warming across fitness components at 53\degree N latitude. See notes in caption of Fig. \ref{fig:pinusmean3}.}
   \label{fig:pinusmean53}
   \end{center}
 \end{figure}
 
 \clearpage
 
-\subsection{For the mean results for \emph{Quercus} ....}
+\subsection{For the mean results for \emph{Quercus} it is doing very well!}
 
 \begin{figure} 
  \begin{center}
@@ -114,7 +115,7 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsQR.pdf}
-  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) mean warming across fitness components at 41 latitude. .}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) mean warming across fitness components at 41\degree N latitude. }
   \label{fig:quercusmean41}
   \end{center}
 \end{figure}
@@ -132,8 +133,8 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 
 \begin{itemize}
 \item \emph{Fagus} is determined mainly by a combo of damage to leaves and flowers, which increases with increasing variance. 
-\item \emph{Pinus} survival dominates at low latitudes (no carbon survival and variance does not change this), but at highest laititude variance causes damage to flowers and reduces fitness. And: {\bf later leafout.}??
-\item \emph{Quercus} is ?? 
+\item \emph{Pinus} survival dominates at low latitudes (no carbon survival and variance does not change this), but at highest latitude variance also leads to later leafout (low chill, later dormancy break) and thus lower leafindex (note that Pinus can sustain VERY low temperatures and is unlikely to have frost damage). 
+\item \emph{Quercus} is not changing much but does see some frost losses at higher variance.
 \end{itemize}
 
 
@@ -166,7 +167,7 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/sdsim_3metricsPS.pdf}
-  \caption{\emph{Pinus} across changing variance showing three latitudes. There is no survival at low latitudes, while at higher latitudes (see Fig. \ref{fig:pinussd53}) there is ....}
+  \caption{\emph{Pinus} across changing variance showing three latitudes. There is no survival at low latitudes, while at higher latitudes (see Fig. \ref{fig:pinussd53}) there is.}
   \label{fig:pinussd3}
   \end{center}
 \end{figure}
@@ -174,7 +175,7 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim41_allmetricsPS.pdf}
-  \caption{\emph{Pinus} across changing variance across fitness components at 41 latitude. .}
+  \caption{\emph{Pinus} across changing variance across fitness components at 41\degree N latitude.}
   \label{fig:pinussd41}
   \end{center}
 \end{figure}
@@ -202,7 +203,7 @@ For the sd results for \emph{Quercus} ....
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim41_allmetricsQR.pdf}
-  \caption{\emph{Quercus} across changing variance across fitness components at 41 latitude. .}
+  \caption{\emph{Quercus} across changing variance across fitness components at 41\degree N latitude. Extremely tiny declines in fitness with increasing variance come from some frost (lower leafindex).}
   \label{fig:quercussd41}
   \end{center}
 \end{figure}
@@ -210,12 +211,42 @@ For the sd results for \emph{Quercus} ....
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim53_allmetricsQR.pdf}
-  \caption{\emph{Quercus} across changing variance across fitness components at 53\degree N latitude. }
+  \caption{\emph{Quercus} across changing variance across fitness components at 53\degree N latitude. Small declines in fitness with higher variance come from some frost (lower leafindex)}
   \label{fig:quercussd53}
   \end{center}
 \end{figure}
+\newpage
+\section{Predictions!}
 
+Victor and Lizzie made predictions for what we will see in simulations of increased warming crossed with -0.5 and $+0.5$ increases in variance. Lizzie added the take-home message that goes with each genus \emph{after} the meeting (we did not expect it to work out to sound so interesting---it just did). 
+
+\begin{itemize}
+\item Quercus: some positive and negative effects of more variance depending on whether warming is high or low
+\begin{itemize}
+\item No effects of increased variance at all of higher warming because no more frost damage, but ...
+\item At lower levels of warming and increased variance may start to see lower survival due to frost damage. 
+\item However, we may see that later dormancy date break actually becomes a problem % I assume we meant at higher warming and higher variance, but we did not say. 
+\end{itemize}
+\item Pinus: Variance and warming compound to lead to greater negative effects. 
+\begin{itemize}
+\item More variance and more warming will lead to even greater issues with dormancy break dates and thus lower carbon survival. 
+\item Less variance will not change the negative results of increased warming, and might even make it worse as possibly the surve moves out of getting much chill at all. 
+\end{itemize}
+\item Fagus: Results depend on latitude, but include variance and warming compounding to greater positive effects. 
+\begin{itemize}
+\item Site 41 N: Increase variance could reduce negative effects of late dormancy somewhat, also less frost with increased warming x increased variance so high warming and high variance could lead to positive effects (more positive than either change alone)
+\item Site 53 N: increased variance problems go away when combined with increased warming (easy to reach dormancy accumulation)
+\end{itemize}
+\end{itemize}
+
+\newpage
 \section{Some reminders for Lizzie... }
+\begin{itemize}
+\item Minimum carbon survival is 0.1. 
+\item Pinus can sustain VERY low temperatures and is unlikely to have frost damage
+\end{itemize}
+
+
 
 \end{document}
 
