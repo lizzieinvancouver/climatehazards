@@ -12,7 +12,7 @@
 # Look over first 3 months
 check <- do.call("rbind", tmeansims[1:3])
 xlimfirstplot <- c(-20,25)
-xlimnextplot <- c(0,1)
+xlimnextplot <- c(-0.1,1.1)
 
 ### Graphs for Pinus
 
@@ -97,7 +97,7 @@ for (i in c(1:length(varchanges))){
 }
 dev.off()
 
-pdf(paste0("graphs/phenofit/sims/extras/flowerendodormQuerucus", substr(whichsite, start = 1, stop = 2), ".pdf"), width=12, height=4)
+pdf(paste0("graphs/phenofit/sims/extras/flowerendodormQuercus", substr(whichsite, start = 1, stop = 2), ".pdf"), width=12, height=4)
 par(mfrow=c(1,5))
 for (i in c(1:length(varchanges))){
     plot(density(dormlist[[i]]), xlim=xlimnextplot, xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
