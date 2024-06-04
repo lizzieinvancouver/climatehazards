@@ -296,7 +296,7 @@ onemeandf <- do.call("rbind", listmean)
 
 
 ##########################################
-## Make plots from  file with latitudes ##
+## Make plots from file with latitudes ##
 ##########################################
 
 # Quick and dirty plots of all metrics.... 
@@ -349,6 +349,7 @@ ggsave(filename=paste0("graphs/phenofit/sims/sdsim", whichlat, "_allmetricsQR.pd
 ggsave(filename=paste0("graphs/phenofit/sims/sdsim", whichlat, "_allmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
 }
 
+
 for(whichlat in unique(onemeandf$latforsim)){
     dfhere <- subset(onemeandf, latforsim==whichlat)
 
@@ -392,6 +393,75 @@ ggsave(filename=paste0("graphs/phenofit/sims/meansim", whichlat, "_allmetricsFS.
 ggsave(filename=paste0("graphs/phenofit/sims/meansim", whichlat, "_allmetricsQR.pdf"), plot=qrdiffplot, height=8, width=12)
 ggsave(filename=paste0("graphs/phenofit/sims/meansim", whichlat, "_allmetricsPS.pdf"), plot=psdiffplot, height=8, width=12)
 }
+
+# Violin plots showing northern and southern sites at once 
+# Adding the mean to these would be good, but was tricky to do quickly
+whichlatz <- c(41, 53)
+dfhere <- onesddf[which(onesddf$latforsim %in% whichlatz),]
+
+fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lon), col=latforsim)) +
+    geom_violin(trim=FALSE, aes(col=latforsim)) + 
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+    scale_x_discrete(labels = sdlabels) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(lon), col=latforsim)) +
+    geom_violin(trim=FALSE, aes(col=latforsim)) + 
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+    scale_x_discrete(labels = sdlabels) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lon), col=latforsim)) +
+    geom_violin(trim=FALSE, aes(col=latforsim)) + 
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+    scale_x_discrete(labels = sdlabels) + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename=paste0("graphs/phenofit/sims/sdsim_northsouthlat_allmetricsFS.pdf"), plot=fsdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/sdsim_northsouthlat_allmetricsQR.pdf"), plot=qrdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/sdsim_northsouthlat_allmetricsPS.pdf"), plot=psdiffplot, height=10, width=14)
+
+
+dfhere <- onemeandf[which(onemeandf$latforsim %in% whichlatz),]
+
+fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lon), col=latforsim)) +
+    geom_violin(trim=FALSE, aes(col=latforsim)) + 
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(lon), col=latforsim)) +
+    geom_violin(trim=FALSE, aes(col=latforsim)) + 
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lon), col=latforsim)) +
+    geom_violin(trim=FALSE, aes(col=latforsim)) + 
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+ggsave(filename=paste0("graphs/phenofit/sims/meansim_northsouthlat_allmetricsFS.pdf"), plot=fsdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/meansim_northsouthlat_allmetricsQR.pdf"), plot=qrdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/meansim_northsouthlat_allmetricsPS.pdf"), plot=psdiffplot, height=10, width=14)
+
+
 
 
 # Next, also quick and dirty ... 
