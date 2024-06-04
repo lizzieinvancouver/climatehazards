@@ -395,36 +395,51 @@ ggsave(filename=paste0("graphs/phenofit/sims/meansim", whichlat, "_allmetricsPS.
 }
 
 # Violin plots showing northern and southern sites at once 
-# Adding the mean to these would be good, but was tricky to do quickly
+# Update V.V.: added the mean with position_dodge
 whichlatz <- c(41, 53)
 dfhere <- onesddf[which(onesddf$latforsim %in% whichlatz),]
 
 fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lon), col=latforsim)) +
-    geom_violin(trim=FALSE, aes(col=latforsim)) + 
-    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
-    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
-    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
-    scale_x_discrete(labels = sdlabels) + 
-    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+  geom_violin(trim=FALSE, aes(fill=latforsim), alpha = 0.3, col = NA) + 
+  stat_summary(
+    position = position_dodge(width=0.9),
+    fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+    geom = "pointrange", lwd=1
+  ) +
+  facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+                                     "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+                                     "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+  scale_x_discrete(labels = sdlabels) + 
+  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(lon), col=latforsim)) +
-    geom_violin(trim=FALSE, aes(col=latforsim)) + 
-    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
-    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
-    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
-    scale_x_discrete(labels = sdlabels) + 
-    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+  geom_violin(trim=FALSE, aes(fill=latforsim), alpha = 0.3, col = NA) + 
+  stat_summary(
+    position = position_dodge(width=0.9),
+    fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+    geom = "pointrange", lwd=1
+  ) +
+  facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+                                     "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+                                     "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+  scale_x_discrete(labels = sdlabels) + 
+  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lon), col=latforsim)) +
-    geom_violin(trim=FALSE, aes(col=latforsim)) + 
-    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
-    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
-    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
-    scale_x_discrete(labels = sdlabels) + 
-    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
-                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+  geom_violin(trim=FALSE, aes(fill=latforsim), alpha = 0.3, col = NA) + 
+  stat_summary(
+    position = position_dodge(width=0.9),
+    fun.data = "mean_sdl",  fun.args = list(mult = 1), 
+    geom = "pointrange", lwd=1
+  ) +
+  facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+                                     "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+                                     "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
+  scale_x_discrete(labels = sdlabels) + 
+  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                     panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
 ggsave(filename=paste0("graphs/phenofit/sims/sdsim_northsouthlat_allmetricsFS.pdf"), plot=fsdiffplot, height=10, width=14)
 ggsave(filename=paste0("graphs/phenofit/sims/sdsim_northsouthlat_allmetricsQR.pdf"), plot=qrdiffplot, height=10, width=14)
