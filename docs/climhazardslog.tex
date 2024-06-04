@@ -24,25 +24,44 @@
 
 \section{Meeting notes (including emailed discussions)}
 
-\subsection{3 June 2024: Return to Montpellier!}
-
-\begin{itemize}
-\item Wrap up what is causing low leaf-index in Fagus simulations with SD (notes below).
-\item Confirm which Quercus species set we wanted to use, there are three:
-\begin{itemize}
-\item \verb|Quercus_robur_ADuputie_Chuine.species| -- {\bf model I used for new sims} and assume we agreed to use (should check notes/git commits to make sure I updated all sims)
-\item \verb|Quercus_robur_ADuputie_updated23June2023.species| -- model from Victor's approach I believe
-\item \verb|Quercus_robur_ADuputie.species| -- first model we started with
-\end{itemize}
-\item Go through SD sims again and make sure we understand all of them. 
-\end{itemize}
-
 Slightly larger topics: 
 \begin{itemize}
 \item Are there any general take-home messages from our simulations?
 \item How much do historical trends inform or help our understanding of simulation results?
 \item How to slim all the work down to a `case study'? 
 \end{itemize}
+
+\subsection{3 June 2024: Return to Montpellier!}
+
+\begin{itemize}
+\item Wrap up what is causing low leaf-index in Fagus simulations with SD (notes below).
+\item Confirm which Quercus species set we wanted to use, there are three and (update) I am using the correct one which is \verb|Quercus_robur_ADuputie_Chuine.species|:
+\begin{itemize}
+\item \verb|Quercus_robur_ADuputie_Chuine.species| -- {\bf model I used for new sims (correct)} and assume we agreed to use (should check notes/git commits to make sure I updated all sims)
+\item \verb|Quercus_robur_ADuputie_updated23June2023.species| -- model from Victor's approach I believe
+\item \verb|Quercus_robur_ADuputie.species| -- first model we started with
+\end{itemize}
+\item Confirm I can ignore the drought and temp survival output -- yes, because we do not change the precipitation so drought survival should not vary with the simulations (and temperature survival is usually 1 -- since those values are rarely reached)
+\item Go through SD sims again and make sure we understand all of them. (notes below)
+\end{itemize}
+
+Discussing SD results, including low leaf-index in Fagus simulations:
+\begin{itemize}
+\item While we think low leaf-index in Fagus simulations should be due to earlier budburst, the work from November to February suggests that it is cold temperatures in the winter. 
+\begin{enumerate}
+\item We discussed expand the window before leafout in my plots (\verb|leafindex_decompose_Fagus.pdf|), but then the temperature I am using as a low may be too high. This interplay between cold hardiness and frost is cool, but hard to evaluate given current model output.
+\item Relatedly, delayed dormancy break date should keep hardiness higher longer, but we still see more frosts. 
+\item I should count up the days below a species' max tolerance.
+\end{enumerate}
+\item Remember: Leafindex generally declines because of frost, this leads to declines in MatIndex. Low FruitIndex comes from frost on flowers.
+\item Quercus shows similar Leafindex to Fagus.
+\item Pinus shows delayed dormancy break which leads to later leafout (other species have delayed dormancy break date but does not lead to later leafout). 
+\item A lot of sims should delayed dormancybreak date so we talked alot about visualizing this more. 
+\end{itemize}
+
+
+Other notes: Victor and I discussed what's the simplest process-model for SDMs and he mentioned TTR SDM (but it sounds more like a correlative SDM than a real process model, so I should look into it more).
+
 
 \subsection{3 January -- 27 February 2024: Understanding low leaf index in \emph{Fagus}}
 \emph{Lizzie wrote this up on 1 June 2024: Yes, big gap due to teaching through April and then visiting Zurich in May. But, here we are.}\\

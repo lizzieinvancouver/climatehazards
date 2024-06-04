@@ -29,8 +29,7 @@ whichsim <-  "sims1sd41" #  sims1sd41 sims1sd47 sims1sd53 sims2mean41 sims2mean4
 # ALERT! 1 June 2024: the code below currently is not designed to handle the mean x SD sims 
 
 allsims <- c("sims1sd41", "sims1sd47", "sims1sd53", 
-    "sims2mean41", "sims2mean47", "sims2mean53",
-    "sims3meansd41", "sims3meansd47", "sims3meansd53")
+    "sims2mean41", "sims2mean47", "sims2mean53") #  "sims3meansd41", "sims3meansd47", "sims3meansd53"
 
 sdlabels <- c("-50%", "-25%", "0%", "25", "50%")
 
@@ -45,9 +44,10 @@ sitezsimsmessy$V1 <- NULL
 sitezsims <- as.data.frame(t(sitezsimsmessy))
 names(sitezsims) <- c("loc", "lat", "lon")
 
-phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
-                   "LeafDormancyBreakDate", "LeafUnfoldingDate", "MaturationIndex", "Survival")
-phenofitfilesdull <- c("CarbonSurvival", "DroughtSurvival", "TempSurvival")
+phenofitfiles <- c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate")
+phenofitfilesdull <- c("DroughtSurvival", "TempSurvival")
 
 fsfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
 qrfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/querob/"), sitezsims)
@@ -74,18 +74,27 @@ qrdf$sp <- "Quercus"
 psdf <- do.call("rbind", psfitsimsdull)
 psdf$sp <- "Pinus"
 
+# Temp and drought survival are dull, so checking them and moving on
+# See quick notes in daily log on 3 June 2024. 
 alldulldf <- rbind(fsdf, qrdf, psdf)
+lessthanoneds <- subset(alldulldf, value<1 & metric=="DroughtSurvival")
+lessthanonets <- subset(alldulldf, value<1 & metric=="TempSurvival")
+print(paste0(nrow(lessthanoneds), " of ", nrow(subset(alldulldf, metric=="DroughtSurvival")), 
+    " rows of drought survival are less than one with a minimum of ",
+    min(lessthanoneds$value)))
+print(paste0(nrow(lessthanonets), " of ", nrow(subset(alldulldf, metric=="TempSurvival")), 
+    " rows of temp survival are less than one with a minimum of ",
+    min(lessthanonets$value)))
 
 
 # Get the simulation runs here ...
 treatz <- read.csv(paste0("output/simsRformat/", whichsim, ".csv"))
 controlrun <- treatz[which(treatz$mean==0 & treatz$sd==0), 3] # identidy the control run's fakelon
 
-# Count years with issues ...
+# Count years with issues (dates greater than 365 or 0 values)
 fsbadyrs <- countbadyrs(fsfitsims, treatz)
 psbadyrs <- countbadyrs(psfitsims, treatz)
 qrbadyrs <- countbadyrs(qrfitsims, treatz)
-
 
 
 #####################
@@ -126,7 +135,9 @@ fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(sd))) +
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -136,7 +147,9 @@ qrdiffplot <- ggplot(qrdiffdf, aes(y=value, x=as.character(sd))) +
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -146,7 +159,9 @@ psdiffplot <- ggplot(psdiffdf, aes(y=value, x=as.character(sd))) +
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -162,7 +177,9 @@ fsdiffplot <- ggplot(fsdiffdf, aes(y=value, x=as.character(mean))) +
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -172,7 +189,9 @@ qrdiffplot <- ggplot(qrdiffdf, aes(y=value, x=as.character(mean))) +
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -182,7 +201,9 @@ psdiffplot <- ggplot(psdiffdf, aes(y=value, x=as.character(mean))) +
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -213,9 +234,9 @@ sitezsimsmessy$V1 <- NULL
 sitezsims <- as.data.frame(t(sitezsimsmessy))
 names(sitezsims) <- c("loc", "lat", "lon")
 
-phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
-                   "LeafDormancyBreakDate", "LeafUnfoldingDate", "MaturationIndex", "Survival", 
-                   "CarbonSurvival", "DroughtSurvival", "TempSurvival")
+phenofitfiles <- c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate")
 
 fsfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
 qrfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/querob/"), sitezsims)
@@ -250,9 +271,9 @@ sitezsimsmessy$V1 <- NULL
 sitezsims <- as.data.frame(t(sitezsimsmessy))
 names(sitezsims) <- c("loc", "lat", "lon")
 
-phenofitfiles <- c("Fitness", "FruitIndex", "FruitMaturationDate", "LeafIndex", "LeafSenescenceDate",
-                   "LeafDormancyBreakDate", "LeafUnfoldingDate", "MaturationIndex", "Survival", 
-                   "CarbonSurvival", "DroughtSurvival", "TempSurvival")
+phenofitfiles <- c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate")
 
 fsfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/fagsyl/"), sitezsims)
 qrfitsims <- cleanphenofitdata(phenofitfiles, paste0("sims/", whichsim, "/querob/"), sitezsims)
@@ -290,7 +311,9 @@ fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lo
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     scale_x_discrete(labels = sdlabels) + 
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
@@ -301,7 +324,9 @@ qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     scale_x_discrete(labels = sdlabels) + 
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
@@ -312,7 +337,9 @@ psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lo
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     scale_x_discrete(labels = sdlabels) + 
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
@@ -331,7 +358,9 @@ fsdiffplot <- ggplot(subset(dfhere, sp=="Fagus"), aes(y=value, x=as.character(lo
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -341,7 +370,9 @@ qrdiffplot <- ggplot(subset(dfhere, sp=="Quercus"), aes(y=value, x=as.character(
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
@@ -351,7 +382,9 @@ psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(lo
         fun.data = "mean_sdl",  fun.args = list(mult = 1), 
         geom = "pointrange", color = "dodgerblue", lwd=1
     ) +
-    facet_wrap(metric~., scales="free") +
+    facet_wrap(factor(metric, levels=c("Fitness", "Survival", "FruitIndex", "MaturationIndex",
+    "CarbonSurvival", "LeafIndex", "LeafDormancyBreakDate", "LeafUnfoldingDate",
+    "FlowerDormancyBreakDate", "FloweringDate", "FruitMaturationDate", "LeafSenescenceDate"))~., scales="free") +
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
