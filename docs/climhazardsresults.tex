@@ -26,15 +26,21 @@
 
 \section{Historical trends}
 
+\begin{itemize}
+\item \emph{Fagus} is determined mainly by FruitIndex (related to frost damage). 
+\item \emph{Pinus} survival dominates (due to carbon problems) 
+\item \emph{Quercus} is determined mainly MaturationIndex (does not mature in time), but mostly it is fine. 
+\end{itemize}
+
 \begin{figure} 
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
-  \caption{{\bf Overview of historical results:} These results build through the multiplicative components of fitness (which are multiplied together): Survival (left), Survival$*$FruitIndex (middle) and Fitness, which is Survival$*$FruitIndex*MaturationIndex (right). Given high survival and little change between the middle and right panels we can see that \emph{Fagus} is determined mainly by FruitIndex (this makes sense as it is often affected by frost damage, having a low tolerance of low temperatures). We see next the for \emph{Pinus} survival dominates (often it does not meet the chill requirement for leafout and thus has no carbon and low CarbonSurvival so low total Survival) and finally, for \emph{Quercus} it's MaturationIndex (this makes sense as the fruits are quite large and can take a long time to mature---it doesn't always happen according to this model). }
+  \caption{These results build through the multiplicative components of fitness (which are multiplied together): Survival (left), Survival$*$FruitIndex (middle) and Fitness, which is Survival$*$FruitIndex*MaturationIndex (right). Given high survival and little change between the middle and right panels we can see that \emph{Fagus} is determined mainly by FruitIndex (this makes sense as it is often affected by frost damage, having a low tolerance of low temperatures). We see next the for \emph{Pinus} survival dominates (often it does not meet the chill requirement for leafout and thus has no carbon and low CarbonSurvival so low total Survival) and finally, for \emph{Quercus} it's MaturationIndex (this makes sense as the fruits are quite large and can take a long time to mature---it doesn't always happen according to this model). }
   \label{fig:historicalfitnessl}
   \end{center}
 \end{figure}
 
-\cleapage
+\newpage
 \section{Overview of warming simulation results}
 
 \subsection{\emph{Fagus} warming results}
@@ -121,10 +127,14 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
   \end{center}
 \end{figure}
 
-
+\newpage
 \section{Overview of SD simulation results}
 
-Then we reviewed the SD sims. I took less notes, but there was a fair bit of similar drivers for each species (e.g., for \emph{Fagus}, which is more frost sensitive we see lower LeafIndex at the higher latitude models likely due to frost) but also a lot of discussion over the balance of where higher SD would put some of the non-linear curves. 
+\begin{itemize}
+\item \emph{Fagus} is determined mainly by a combo of damage to leaves and flowers, which increases with increasing variance. 
+\item \emph{Pinus} survival dominates at low latitudes (no carbon survival and variance does not change this), but at highest laititude variance causes damage to flowers and reduces fitness. And: {\bf later leafout.}??
+\item \emph{Quercus} is ?? 
+\end{itemize}
 
 
 \begin{figure} 
@@ -204,6 +214,8 @@ For the sd results for \emph{Quercus} ....
   \label{fig:quercussd53}
   \end{center}
 \end{figure}
+
+\section{Some reminders for Lizzie... }
 
 \end{document}
 
