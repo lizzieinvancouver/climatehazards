@@ -11,6 +11,8 @@
 
 # Look over first 3 months
 check <- do.call("rbind", tmeansims[1:3])
+xlimfirstplot <- c(-20,25)
+xlimnextplot <- c(0,1)
 
 ### Graphs for Pinus
 
@@ -22,7 +24,7 @@ for (i in c(1:length(varchanges))){
     dormlist[[i]] <- (1 / ( 1+exp(0.06*(dfhere$tempC-6)^2+(dfhere$tempC-6))))
     densityhere <- density(dfhere$tempC)
     densityhere$y = densityhere$y/max(densityhere$y)
-    plot(densityhere, xlab="Mean Temp from Jan-Mar (50 years)", 
+    plot(densityhere, xlim=xlimfirstplot, xlab="Mean Temp from Jan-Mar (50 years)", 
         main=paste0("For sim", simstorun, " and site ", substr(whichsite, start = 1, stop = 2), "\n Variance at ", varchanges[i]))
     # Below, quick way to show the f(x) on the data, but hacked y value (by multiplying by 0.1) so it shows up on the same graph well ...
     # ... so ignore the height of the f(x) curve
@@ -36,7 +38,7 @@ dev.off()
 pdf(paste0("graphs/phenofit/sims/extras/flowerendodormPinus", substr(whichsite, start = 1, stop = 2), ".pdf"), width=12, height=4)
 par(mfrow=c(1,5))
 for (i in c(1:length(varchanges))){
-    plot(density(dormlist[[i]]), xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
+    plot(density(dormlist[[i]]), xlim=xlimnextplot, xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
 }
 dev.off()
 
@@ -53,7 +55,7 @@ for (i in c(1:length(varchanges))){
     dormlist[[i]] <- ifelse(dfhere$tempC<Vb, 1, 0)
     densityhere <- density(dfhere$tempC)
     densityhere$y = densityhere$y/max(densityhere$y)
-    plot(densityhere, xlab="Mean Temp from Jan-Mar (50 years)", 
+    plot(densityhere, xlim=xlimfirstplot, xlab="Mean Temp from Jan-Mar (50 years)", 
         main=paste0("For sim", simstorun, " and site ", substr(whichsite, start = 1, stop = 2), "\n Variance at ", varchanges[i]))
     abline(v=Vb,  col="lightblue", lwd=2)
     abline(h=mean(dormlist[[i]]), col="dodgerblue", lwd=2)
@@ -63,7 +65,7 @@ dev.off()
 pdf(paste0("graphs/phenofit/sims/extras/flowerendodormFagus", substr(whichsite, start = 1, stop = 2), ".pdf"), width=12, height=4)
 par(mfrow=c(1,5))
 for (i in c(1:length(varchanges))){
-    plot(density(dormlist[[i]]), xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
+    plot(density(dormlist[[i]]), xlim=xlimnextplot, xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
 }
 dev.off()
 
@@ -83,7 +85,7 @@ for (i in c(1:length(varchanges))){
         ((Topt-Tmin)^(2*alpha))
     densityhere <- density(dfhere$tempC)
     densityhere$y = densityhere$y/max(densityhere$y)
-    plot(densityhere, xlab="Mean Temp from Jan-Mar (50 years)", 
+    plot(densityhere, xlim=xlimfirstplot,  xlab="Mean Temp from Jan-Mar (50 years)", 
         main=paste0("For sim", simstorun, " and site ", substr(whichsite, start = 1, stop = 2), "\n Variance at ", varchanges[i]))
     # Below, quick way to show the f(x) on the data, but hacked y value (by multiplying by 0.1) so it shows up on the same graph well ...
     # ... so ignore the height of the f(x) curve
@@ -98,6 +100,6 @@ dev.off()
 pdf(paste0("graphs/phenofit/sims/extras/flowerendodormQuerucus", substr(whichsite, start = 1, stop = 2), ".pdf"), width=12, height=4)
 par(mfrow=c(1,5))
 for (i in c(1:length(varchanges))){
-    plot(density(dormlist[[i]]), xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
+    plot(density(dormlist[[i]]), xlim=xlimnextplot, xlab="endodormancy result", main=paste0("Variance at ", varchanges[i]))
 }
 dev.off()
