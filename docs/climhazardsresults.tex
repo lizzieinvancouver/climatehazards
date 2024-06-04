@@ -1,0 +1,209 @@
+\documentclass[11pt,letter]{article}
+\usepackage[top=1.00in, bottom=1.0in, left=1.1in, right=1.1in]{geometry}
+\renewcommand{\baselinestretch}{1}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\def\labelitemi{--}
+\parindent=0pt
+
+\begin{document}
+\bibliographystyle{/Users/Lizzie/Documents/EndnoteRelated/Bibtex/styles/besjournals}
+\renewcommand{\refname}{\CHead{}}
+
+\setlength{\parindent}{0cm}
+\setlength{\parskip}{5pt}
+
+\title{Climate Hazards \\ Trying to organize results}
+\author{Lizzie, Isabelle Chuine, Ben Cook, Victor van der Meersch}
+\date{\today}
+\maketitle
+\tableofcontents
+% A lot of this and the historical and mean warming results taken from 23 juin 2023 log notes to start with. 
+
+\section{Historical trends}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/historical/fitnessBuildup.pdf}
+  \caption{{\bf Overview of historical results:} These results build through the multiplicative components of fitness (which are multiplied together): Survival (left), Survival$*$FruitIndex (middle) and Fitness, which is Survival$*$FruitIndex*MaturationIndex (right). Given high survival and little change between the middle and right panels we can see that \emph{Fagus} is determined mainly by FruitIndex (this makes sense as it is often affected by frost damage, having a low tolerance of low temperatures). We see next the for \emph{Pinus} survival dominates (often it does not meet the chill requirement for leafout and thus has no carbon and low CarbonSurvival so low total Survival) and finally, for \emph{Quercus} it's MaturationIndex (this makes sense as the fruits are quite large and can take a long time to mature---it doesn't always happen according to this model). }
+  \label{fig:historicalfitnessl}
+  \end{center}
+\end{figure}
+
+\cleapage
+\section{Overview of warming simulation results}
+
+\subsection{\emph{Fagus} warming results}
+Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \ref{fig:fagusmean3}) we discussed how we could see that at low latitudes (Fig. \ref{fig:fagusmean41}) that there was reduced CarbonSurvival (not enough cold means late dormancy) and thus FruitMaturationDate gets later. While at higher latitudes (Fig. \ref{fig:fagusmean53} ) there is an increase in the FruitIndex as FruitMaturation is higher. 
+
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsFS.pdf}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming showing three latitudes. In June 2023, we discussed: at low latitudes (see next figure) that there was reduced CarbonSurvival (not enough cold means late dormancy) and thus FruitMaturationDate gets later. While at higher latitudes (see Fig. \ref{fig:fagusmean53}) there is an increase in the FruitIndex as FruitMaturation is higher.}
+  \label{fig:fagusmean3}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsFS.pdf}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 41 latitude. Low fitness is driven by low carbonsurvival, which occurs because of late dormancy break date (because leafdormancybreakdate is variable that's the driver; if it were frost, we'd see more constant leafdormancybreakdate and variable in leafindex).}
+  \label{fig:fagusmean41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsFS.pdf}
+  \caption{\emph{Fagus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 53\degree N latitude. Here's warming reduces frost and thus fruitindex goes up and survival goes up. Note that the leafdormancybreakdate also gets a little later but leafunfolding does not because the warming is still enough for get earlier leafout (and there is a buffer where early dormancybreakdate does not matter because it's too cold leaf unfolding to start. }
+  \label{fig:fagusmean53}
+  \end{center}
+\end{figure}
+
+\clearpage
+\subsection{For our mean results for  \emph{Pinus}}...
+... it looks like carbon could be the issue again, which is close to 0 at low latitudes and declines with warming at the higher latitude. 
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsPS.pdf}
+  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) meaning warming showing three latitudes. There is no survival at low latitudes, while at higher latitudes (see Fig. \ref{fig:pinusmean53}) there is ....}
+  \label{fig:pinusmean3}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsPS.pdf}
+  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 41 latitude. .}
+  \label{fig:pinusmean41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsPS.pdf}
+  \caption{\emph{Pinus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 53\degree N latitude. }
+  \label{fig:pinusmean53}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+\subsection{For the mean results for \emph{Quercus} ....}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/meansim_3metricsQR.pdf}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) meaning warming showing three latitudes.}
+  \label{fig:quercusmean3}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim41_allmetricsQR.pdf}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 41 latitude. .}
+  \label{fig:quercusmean41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/meansim53_allmetricsQR.pdf}
+  \caption{\emph{Quercus} across 0 (1) to $+$5 (6) meaning warming across fitness components at 53\degree N latitude. }
+  \label{fig:quercusmean53}
+  \end{center}
+\end{figure}
+
+
+\section{Overview of SD simulation results}
+
+Then we reviewed the SD sims. I took less notes, but there was a fair bit of similar drivers for each species (e.g., for \emph{Fagus}, which is more frost sensitive we see lower LeafIndex at the higher latitude models likely due to frost) but also a lot of discussion over the balance of where higher SD would put some of the non-linear curves. 
+
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/sdsim_3metricsFS.pdf}
+  \caption{\emph{Fagus} across changing variance showing three latitudes. ...}
+  \label{fig:fagussd3}sd
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim41_allmetricsFS.pdf}
+  \caption{\emph{Fagus} across changing variance across fitness components at 41 latitude. Low fitness is driven by low carbonsurvival, which occurs because of late dormancy break date (because leafdormancybreakdate is variable that's the driver; if it were frost, we'd see more constant leafdormancybreakdate and variable in leafindex).}
+  \label{fig:fagussd41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim53_allmetricsFS.pdf}
+  \caption{\emph{Fagus} across changing variance across fitness components at 53\degree N latitude. Here's warming reduces frost and thus fruitindex goes up and survival goes up. Note that the leafdormancybreakdate also gets a little later but leafunfolding does not because the warming is still enough for get earlier leafout (and there is a buffer where early dormancybreakdate does not matter because it's too cold leaf unfolding to start. }
+  \label{fig:fagussd53}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/sdsim_3metricsPS.pdf}
+  \caption{\emph{Pinus} across changing variance showing three latitudes. There is no survival at low latitudes, while at higher latitudes (see Fig. \ref{fig:pinussd53}) there is ....}
+  \label{fig:pinussd3}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim41_allmetricsPS.pdf}
+  \caption{\emph{Pinus} across changing variance across fitness components at 41 latitude. .}
+  \label{fig:pinussd41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim53_allmetricsPS.pdf}
+  \caption{\emph{Pinus} across changing variance across fitness components at 53\degree N latitude. }
+  \label{fig:pinussd53}
+  \end{center}
+\end{figure}
+
+\clearpage
+
+For the sd results for \emph{Quercus} ....
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/metrics3/sdsim_3metricsQR.pdf}
+  \caption{\emph{Quercus} across changing variance showing three latitudes.}
+  \label{fig:quercussd3}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim41_allmetricsQR.pdf}
+  \caption{\emph{Quercus} across changing variance across fitness components at 41 latitude. .}
+  \label{fig:quercussd41}
+  \end{center}
+\end{figure}
+
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim53_allmetricsQR.pdf}
+  \caption{\emph{Quercus} across changing variance across fitness components at 53\degree N latitude. }
+  \label{fig:quercussd53}
+  \end{center}
+\end{figure}
+
+\end{document}
+
