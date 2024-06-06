@@ -134,15 +134,21 @@ onemeansddf <- do.call("rbind", listmeansd)
 }
 
 # And get columns fro mean warming versus SD
-#     simshere <- c("+1C x sd -50%", "+1C x sd +50%", "+2C x sd -50%", "+2C x sd +50%", 
-#        "+3C x sd -50%", "+3C x sd +50%", "+4C x sd -50%", "+4C x sd +50%", 
- #       "+5C x sd -50%", "+5C x sd +50%")
-onemeansddf$var <- ifelse(onemeansddf$lon<6, "50perlower", "50perhigher")
+simsiran<- c("+1C x sd -50%", "+1C x sd +50%", "+2C x sd -50%", "+2C x sd +50%", 
+    "+3C x sd -50%", "+3C x sd +50%", "+4C x sd -50%", "+4C x sd +50%", 
+    "+5C x sd -50%", "+5C x sd +50%")
+onemeansddf$var <- NA
+onemeansddf$var[which(onemeansddf$lon %in% c(1, 3, 5, 7, 9))] <- "50perlower"
+onemeansddf$var[which(onemeansddf$lon %in% c(2, 4, 6, 8, 10))] <- "50perhigher"
 onemeansddf$warming <- onemeansddf$lon
-onemeansddf$warming[which(onemeansddf$lon==6)] <- 1
-onemeansddf$warming[which(onemeansddf$lon==7)] <- 2
-onemeansddf$warming[which(onemeansddf$lon==8)] <- 3
-onemeansddf$warming[which(onemeansddf$lon==9)] <- 4
+onemeansddf$warming[which(onemeansddf$lon==2)] <- 1
+onemeansddf$warming[which(onemeansddf$lon==3)] <- 2
+onemeansddf$warming[which(onemeansddf$lon==4)] <- 2
+onemeansddf$warming[which(onemeansddf$lon==5)] <- 3
+onemeansddf$warming[which(onemeansddf$lon==6)] <- 3
+onemeansddf$warming[which(onemeansddf$lon==7)] <- 4
+onemeansddf$warming[which(onemeansddf$lon==8)] <- 4
+onemeansddf$warming[which(onemeansddf$lon==9)] <- 5
 onemeansddf$warming[which(onemeansddf$lon==10)] <- 5
 
 ##########################################
