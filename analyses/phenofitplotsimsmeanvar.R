@@ -150,6 +150,7 @@ onemeansddf$warming[which(onemeansddf$lon==7)] <- 4
 onemeansddf$warming[which(onemeansddf$lon==8)] <- 4
 onemeansddf$warming[which(onemeansddf$lon==9)] <- 5
 onemeansddf$warming[which(onemeansddf$lon==10)] <- 5
+unique(paste(onemeansddf$var, onemeansddf$warming)) # just checking!
 
 ##########################################
 ## Make plots from file with latitudes ##
@@ -199,8 +200,8 @@ psdiffplot <- ggplot(subset(dfhere, sp=="Pinus"), aes(y=value, x=as.character(wa
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-ggsave(filename=paste0("graphs/phenofit/sims/meansdsim", whichlat, "allmetricsFS.pdf"), plot=fsdiffplot, height=10, width=14)
-ggsave(filename=paste0("graphs/phenofit/sims/meansdsim", whichlat, "allmetricsQR.pdf"), plot=qrdiffplot, height=10, width=14)
-ggsave(filename=paste0("graphs/phenofit/sims/meansdsim", whichlat, "allmetricsPS.pdf"), plot=psdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/meansdsimallmetricsFSlat", whichlat, ".pdf"), plot=fsdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/meansdsimallmetricsQRlat", whichlat, ".pdf"), plot=qrdiffplot, height=10, width=14)
+ggsave(filename=paste0("graphs/phenofit/sims/meansdsimallmetricsPSlat", whichlat, ".pdf"), plot=psdiffplot, height=10, width=14)
 }
 
