@@ -9,7 +9,7 @@
 
 # Look over first 3 months
 check <- do.call("rbind", tmeansims[1:3])
-xlimfirstplot <- c(-20,35)
+xlimfirstplot <- c(-20,25)
 xlimnextplot <- c(-0.1,1.1)
 
 
