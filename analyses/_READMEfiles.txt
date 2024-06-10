@@ -14,3 +14,5 @@ calcclimatemetricsfuture_ssp585.R -- a Nov 2023 copy of calcclimatemetricsfuture
 phenofitplot.R -- plots PHENOFIT results from historical climate
 
 phenofitplotsims.R -- plots PHENOFIT results from simulations
+
+phenofitsims/ -- code here is constantly overwritten as you run the simulation code (calcclimatesims.R) so not saved. 

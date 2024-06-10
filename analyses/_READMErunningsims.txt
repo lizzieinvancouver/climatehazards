@@ -1,10 +1,10 @@
 Started 22 Juin 2023
 By Lizzie
 
-How to run the simulations ...
+How to run the simulations ... (run calcclimatemetrics.R first!)
 
 1) Update the relevant lines in calcclimatatesims.R. This file ...
-	- Reads in detrended data created in calcclimatemetrics.R 
+	- Reads in detrended data created in calcclimatemetrics.R (update 10 June 2024: Lizzie included all files needed to run this, she thinks)
 	- Created the tmn and tmx simulated data, from those creates tmp.
 	- Creates duplicated PRE, ALT, WHC files
 	- Creates updated PET files
