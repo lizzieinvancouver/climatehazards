@@ -23,7 +23,6 @@
 *.out
 
 \notposting
-/analyses/input/ERA5LAND
 analyses/output/phenofitsims/pet*
 analyses/output/phenofitsims/pre*
 analyses/output/phenofitsims/Altitude*
@@ -31,5 +30,4 @@ analyses/output/phenofitsims/WHC*
 data/recdVictor*
 _newrefs/
 phenofitdocs/
-analyses/output/simsRformat/
 analyses/graphs/zarchive
