@@ -188,6 +188,14 @@ Next the mean warming simulations. In understanding \emph{Fagus} results (Fig. \
   \end{center}
 \end{figure}
 
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim53_allmetricsPS.pdf}
+  \caption{\emph{Pinus} across changing variance across fitness components at 53\degree N latitude. }
+  \label{fig:pinussd53}
+  \end{center}
+\end{figure}
+
 \clearpage
 
 For the sd results for \emph{Quercus} ....
@@ -202,9 +210,10 @@ For the sd results for \emph{Quercus} ....
 
 \begin{figure} 
  \begin{center}
-\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/sdsim41_allmetricsQR.pdf}
-  \caption{\emph{Quercus} across changing variance across fitness components at 41\degree N latitude. Extremely tiny declines in fitness with increasing variance come from some frost (lower leafindex).}
-  \label{fig:quercussd41}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/extras/flowerendodormPinusMeanTemp53.pdf}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/extras/flowerendodormPinus53.pdf}
+  \caption{Top: \emph{Pinus} endodormancy curves (same curve, always in light blue) across mean temperatures with changing variance at 53\degree N latitude. Darker blue horizontal line shows estimated endodormancy. Because of which side the endodormancy curve is on relative to temperature, increasing variance leads to more days falling outside the curve and leading to (bottom) 0 accumulated endodormancy, instead of 1. {\bf Note} that I should change to Oct-Feb temperatures for these figures.}
+  \label{fig:pinusendodorm53}
   \end{center}
 \end{figure}
 
@@ -215,8 +224,12 @@ For the sd results for \emph{Quercus} ....
   \label{fig:quercussd53}
   \end{center}
 \end{figure}
+
 \newpage
-\section{Predictions!}
+
+\section{Predictions for SD x mean warming!}
+
+\emph{Short update from 7 June:} When we discussed this, we felt most predictions were vaguely correct to varying degrees. See the section following and review the results to confirm. 
 
 Victor and Lizzie made predictions for what we will see in simulations of increased warming crossed with -0.5 and $+0.5$ increases in variance. Lizzie added the take-home message that goes with each genus \emph{after} the meeting). 
 
@@ -244,11 +257,30 @@ We also discussed how important the endodormancy curves are to predictions; beca
 
 Also, given we're not sure about the endodormancy curves (perhaps especially for Quercus, which has quite a wide endodormancy curve) we should not make predictions specifically about these species, but more generally about responses to shifting mean and variance. 
 
+\section{Results for SD x mean warming}
+\emph{These results come from work on 6-7 June 2024, while Lizzie was in Montpellier and may not yet be fully and perfectly digested.} Also, I was pretty exhausted during this meeting so take them with a grain of salt. Plots are meansdsimallmetricsFSlat41.pdf etc.. See also `Overview of June 2024 in Montpellier' in the log for a few take home messages from around 4pm on a Friday. 
+
+\begin{itemize}
+\item \emph{Quercus}: some positive and negative effects of more variance depending on whether warming is high or low
+\begin{itemize}
+\item At site 41: Flowering is earlier for higher variance, but very similar and no earlier mat date. Dormancy break date is later, but does not seem to lead to later flowering, and also does not affect fitness. Basically all fine (lower fitness a TINY bit for lower warming x higher variance).  At 53 N: higher variance, lower warming leads to some frost but not much.
+\end{itemize}
+\item \emph{Pinus}: Variance and warming compound to lead to greater negative effects. Or, as we said on the 7th, ``everything is bad.''
+\item \emph{Fagus}
+\begin{itemize}
+\item Site 41 N: Low variance is better except at high warming where there are issues with late breaking.
+\item Site 53 N: Increased variance is constantly worse, but increased warming leads to less frost. Fruit maturation stalls (even though flowering advances) though it appears to have no or low impact on fitness. 
+\end{itemize}
+\end{itemize}
+
 \newpage
 \section{Some reminders for Lizzie... }
 \begin{itemize}
 \item Minimum carbon survival is 0.1. 
 \item Pinus can sustain VERY low temperatures and is unlikely to have frost damage
+\item Fagus and Quercus have mixed buds (so flower endodormancy should be the same as leaf endodormancy).
+\item Temperature survival really does not matter. See 7 June 2024 log notes.
+\item Drought survival should not matter as we do not change the water in the soil (WHC) or the precip. 
 \end{itemize}
 
 

@@ -5,7 +5,14 @@ Train back to Montpellier
 <><><><><><><><><><><><><><>
 UPDATE from 2-10 June 2024: 
 
-We finished simulations for mean x variance changes and mostly understand the results! I think, but this depends on how good I wrap up my notes. Is it possible for the Lizzie of today to communicate with the Lizzie of the future? Lizzie of today does her best through new git issues (NOT DONE as of 10 June 2024, need to finish). 
+We finished simulations for mean x variance changes and mostly understand the results! I think, but this depends on how good I wrap up my notes. Is it possible for the Lizzie of today to communicate with the Lizzie of the future? Lizzie of today does her best through new git issues (written below but NOT ONLINE as of 11 June 2024, need to finish). 
+
+- Do these new issues (I set up on git):
+	Update the endodormancy plots to better months
+	Fix the cold days plots
+	make the mean warming plots with just north and south latitude
+	make fruit maturation curves
+	simplify towards only a few figures (and simplify figures in general)
  
 To do, but longer time-horizon (listed here ONLY, not in git issues): 
 - Prep the figures we may want in paper (including the conceptual ones)

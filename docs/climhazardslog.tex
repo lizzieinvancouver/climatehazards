@@ -32,17 +32,27 @@ Also did ... Added flowering date and flower dormancy date to all figures. In th
 
 Slightly larger topics we vaguely discussed. 
 \begin{itemize}
-\item Are there any general take-home messages from our simulations? Answer: Endodormancy is key to predicting variance changes, and most variance changes also deal with frost damage. 
-\item How much do historical trends inform or help our understanding of simulation results?  Answer: Not much for variance, but some for warming. 
+\item Are there any general take-home messages from our simulations? Answer: Endodormancy and frost are key to predicting species responses to variance changes. Endodormancy response curves drive species responses so we need to get those right. 
+\item How much do historical trends inform or help our understanding of simulation results?  Answer: Not much for variance, but some for warming. Basically, space for time is {\bf not great} for forecasting warming and useless for forecasting variance. 
 \item How to slim all the work down to a `case study'?  Answer: Not possible, probably need to write as full paper, but I (Lizzie) still plan to step back and see if two papers are possible (one perspective and one data/research paper). 
 \end{itemize}
 
+\subsection{7 June 2024: Last day in Montpellier}
+Met with Isabelle and Victor and discussed SD x warming results (I was a little exhausted so definitely not my best work, should check). Most notes in climhazardresults.pdf. 
+
+We agreed we could: Drop latitude 47 from everything if we want. 
+
+Also, temperature survival does not matter. At all. It does not matter in the model because the temperature for it is very low and by the time this temperature is hit, a species leafindex will have gone super low and leafindex trumps temp survival so temp survival does nothing. Isabelle said someday if she changed the model it could matter, but for now it is pointless (she added it originally because people said it mattered). We discussed this because I thought I saw perhaps a few more tempsurvival issues in the sd x mean runs (but did not check, these are just printed out to the screen in phenofitplotsims.R and phenofitplotsimsmeanvar.R), but given this does not matter, it does not seem worth checking.
+
+Discussed FruitMat in depth, as it gets later or stalls with SD x warming. It has two curves, the first is sigmoid so unlikely to matter. The second is more interesting. I set up a git issue to work on plotting this. 
 
 \subsection{4-6 June 2024: Victor and Lizzie}
 
-4 June: We worked on climhazardresults.pdf! Including making predictions for mean warming x SD. \\
-5 June: Met with I\~naki \\
-6 June: Discussed predictions with Isabelle and Victor, including how important the endodormancy curves are to predictions. 
+\begin{itemize}
+\item 4 June: We worked on climhazardresults.pdf! Including making predictions for mean warming x SD. \\
+\item 5 June: Met with I\~naki \\
+\item 6 June: Discussed predictions with Isabelle and Victor, including how important the endodormancy curves are to predictions. 
+\end{itemize}
 
 Isabelle mentioned Outi Savolainen paper showing trees are 100 years out of step with climate optimum; she said it was for spruce, but closest I found (on quick glance) was for Scots Pine \url{https://academic.oup.com/jhered/article/102/5/526/825887}.
 
