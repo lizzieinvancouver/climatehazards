@@ -23,16 +23,21 @@ source("source/plotsimsfxs.R")
 # Be sure to include in the f(x) FHminfe and daysafter
 ### 
 
+# Make a lookup table for species leafcold and maxcold
+lookupcoldspp <- data.frame(species=c("Fagus", "Pinus", "Quercus"), leafcold=c(-5.3, -5, -7), maxcold=c(-25.3, -70.5, -37))
+
 # Took some code from phenofitplotsims.R to use later, perhaps
 allsims <- c("sims1sd41", "sims1sd47", "sims1sd53") #     "sims2mean41", "sims2mean47", "sims2mean53"
 
 # Write out dataframe to fill in ... 
 frosts <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), 
-	year=numeric(), leafoutdoy=numeric(), dormbreakdoy=numeric(), frostdays=numeric(), meantempinwindow=numeric(), leafindex=numeric())
+	year=numeric(), leafoutdoy=numeric(), dormbreakdoy=numeric(), frostdays=numeric(), 
+	maxcolddays=numeric(), meantempinwindow=numeric(), leafindex=numeric())
 lateleafout <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), latedays=numeric())
 
 for(onesim in allsims){ # whichsim  <- "sims1sd53"
 	whichsim <- onesim
+	whichsp <- "Fagus"
 
 	# Get the climate data
 	# Reminder that tminsims is 12 dataframes (1 month per df) in a list with...
@@ -58,16 +63,25 @@ for(onesim in allsims){ # whichsim  <- "sims1sd53"
 	fsdf$sp <- "Fagus"
 
 	# Now, get the number of days in a period AFTER leaf unfolding 
-	FHminfe <- -5.3 # I made this 3 and got up to 8 frost days, so I think it is working.
+
+	FHminfe <- lookupcoldspp$leafcold[which(lookupcoldspp$species==whichsp)] # I made this 3 and got up to 8 frost days, so I think it is working.
+	maxcold <- lookupcoldspp$maxcold[which(lookupcoldspp$species==whichsp)] # see calcs in issue #10
 	daysbefore <- 7
 	daysafter <- 7
 
 	for(i in c(1:nrow(fsdf))){ # i <- 1
-		timsimsubby <- lapply(tminsims, function(x) subset(x, fakelon == fsdf[i,"lon"] & year == fsdf[i,"year"]))
-		df <- do.call("rbind", timsimsubby) 
-		df$counter <- 1:nrow(df)
+		timsimsubbythisyr <- lapply(tminsims, function(x) subset(x, fakelon == fsdf[i,"lon"] & year == fsdf[i,"year"]))
+		timsimsubbybeforeyr <- lapply(tminsims, function(x) subset(x, fakelon == fsdf[i,"lon"] & year == (fsdf[i,"year"]-1)))
+		dfthisyr <- do.call("rbind", timsimsubbythisyr) 
+		dfbeforeyr <- do.call("rbind", timsimsubbybeforeyr) 
+		dfbeforeyr <- dfbeforeyr[275:nrow(dfbeforeyr),] # Get Oct 1 onward only
+		addthesedays <- nrow(dfbeforeyr) # we need to add these to leafout day below
+		df <- rbind(dfbeforeyr, dfthisyr)
+		df$counterfromOct1 <- 1:nrow(df)
+		df$counter <- df$counterfromOct1-addthesedays
 		# df$date <- as.Date(paste(df$counter, df$year, sep="-"), format="%j-%Y")
 		tempcinwindow <- df$tempC[which(df$counter>=(round(fsdf[i, "value"])-daysbefore) & df$counter<=(round(fsdf[i, "value"])+daysafter))]
+		daysbelowmaxcoldwindow <- df$tempC[1:which(df$counter==(round(fsdf[i, "value"])))]
 		leafindexhere <- subset(leafindexdf, lat==fsdf[i,"lat"] & lon==fsdf[i, "lon"] & year==fsdf[i,"year"])
 		dormbreakhere <- subset(dormbreakdf, lat==fsdf[i,"lat"] & lon==fsdf[i, "lon"] & year==fsdf[i,"year"])
 	    frostsadd <- data.frame(sim=whichsim, sp=fsdf[i,"sp"],
@@ -75,6 +89,7 @@ for(onesim in allsims){ # whichsim  <- "sims1sd53"
 	    	leafoutdoy=round(fsdf[i, "value"]),
 	    	dormbreakdoy=dormbreakhere$value,
 	    	frostdays=length(tempcinwindow[which(tempcinwindow<FHminfe)]),
+	    	maxcolddays=length(daysbelowmaxcoldwindow[daysbelowmaxcoldwindow<maxcold]),
 	    	meantempinwindow=mean(tempcinwindow),
 	    	leafindex=leafindexhere$value)
 	    frosts <- rbind(frosts, frostsadd)
@@ -94,8 +109,9 @@ table(frosts$lon, frosts$sim)
 # plot results
 par(mfrow=c(1,3))
 plot(leafoutdoy~meantempinwindow, data=frosts, xlab="Mean temperature after leafout", ylab="Leafout day")
-plot(leafindex~leafoutdoy, data=frosts, xlab="Leafout day", ylab="Leaf Index (frost days in blue)")
+plot(leafindex~leafoutdoy, data=frosts, xlab="Leafout day", ylab="Leaf Index (frost days in blue and maxcold in red)")
 points(frostdays~leafoutdoy, data=frosts, pch=16, col="skyblue")
+points(frostdays~leafoutdoy, data=subset(frosts, maxcolddays>0), pch=3, col="darkred")
 plot(leafindex~dormbreakdoy, data=frosts, xlab="LeafDormancyBreakDate day", ylab="Leaf Index (frost days in blue)")
 points(frostdays~dormbreakdoy, data=frosts, pch=16, col="skyblue")
 subset(frosts, frostdays>0)
