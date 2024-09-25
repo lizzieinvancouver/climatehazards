@@ -118,10 +118,10 @@ plotfrosts <- function(df, specieshere){
 	par(mfrow=c(1,3))
 	plot(leafoutdoy~meantempinwindow, data=df, xlab="Mean temperature after leafout", ylab="Leafout day")
 	plot(leafindex~leafoutdoy, data=df, xlab="Leafout day", ylab="Leaf Index (frost days in blue and maxcold in red)")
-	points(frostdays~leafoutdoy, data=df, pch=16, col="skyblue")
-	points(frostdays~leafoutdoy, data=subset(df, maxcolddays>0), pch=3, col="darkred")
+	points(leafindex~leafoutdoy, data=subset(df, frostdays>0), pch=16, col="skyblue")
+	points(leafindex~leafoutdoy, data=subset(df, maxcolddays>0), pch=3, col="darkred")
 	plot(leafindex~dormbreakdoy, data=df, xlab="LeafDormancyBreakDate day", ylab="Leaf Index (frost days in blue)")
-	points(frostdays~dormbreakdoy, data=df, pch=16, col="skyblue")
+	points(leafindex~dormbreakdoy, data=subset(df, frostdays>0), pch=16, col="skyblue")
 	dev.off()
 }
 
