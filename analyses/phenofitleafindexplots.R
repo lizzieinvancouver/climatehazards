@@ -30,14 +30,21 @@ lookupcoldspp <- data.frame(species=c("Fagus", "Pinus", "Quercus"), pathname=c("
 # Took some code from phenofitplotsims.R to use later, perhaps
 allsims <- c("sims1sd41", "sims1sd47", "sims1sd53") #     "sims2mean41", "sims2mean47", "sims2mean53"
 
+if(FALSE){ # for testing
+	specieshere <- "Fagus"
+	daysbeforehere <- 7 
+	daysafterhere <- 7 
+}
+
 getcoldtimes <- function(allsims, specieshere, daysbeforehere, daysafterhere){
 	# Write out dataframe to fill in ... 
-	frosts <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), 
-		year=numeric(), leafoutdoy=numeric(), dormbreakdoy=numeric(), frostdays=numeric(), 
-		maxcolddays=numeric(), meantempinwindow=numeric(), leafindex=numeric())
+	frosts <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), year=numeric(), 
+		leafoutdoy=numeric(), dormbreakdoy=numeric(), frostdays=numeric(), maxcolddays=numeric(), 
+		meantempinwindow=numeric(), meantempdormbreaklf=numeric(),mintempdormbreaklf=numeric(), 
+		leafindex=numeric())
 	lateleafout <- data.frame(sim=character(), sp=character(), lat=numeric(), lon=numeric(), latedays=numeric())
 
-	for(onesim in allsims){ # whichsim  <- "sims1sd53"
+	for(onesim in allsims){ # onesim  <- "sims1sd53"
 		whichsim <- onesim
 		whichsp <- specieshere
 		pathhere <- lookupcoldspp$pathname[which(lookupcoldspp$species==whichsp)]
@@ -87,6 +94,8 @@ getcoldtimes <- function(allsims, specieshere, daysbeforehere, daysafterhere){
 			daysbelowmaxcoldwindow <- df$tempC[1:which(df$counter==(round(fsdf[i, "value"])))]
 			leafindexhere <- subset(leafindexdf, lat==fsdf[i,"lat"] & lon==fsdf[i, "lon"] & year==fsdf[i,"year"])
 			dormbreakhere <- subset(dormbreakdf, lat==fsdf[i,"lat"] & lon==fsdf[i, "lon"] & year==fsdf[i,"year"])
+		    meantempdormbreaktoleafout <- mean(df$tempC[which(df$counter>=dormbreakhere$value & df$counter<=round(fsdf[i, "value"]))])
+		    mintempdormbreaktoleafout <- min(df$tempC[which(df$counter>=dormbreakhere$value & df$counter<=round(fsdf[i, "value"]))])
 		    frostsadd <- data.frame(sim=whichsim, sp=fsdf[i,"sp"],
 		    	lat=fsdf[i,"lat"], lon=fsdf[i,"lon"], year=fsdf[i,"year"], 
 		    	leafoutdoy=round(fsdf[i, "value"]),
@@ -94,6 +103,8 @@ getcoldtimes <- function(allsims, specieshere, daysbeforehere, daysafterhere){
 		    	frostdays=length(tempcinwindow[which(tempcinwindow<FHminfe)]),
 		    	maxcolddays=length(daysbelowmaxcoldwindow[daysbelowmaxcoldwindow<maxcold]),
 		    	meantempinwindow=mean(tempcinwindow),
+		    	meantempdormbreaklf=meantempdormbreaktoleafout,
+		    	mintempdormbreaklf=mintempdormbreaktoleafout,
 		    	leafindex=leafindexhere$value)
 		    frosts <- rbind(frosts, frostsadd)
 		}
@@ -125,6 +136,27 @@ plotfrosts <- function(df, specieshere){
 	dev.off()
 }
 
+plottempsdormtoleafout <- function(df, specieshere){
+	mindormplot <- ggplot(df, aes(dormbreakdoy, leafindex, colour = mintempdormbreaklf)) +
+  		geom_point() + 
+  		scale_colour_viridis_c()
+  	minleafoutplot <- ggplot(df, aes(leafoutdoy, leafindex, colour = mintempdormbreaklf)) +
+  		geom_point() + 
+  		scale_colour_viridis_c()
+	meandormplot <- ggplot(df, aes(dormbreakdoy, leafindex, colour = meantempdormbreaklf)) +
+  		geom_point() + 
+  		scale_colour_viridis_c()
+  	meanleafoutplot <- ggplot(df, aes(leafoutdoy, leafindex, colour = meantempdormbreaklf)) +
+  		geom_point() + 
+  		scale_colour_viridis_c()
+  	ggsave(filename=paste0("graphs/phenofit/sims/extras/leafindex_decompose/leafindex_decompose_dormbreaktoleafouttemp_", specieshere, ".pdf"), 
+  		grid.arrange(mindormplot, meandormplot, minleafoutplot,  meanleafoutplot,
+          ncol = 2, nrow = 2), height=8, width=12)
+}
+
 plotfrosts(frostsFagus, "Fagus")
+plottempsdormtoleafout(frostsFagus, "Fagus")
 plotfrosts(frostsQuercus, "Quercus")
+plottempsdormtoleafout(frostsQuercus, "Quercus")
 plotfrosts(frostsPinus, "Pinus")
+plottempsdormtoleafout(frostsPinus, "Pinus")
