@@ -106,11 +106,12 @@ for(i in c(1:length(tminsims))){
 writeoutdata(listofyearshere, tmeansims, "tmp_")
 
 if(simstorun=="sims1sd"){
-source("source/flowerdormplots.R") # for checking what is up with Pinus (and Fagus and Quercus) endodormancy
+    source("source/flowerdormplots.R") # for checking what is up with Pinus (and Fagus and Quercus) endodormancy
 }
 
 if(simstorun=="sims3meansd"){
-source("source/flowerdormplotsmeanvar.R") 
+    source("source/flowerdormplotsmeanvar.R") 
+    source("source/fruitmatplotsmeanvar.R")
 }
 
 # Also write out the full lists to have for plotting
