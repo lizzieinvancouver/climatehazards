@@ -55,6 +55,46 @@ psfit <- cleanphenofitdata(phenofitfiles, "pinsyl_19512020/", sitez)
 qrfit <- cleanphenofitdata(phenofitfiles, "querob_19512020/", sitez)
 
 
+## Quick heat map of fitness with means (June 2025)
+fsfitsum <- aggregate(fsfit[["Fitness"]]["value"], fsfit[["Fitness"]]["lat"], FUN=mean)
+fsfitsum$sp <- "Fagus"
+psfitsum <- aggregate(psfit[["Fitness"]]["value"], psfit[["Fitness"]]["lat"], FUN=mean)
+psfitsum$sp <- "Pinus"
+qrfitsum <- aggregate(qrfit[["Fitness"]]["value"], qrfit[["Fitness"]]["lat"], FUN=mean)
+qrfitsum$sp <- "Quercus"
+
+# And also do by year ... 
+fsfithere <- as.data.frame(fsfit[["Fitness"]])
+fsfithere$sp <- "Fagus"
+psfithere <- as.data.frame(psfit[["Fitness"]])
+psfithere$sp <- "Pinus"
+qrfithere <- as.data.frame(qrfit[["Fitness"]])
+qrfithere$sp <- "Quercus"
+
+allspfitmean <- rbind(fsfitsum, psfitsum, qrfitsum)
+allspfitmean$standin <- rep(1, nrow(allspfitmean))
+
+allspfit <- rbind(fsfithere, psfithere, qrfithere)
+
+
+heatmapme <- ggplot(allspfitmean, aes(lat, standin)) +                          
+    geom_tile(aes(fill = value)) +
+    scale_fill_viridis_c() + 
+    facet_grid(.~
+        factor(sp, levels=c("Pinus", "Fagus", "Quercus")))
+
+ggsave(filename="graphs/phenofit/sims/heatmaps/heatmapfitnesshistorical.pdf", plot=heatmapme, height=3, width=7)
+
+
+## Not impressive ... but why more years for Quercus?
+ggplot(allspfit, aes(lat, year)) +                          
+    geom_tile(aes(fill = value)) +
+    scale_fill_viridis_c() + 
+    facet_grid(.~
+        factor(sp, levels=c("Pinus", "Fagus", "Quercus")))
+##
+
+
 ## plot the data 
 ## by years is not super useful ... 
 makequickplotsyrs <- function(fitdf, leafdf, matdf, filename, ylimhere, xlimhere){

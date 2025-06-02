@@ -1,6 +1,8 @@
 ## Started 2 June 2025 ##
 ## Back at CNRS, maybe now I finish this project? ##
 
+## Making the heatmaps of Phenofit output from simulated climate data #
+
 ## housekeeping
 rm(list=ls()) 
 options(stringsAsFactors = FALSE)
