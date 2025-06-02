@@ -133,6 +133,8 @@ listmeansd[[i]] <- alldathere
 onemeansddf <- do.call("rbind", listmeansd)
 }
 
+write.csv(onemeansddf, "output/onemeansddf.csv")
+
 # And get columns fro mean warming versus SD
 simsiran<- c("+1C x sd -50%", "+1C x sd +50%", "+2C x sd -50%", "+2C x sd +50%", 
     "+3C x sd -50%", "+3C x sd +50%", "+4C x sd -50%", "+4C x sd +50%", 

@@ -256,7 +256,7 @@ listsd[[i]] <- alldathere
 onesddf <- do.call("rbind", listsd)
 }
 
-
+write.csv(onesddf, "output/onesddf.csv")
 
 # Make a giant file of all mean sims
 listmean <- list()
@@ -293,6 +293,7 @@ listmean[[i]] <- alldathere
 onemeandf <- do.call("rbind", listmean)
 }
 
+write.csv(onemeandf, "output/onemeandf.csv")
 
 ##########################################
 ## Make plots from file with latitudes ##
