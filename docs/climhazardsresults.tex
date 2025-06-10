@@ -212,7 +212,7 @@ For the sd results for \emph{Quercus} ....
  \begin{center}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/extras/flowerendodorm/flowerendodormPinusMeanTemp53.pdf}
 \noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/extras/flowerendodorm/flowerendodormPinus53.pdf}
-  \caption{Top: \emph{Pinus} endodormancy curves (same curve, always in light blue) across mean temperatures with changing variance at 53\degree N latitude. Darker blue horizontal line shows estimated endodormancy. Because of which side the endodormancy curve is on relative to temperature, increasing variance leads to more days falling outside the curve and leading to (bottom) 0 accumulated endodormancy, instead of 1. {\bf Note} that I should change to Oct-Feb temperatures for these figures.}
+  \caption{Top: \emph{Pinus} endodormancy curves (same curve, always in light blue) across mean temperatures with changing variance at 53\degree N latitude. Darker blue horizontal line shows estimated endodormancy. Because of which side the endodormancy curve is on relative to temperature, increasing variance leads to more days falling outside the curve and leading to (bottom) 0 accumulated endodormancy, instead of 1.} % I DID change to Oct-Feb temperatures for these figures.
   \label{fig:pinusendodorm53}
   \end{center}
 \end{figure}
@@ -273,6 +273,14 @@ Also, given we're not sure about the endodormancy curves (perhaps especially for
 \end{itemize}
 \end{itemize}
 
+\begin{figure} 
+ \begin{center}
+\noindent \includegraphics[width=1\textwidth]{..//analyses/graphs/phenofit/sims/extras/flowerendodorm/sdmeanflowerendodormFagusMeanTemp53}
+  \caption{Top: \emph{Fagus} endodormancy curves (same curve, always in light blue, blue is the daily temperatures) across changing mean temperatures with changing variance at 53\degree N latitude. Darker blue horizontal line shows estimated endodormancy. You can see declines in estimated endodormancy with increasing mean and variance, which explains stalling (or getting later) FruitMat with increasing mean and variance (see also issue 13).} 
+  \label{fig:fagusendodorm53}
+  \end{center}
+\end{figure}
+
 \newpage
 \section{Some reminders for Lizzie... }
 \begin{itemize}
@@ -284,6 +292,32 @@ Also, given we're not sure about the endodormancy curves (perhaps especially for
 \end{itemize}
 
 
+\newpage
+\section{Organizing to write the ms (June 2025)... }
+
+\begin{enumerate}
+\item Introduction
+\item Methods
+\begin{enumerate}
+\item Parameter files
+\begin{enumerate}
+\item  \verb|Quercus_robur_ADuputie_Chuine.species|
+\end{enumerate}
+\item drought survival should not vary with the simulations because we do not change the precipitation
+\item temperature survival does not matter in this model (see notes in daily log)
+\end{enumerate}
+\item Results
+\item Discussion
+\begin{enumerate}
+\item ``reproductive stage is more sensitive to cold stress than the vegetative stage'' (see 3 Dec 2023 in log)
+\end{enumerate}
+\end{enumerate}
+
 
 \end{document}
+
+
+\begin{enumerate}
+\item  \verb|Quercus_robur_ADuputie_Chuine.species|
+\end{enumerate}
 
