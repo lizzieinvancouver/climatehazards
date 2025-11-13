@@ -395,7 +395,7 @@ maindriverquer <- ggplot(subset(alldatwide, sp=="Quercus"), aes(x=as.character(l
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
 
-maindriverfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=as.character(lat), y=value.FruitMaturationDate))  +
+maindriverfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=as.character(lat), y=value.FruitIndex))  +
     geom_boxplot() + 
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
@@ -407,7 +407,7 @@ dev.off()
 
 # Wait, the issue suggest XY plots ... 
 
-xyfitfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=value.FruitMaturationDate, y=value.Fitness, col=lat)) +
+xyfitfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=value.FruitIndex, y=value.Fitness, col=lat)) +
     geom_point() + 
     theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
                        panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
