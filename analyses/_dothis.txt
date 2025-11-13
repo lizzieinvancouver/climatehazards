@@ -6,6 +6,10 @@ Train back to Montpellier
 November 2025, back at CEFE
 
 * Have done nothing since I left, so time to sort things out! (Also, I did not draft paper in June.)
+* I think the next steps are ...
+	- Update the results file for the mean x SD based on my notes there, and the log and confirm them with Isabelle or Victor (maybe by building up what I will show in supp to back them up)
+	- Start a .rnw for sup and main text
+	- Figure out all the figures. We have the heat map, we could have a conceptual one or two, but what are we showing for the historical results and do we need to show anything for the sims beyond just the heat map?
 
 <><><><><><><><><><><><><><>
 Starting back up 1 June 2025 (to do items on 13 June 2025):
