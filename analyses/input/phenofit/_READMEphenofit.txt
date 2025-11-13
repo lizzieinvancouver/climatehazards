@@ -6,3 +6,5 @@ I need a better way to do this, but for now here is output using the ERA5LAND da
 	Quercus_robur_ADuputie.species
 
 On 15 April I deleted what was here (as we switched sites -- I kept the R figures though) and updated to new data. 
+
+On 13 Nov 2025, I confirmed querob_19512020/ is the DuputieChuine parameter set.
