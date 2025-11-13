@@ -35,26 +35,61 @@ Questions
 \item Do historical drivers extend into the future projections?
 \end{itemize}
 
+Thinking on setup ... not sure this is helpful... 
+\begin{itemize}
+\item  Things that could shift in general
+\begin{itemize}
+\item Changes in frost risk 
+\end{itemize}
+\item Things that could shift with warming
+\begin{itemize}
+\item Accelerated development (leaves, fruit), leading to fruit maturation happening more often
+\item Delayed development (leaves only?) due to too much heat
+\end{itemize}
+\item Things that could shift with SD
+\begin{itemize}
+\item More frost events? 
+\end{itemize}
+\end{itemize}
 
 Methods
 \begin{itemize}
 \item We used historical climate data (YEARS, dataset) and applied shifts to the historical data to simulate increases in means and shifts in variance. 
 \item 
+\item Drought survival should not matter as we do not change the water in the soil (WHC) or the precip. 
 \end{itemize}
+
+Maybe we also want something like ... \verb|2023Jun_MontpellierVisitnotes.pdf|?
 
 Results
 \begin{itemize}
 \item Historical trends
 \begin{itemize}
-\item 
+\item This is explained in Section 1 (incl. Fig 1 caption) in climhazardsresults.pdf ... we have no better plots so far, but you can see also: \\ \verb|analyses/graphs/phenofit/historical/allspp_maindriverxy.pdf|
 \end{itemize}
-\item Effects of increasing mean temperatures and shifts in variance % maybe these could work together versus doing means, then SD, then interaction?
+\item Effects of increasing mean temperatures (summarized from results file, see above)
+\item Fagus 
 \begin{itemize}
-\item 
+\item Fagus depends on latitude:  at low latitudes there is reduced CarbonSurvival (not enough cold means late dormancy) and thus FruitMaturationDate gets later. While at higher latitudes there is an increase in the FruitIndex as FruitMaturation is higher. 
+\item Quercus -- not much effect, FruitMaturation gets a little later at low latitudes due to ... ??
+\item Pinus is pretty similar across latitudes, it just gets hammered by low CarbonSurvival due to low chilling and thus later dormancy break date
+\end{itemize}
+\item Effects of SD ... (copied from results file, see above)
+\begin{itemize}
+\item \emph{Fagus} is determined mainly by a combo of damage to leaves and flowers, which increases with increasing variance. 
+\item \emph{Pinus} survival dominates at low latitudes (no carbon survival and variance does not change this), but at highest latitude variance also leads to later leafout (low chill, later dormancy break) and thus lower leafindex (note that Pinus can sustain VERY low temperatures and is unlikely to have frost damage). 
+\item \emph{Quercus} is not changing much but does see some frost losses at higher variance.
+\end{itemize}
+\item Effects of increasing mean temperatures and shifts in variance (summarized from results file, see above)
+\begin{itemize}
+\item Fagus depends a little on latitude: at site 41 N low variance is better except at high warming where there are issues with late breaking, at 53 N: Increased variance is constantly worse, but increased warming leads to less frost. Fruit maturation stalls (even though flowering advances) though it appears to have no or low impact on fitness, but we did look closely at it -- see Fig 21 in the results file.  
+\item \emph{Pinus}: Variance and warming compound to lead to greater negative effects. We made some endodormancy curves, see Fig 19 of results file. 
+\item Quercus: Not much happens, esp. at lower latitudes. At 53 N higher variance, lower warming leads to some frost but not much.
 \end{itemize}
 \end{itemize}
 
 
+\newpage
 \section{Outline}
 
 \begin{enumerate}
