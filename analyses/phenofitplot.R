@@ -369,3 +369,60 @@ for (i in seq(length(p))) {
 }
 dev.off()
 
+
+## Working on potential ms figure suggested in issue 14
+fitpin <- ggplot(subset(alldatwide, sp=="Pinus"), aes(x=as.character(lat), y=value.Fitness))  +
+    geom_boxplot() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+fitquer <- ggplot(subset(alldatwide, sp=="Quercus"), aes(x=as.character(lat), y=value.Fitness))  +
+    geom_boxplot() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+fitfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=as.character(lat), y=value.Fitness))  +
+    geom_boxplot() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+maindriverpin <- ggplot(subset(alldatwide, sp=="Pinus"), aes(x=as.character(lat), y=value.LeafUnfoldingDate))  +
+    geom_boxplot() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+maindriverquer <- ggplot(subset(alldatwide, sp=="Quercus"), aes(x=as.character(lat), y=value.FruitMaturationDate))  +
+    geom_boxplot() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+maindriverfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=as.character(lat), y=value.FruitMaturationDate))  +
+    geom_boxplot() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+pdf("graphs/phenofit/historical/allspp_maindriver.pdf", height=6, width=10)
+grid.arrange(fitfag, fitpin, fitquer, maindriverpin, maindriverquer, maindriverfag, nrow = 2)
+dev.off()
+
+# Wait, the issue suggest XY plots ... 
+
+xyfitfag <- ggplot(subset(alldatwide, sp=="Fagus"), aes(x=value.FruitMaturationDate, y=value.Fitness, col=lat)) +
+    geom_point() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+xyfitpin <- ggplot(subset(alldatwide, sp=="Pinus"), aes(x=value.LeafUnfoldingDate, y=value.Fitness, col=lat)) +
+    geom_point() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+xyfitquer <- ggplot(subset(alldatwide, sp=="Quercus"), aes(x=value.FruitMaturationDate, y=value.Fitness, col=lat)) +
+    geom_point() + 
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+                       panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
+
+
+pdf("graphs/phenofit/historical/allspp_maindriverxy.pdf", height=4, width=10)
+grid.arrange(xyfitfag, xyfitpin, xyfitquer, nrow = 1)
+dev.off()
