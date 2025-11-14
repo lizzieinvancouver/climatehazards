@@ -1,9 +1,11 @@
 ## Started 25 September 2024 ##
 ## By Lizzie ##
+## Called in calcclimatesims.R ##
 
 ## Trying to make fruit maturation plots to see if it is too hot in summer for some simulations ##
 ## Focusing on mean warming x variance FIRST as that is the most likely place to see something ... ##
 ## Meaning: I am not sure I will make fruitmatplots.R ##
+## Note from Nov 2025: I call some items 'dorm' below (copying other code) but this code is about fruit mat ##
 
 # Look over July to October
 check <- do.call("rbind", tmeansims[c(7:10)])
